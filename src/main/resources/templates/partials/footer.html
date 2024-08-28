@@ -1,0 +1,50 @@
+<footer id="footer" class="footer pt-5 pb-3 is-mobile">
+  <div class="columns gap-5">
+    <div class="column">
+      <h3>Devify</h3>
+      <p class="is-size-7">
+        Somos uma plataforma dedicada a ensinar sobre desenvolvimento de software em todas as áreas e com
+        várias linguagens de programação.
+      </p>
+    </div>
+    <div class="column has-text-right">
+      <h3>Links</h3>
+      <ul>
+        <li>
+          <a class="is-size-7" href="/">Home</a>
+        </li>
+        <li>
+          <a class="is-size-7" href="/contact">Entrar em contato</a>
+        </li>
+        <li>
+          <a class="is-size-7" href="/report">Encontrei um problema</a>
+        </li>
+        <li>
+          <a class="is-size-7" href="/terms">Termos</a>
+        </li>
+        <li>
+          <a class="is-size-7" href="#">Ajude-nos</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container has-text-centered p-3">
+    <div>
+      <p class="is-size-7">
+        &copy; 2024 - Devify -
+        <a href="/terms">Termos</a>
+      </p>
+    </div>
+  </div>
+</footer>
+<script src="/javascript/devify.dist.min.js" defer></script>
+<script>
+  function logout() {
+    $('#sign-out-btn').click()
+  }
+
+  addEventListener('DOMContentLoaded', function () {
+    $('#logout').on('click', logout)
+  })
+</script>

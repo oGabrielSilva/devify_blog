@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <meta data-details="page" data-content="session" />
+  </head>
+  <body>
+    <header id="header">
+      <th th:replace="~{partials/nav}"></th>
+    </header>
+
+    <div class="container pt-6 pb-5 px-3" id="root">
+      <h1 class="title mb-1">Faça login para continuar</h1>
+      <p>Área Restrita da Devify: entre com as credenciais adequadas</p>
+      <form th:action="@{/session}" method="POST" enctype="application/x-www-form-urlencoded" class="py-5">
+        <input type="hidden" name="next" th:value="${nextURL}" />
+        <div id="email" class="field">
+          <label for="email-inp" class="label">Email</label>
+          <div class="control has-icons-left">
+            <input id="email-inp" class="input" type="email" name="email" placeholder="robin@devify.cyou" />
+            <span class="icon is-small is-left" aria-hidden="true">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </div>
+          <p class="help pb-1 has-text-danger is-hidden">Formato de email não é considerado válido</p>
+        </div>
+
+        <div id="password" class="field">
+          <label for="password-inp" class="label">Senha</label>
+          <div class="control has-icons-left">
+            <input id="password-inp" class="input" name="password" type="password" />
+            <span class="icon is-small is-left" aria-hidden="true">
+              <i class="fas fa-lock"></i>
+            </span>
+          </div>
+          <p class="help pb-1 has-text-danger is-hidden">
+            Senha não aceita. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra
+            maiúscula, uma letra minúscula e um número
+          </p>
+        </div>
+
+        <div class="buttons pt-5">
+          <button type="submit" class="button is-primary">Fazer login</button>
+          <button th:data-action="@{/session/sign-up}" id="sign-up" class="button" type="button">
+            Cadastrar
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <th th:replace="~{partials/footer}"></th>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" th:content="${noIndexPage != null && noIndexPage ? 'noindex' : 'index, follow'}" />
+<meta name="author" content="Gabriel Henrique da Silva" />
+<meta data-details="error" th:data-message="${error}" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"
+></script>
+<script src="https://kit.fontawesome.com/78b3364728.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
+<link rel="stylesheet" href="/css/globals.css" />
+<title th:text="${pageTitle != null ? pageTitle + ' - Devify' : '- Devify'}"></title>
+<style>
+  .navbar-dropdown {
+    padding: 0.25rem;
+  }
+
+  .navbar-dropdown .navbar-item {
+    border-radius: 0.25rem;
+  }
+</style>
+<script>
+  Array.prototype.pickRandom = function () {
+    if (this.length === 0) return null
+    var item = this[Math.floor(Math.random() * this.length)]
+    return item ? item : null
+  }
+</script>

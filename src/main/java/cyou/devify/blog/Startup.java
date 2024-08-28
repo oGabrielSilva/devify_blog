@@ -13,7 +13,8 @@ public class Startup {
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void onStart() {
-		System.out.println(String.format("\nApplication on http://127.0.0.1:%s\n", port));
+		System.out.println("\nSystem reserved URLs: /images, /css, /javascript");
+		System.out.println(String.format("Application on http://127.0.0.1:%s\n", port));
 	}
 
 	public static void main(String[] args) {

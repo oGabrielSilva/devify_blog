@@ -1,0 +1,114 @@
+<nav class="navbar" role="navigation" aria-label="Navegação principal">
+  <div class="navbar-brand">
+    <a title="Devify. Tudo sobre programação" class="navbar-item" href="/">
+      <h1 class="title is-4">Devify</h1>
+    </a>
+
+    <a
+      role="button"
+      class="navbar-burger burger"
+      aria-label="Exibir menu"
+      aria-expanded="false"
+      data-target="default-navbar-target"
+      id="navbar-burger-button"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="default-navbar-target" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item gap-3 is-flex is-align-items-center" href="/">
+        <span class="icon is-small" aria-hidden="true">
+          <i class="fa-solid fa-house"></i>
+        </span>
+        <span>Home</span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="/stacks">
+          <span class="icon is-small" aria-hidden="true">
+            <i class="fa-solid fa-layer-group"></i>
+          </span>
+          <span>Stacks</span>
+        </a>
+
+        <div class="navbar-dropdown">
+          <a class="navbar-item" role="none">Nenhuma Stack cadastrada</a>
+        </div>
+      </div>
+
+      <a class="navbar-item gap-3 is-flex is-align-items-center" href="/about">
+        <span class="icon is-small" aria-hidden="true">
+          <i class="fa-solid fa-diamond"></i>
+        </span>
+        <span>Sobre a Devify</span>
+      </a>
+
+      <th th:if="${@userService.isAuthenticated}">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" role="button">Administração</a>
+
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="/internal">
+              <span class="icon is-small">
+                <i class="fa-solid fa-table-columns"></i>
+              </span>
+              <span>Painel administrativo </span>
+            </a>
+            <a class="navbar-item" th:href="@{/internal/profile}">
+              <span class="icon is-small">
+                <i class="fa-solid fa-user-tie"></i>
+              </span>
+              <span>Suas informações</span>
+            </a>
+            <hr class="p-0 my-2" />
+            <a class="navbar-item" id="logout" role="button">
+              <span class="icon is-small">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              </span>
+              <span>Sair</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="is-hidden">
+          <form th:action="@{/session/out}" method="post" class="is-hidden">
+            <button type="submit" id="sign-out-btn">Sair</button>
+          </form>
+        </div>
+      </th>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <button
+            data-design
+            title="Troque o tema"
+            aria-label="Clique para alternar entre o tema claro e escuro"
+            class="button is-text p-2"
+            style="text-decoration: none"
+          >
+            <span data-scheme="light" class="icon is-small has-text-warning p-0 m-0">
+              <i class="fa-solid fa-sun"></i>
+            </span>
+            <span data-scheme="dark" class="icon is-small has-text-link p-0 m-0">
+              <i class="fa-solid fa-moon"></i>
+            </span>
+          </button>
+
+          <button class="button" id="search">
+            <span>Pesquisar</span>
+            <span class="icon is-small">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
