@@ -1,3 +1,4 @@
+import { InternalProfilePageHandler } from './profile/InternalProfilePageHandler'
 import { SessionPageHandler } from './session/SessionPageHandler'
 
 export class PageHandler {
@@ -12,6 +13,9 @@ export class PageHandler {
     switch (page.toLocaleLowerCase()) {
       case 'session':
         SessionPageHandler.fast.handle()
+        break
+      case 'profile':
+        InternalProfilePageHandler.fast.handle()
         break
     }
   }

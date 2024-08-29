@@ -90,7 +90,8 @@ public class SessionController {
     }
 
     var user = userRepository
-        .save(new User(payload.email().split("@")[0], payload.email(), passwordEncoder.encode(payload.password())));
+        .save(new User(payload.email().split("@")[0], payload.email(), "/images/avatar_placeholder.png",
+            passwordEncoder.encode(payload.password())));
     var token = tokenService.create(user);
     response.addCookie(tokenService.createCookie(token));
 

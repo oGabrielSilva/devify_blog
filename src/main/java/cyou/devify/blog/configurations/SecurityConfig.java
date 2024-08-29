@@ -39,20 +39,12 @@ public class SecurityConfig implements WebMvcConfigurer {
     return http.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
         .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(
-            request -> request.requestMatchers("/test").hasRole(Role.ADMIN.asString()).anyRequest()
-                .permitAll())
-        // .formLogin(options -> options.loginPage("/session").permitAll())
-        // .logout((logout) -> logout.permitAll())
+            request -> request.requestMatchers("/internal/profile").hasRole(Role.COMMON.asString())
+                .requestMatchers("/internal", "/internal/**").hasRole(Role.EDITOR.asString())
+                .anyRequest().permitAll())
         .exceptionHandling(ex -> ex
             .authenticationEntryPoint((req, res, exMet) -> res.sendRedirect("/session?next=" + req.getServletPath())))
         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
         .build();
   }
-
-  // @Override
-  // public void addInterceptors(InterceptorRegistry registry) {
-  // registry.addInterceptor(userToModelViewInterceptor).excludePathPatterns("/api/**",
-  // "/public/**", "/session",
-  // "/forgot-password", "/error").addPathPatterns("/", "/**");
-  // }
 }

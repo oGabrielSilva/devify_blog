@@ -1,6 +1,5 @@
-import { PageHandler } from './handlers/PageHandler'
 import { BulmaCss } from './lib/BulmaCss'
-import { toaster } from './lib/kassiopeia-tools'
+import { anim, locker, toaster } from './lib/kassiopeia-tools'
 import { configureDirectionButtons } from './utils/directionButtons'
 
 export class Startup {
@@ -38,9 +37,9 @@ export class Startup {
 
     configureDirectionButtons()
 
-    PageHandler.fast.handle()
-
     this.showError()
+    self.locker = locker
+    self.anim = anim
   }
 
   public static get fast() {

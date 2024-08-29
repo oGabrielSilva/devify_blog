@@ -33,7 +33,7 @@ import lombok.ToString;
 public class User implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  public UUID id;
+  private UUID id;
 
   @Column(length = 50, nullable = false)
   private String name = "";
@@ -45,7 +45,6 @@ public class User implements UserDetails {
   private String avatarURL;
   private String avatarFilePath;
 
-  @Column(columnDefinition = "TEXT")
   private String bio;
 
   @Column(unique = true, length = 150, nullable = false)
@@ -68,9 +67,10 @@ public class User implements UserDetails {
 
   private boolean enabled = true;
 
-  public User(String name, String email, String password) {
+  public User(String name, String email, String avatarURL, String password) {
     this.name = name;
     this.email = email;
+    this.avatarURL = avatarURL;
     this.password = password;
   }
 
@@ -98,6 +98,8 @@ public class User implements UserDetails {
       case HELPER:
         roles.add(Role.HELPER);
         roles.add(Role.EDITOR);
+        break;
+      case COMMON:
         break;
       default:
         roles.add(Role.EDITOR);
@@ -136,6 +138,8 @@ public class User implements UserDetails {
       case HELPER:
         roles.add(new SimpleGrantedAuthority("ROLE_" + Role.HELPER.asString()));
         roles.add(new SimpleGrantedAuthority("ROLE_" + Role.EDITOR.asString()));
+        break;
+      case COMMON:
         break;
       default:
         roles.add(new SimpleGrantedAuthority("ROLE_" + Role.EDITOR.asString()));

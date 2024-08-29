@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <th th:replace="~{partials/head}"></th>
+  <meta data-details="page" data-content="profile" />
+  <script src="/javascript/index.internal.js" defer></script>
+</head>
+
+<body>
+  <header id="header">
+    <th th:replace="~{partials/nav}"></th>
+  </header>
+
+  <div class="container" id="root">
+    <div id="tabs" class="tabs is-right is-boxed pt-6">
+      <ul style="font-size: 13px">
+        <li th:class="${tab == 'profile' ? 'is-active' : ''}" data-tab="profile">
+          <a role="button">
+            <span class="icon is-small" aria-hidden="true">
+              <i class="fa-solid fa-user-tie"></i>
+            </span>
+            <span>Perfil</span>
+          </a>
+        </li>
+        <li th:class="${tab == 'links' ? 'is-active' : ''}" data-tab="links">
+          <a role="button">
+            <span class="icon is-small" aria-hidden="true">
+              <i class="fa-solid fa-link"></i>
+            </span>
+            <span>Links</span>
+          </a>
+        </li>
+        <li th:class="${tab == 'security' ? 'is-active' : ''}" data-tab="security">
+          <a role="button">
+            <span class="icon is-small" aria-hidden="true">
+              <i class="fa-solid fa-shield-halved"></i>
+            </span>
+            <span>Segurança</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <main class="pb-6 px-3">
+      <form id="internal-profile-form" enctype="multipart/form-data"
+        th:class="|py-5 ${tab != 'profile' ? 'is-hidden' : ''}|" method="post" th:action="@{/internal/profile}">
+        <h1 class="pb-3 title">Seu perfil</h1>
+
+        <div class="is-flex is-justify-content-center align-items-sm-center py-3">
+          <div>
+            <img th:src="${user.avatarURL}" class="avatar" th:aria-label="|Avatar do usuário ${user.name}|"
+              title="Avatar do usuário" width="128" height="128" style="width: 128px; height: 128px" />
+            <input name="avatar" class="is-hidden" type="file" accept="image/png, image/jpeg, image/webp" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="inp-name">Nome</label>
+          <div class="control has-icons-left has-icons-right">
+            <input th:value="${user.name}" name="name" class="input" id="inp-name" type="text" maxlength="50"
+              placeholder="Nico Robin" />
+            <span class="icon is-small is-left">
+              <i class="fa-solid fa-signature"></i>
+            </span>
+            <span class="is-small icon is-right">
+              <small id="name-len" th:text="${50 - user.name.length}"></small>
+            </span>
+          </div>
+          <p id="name-helper" class="help is-danger is-hidden">Nome precisa ser maior</p>
+        </div>
+
+        <div class="field">
+          <label for="inp-pseud" class="label">Pseudônimo</label>
+          <div class="control has-icons-left has-icons-right">
+            <input id="inp-pseud" th:value="${user.pseudonym}" name="pseudonym" class="input" type="text"
+              placeholder="Monet" maxlength="25" />
+            <span class="icon is-small is-left">
+              <i class="fa-solid fa-user-astronaut"></i>
+            </span>
+            <span class="is-small icon is-right">
+              <small id="pseudonym-len"
+                th:text="${25 - (#strings.isEmpty(user.pseudonym) ? 0 : user.pseudonym.length)}"></small>
+            </span>
+          </div>
+          <p class="help">
+            O pseudônimo é o nome que será exibido publicamente. Você pode deixá-lo em branco, se preferir.
+            Se escolher definir um pseudônimo, apenas outros usuários internos do sistema terão acesso ao
+            seu nome verdadeiro.
+          </p>
+        </div>
+
+        <div class="control">
+          <label for="inp-bio" class="label">Bio</label>
+          <textarea maxlength="500" class="textarea" id="inp-bio" name="Bio"
+            placeholder="Fale um pouco sobre você para seus leitores" th:text="${user.bio}"
+            style="min-height: 200px;"></textarea>
+        </div>
+
+        <div class="py-5 buttons">
+          <button type="submit" class="button is-primary">Salvar perfil</button>
+        </div>
+
+        <div>
+          <small>
+            Profile icon made by
+            <a target="_blank" rel="noopener noreferrer" href="https://www.flaticon.com/authors/md-tanvirul-haque"
+              title="Md Tanvirul Haque">
+              Md Tanvirul Haque
+            </a>
+            from
+            <a target="_blank" rel="noopener noreferrer" href="https://www.flaticon.com/" title="Flaticon">
+              www.flaticon.com
+            </a>
+          </small>
+        </div>
+      </form>
+
+      <form id="internal-profile-links-form" enctype="application/x-www-form-urlencoded"
+        th:class="|py-5 ${tab != 'links' ? 'is-hidden' : ''}|" method="post" th:action="@{/internal/profile/links}">
+        <h1 class="pb-3 title">Seus links</h1>
+      </form>
+    </main>
+  </div>
+
+  <th th:replace="~{partials/footer}"></th>
+</body>
+
+</html>
