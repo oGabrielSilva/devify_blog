@@ -61,11 +61,11 @@
               <span>Perfil</span>
             </a>
             <a th:if="${#strings.isEmpty(currentURL) or !currentURL.contains('internal/profile')}" class="navbar-item"
-              th:href="@{/internal/profile?tab=links}">
+              th:href="@{/internal/profile?tab=social}">
               <span class="icon is-small">
                 <i class="fa-solid fa-link"></i>
               </span>
-              <span>Seus links</span>
+              <span>Seus links sociais</span>
             </a>
             <a th:if="${#strings.isEmpty(currentURL) or !currentURL.contains('internal/profile')}" class="navbar-item"
               th:href="@{/internal/profile?tab=security}">

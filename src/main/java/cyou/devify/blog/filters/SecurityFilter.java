@@ -51,6 +51,7 @@ public class SecurityFilter extends OncePerRequestFilter {
   protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
     String path = request.getServletPath();
     return path.contains("session") ||
+        path.contains("static/images/avatar") ||
         path.contains("site.webmanifest") ||
         path.contains("about.txt") ||
         path.contains("favicon.ico") ||

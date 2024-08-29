@@ -23,12 +23,12 @@
             <span>Perfil</span>
           </a>
         </li>
-        <li th:class="${tab == 'links' ? 'is-active' : ''}" data-tab="links">
+        <li th:class="${tab == 'social' ? 'is-active' : ''}" data-tab="social">
           <a role="button">
             <span class="icon is-small" aria-hidden="true">
               <i class="fa-solid fa-link"></i>
             </span>
-            <span>Links</span>
+            <span>Social</span>
           </a>
         </li>
         <li th:class="${tab == 'security' ? 'is-active' : ''}" data-tab="security">
@@ -116,14 +116,113 @@
         </div>
       </form>
 
-      <form id="internal-profile-links-form" enctype="application/x-www-form-urlencoded"
-        th:class="|py-5 ${tab != 'links' ? 'is-hidden' : ''}|" method="post" th:action="@{/internal/profile/links}">
-        <h1 class="pb-3 title">Seus links</h1>
-      </form>
+      <div id="social-container" th:class="|py-5 ${tab != 'social' ? 'is-hidden' : ''}|">
+        <div class="pb-3 mb-5 is-flex is-justify-content-space-between is-align-items-center gap-3">
+          <h1 class="title mb-0">Seus links sociais</h1>
+          <button id="clear-links" class="button is-ghost has-text-danger is-small" type="button">Limpar campos</button>
+        </div>
+
+        <form id="internal-profile-social-form" enctype="application/x-www-form-urlencoded" method="post"
+          th:action="@{/internal/profile/social}">
+
+          <div id="instagram" class="field pb-2">
+            <label for="insta-inp" class="label">Instagram</label>
+            <div class="control has-icons-left">
+              <input id="insta-inp" th:value="${user.social.instagram}" class="input" type="text" name="instagram"
+                placeholder="https://www.instagram.com/ojcdevg" />
+              <span class="icon is-small is-left">
+                <i class="fa-brands fa-instagram"></i>
+              </span>
+            </div>
+          </div>
+
+          <div id="youtube" class="field pb-2">
+            <label for="youtube-inp" class="label">YouTube</label>
+            <div class="control has-icons-left">
+              <input th:value="${user.social.youtube}" id="youtube-inp" class="input" type="text" name="youtube"
+                placeholder="https://www.youtube.com/@YouTube" />
+              <span class="icon is-small is-left">
+                <i class="fa-brands fa-youtube"></i>
+              </span>
+            </div>
+          </div>
+
+          <div id="twitter" class="field pb-2">
+            <label for="twitter-inp" class="label">Twitter/X</label>
+            <div class="control has-icons-left">
+              <input th:value="${user.social.twitter}" id="twitter-inp" class="input" type="text" name="twitter"
+                placeholder="https://x.com/odev_gabriel | https://twitter.com/odev_gabriel" />
+              <span class="icon is-small is-left">
+                <i class="fa-brands fa-x-twitter"></i>
+              </span>
+            </div>
+          </div>
+
+          <div id="github" class="field pb-2">
+            <label for="github-inp" class="label">GitHub</label>
+            <div class="control has-icons-left">
+              <input th:value="${user.social.github}" id="github-inp" class="input" type="text" name="github"
+                placeholder="https://github.com/oGabrielSilva" />
+              <span class="icon is-small is-left">
+                <i class="fa-brands fa-github"></i>
+              </span>
+            </div>
+          </div>
+
+          <div id="discord" class="field pb-2">
+            <label for="discord-inp" class="label">Discord</label>
+            <div class="control has-icons-left">
+              <input th:value="${user.social.discord}" id="discord-inp" class="input" type="text" name="discord"
+                placeholder="" />
+              <span class="icon is-small is-left">
+                <i class="fa-brands fa-discord"></i>
+              </span>
+            </div>
+          </div>
+
+          <div id="linkedin" class="field pb-2">
+            <label for="linkedin-inp" class="label">LinkedIn</label>
+            <div class="control has-icons-left">
+              <input th:value="${user.social.linkedin}" id="linkedin-inp" class="input" type="text" name="linkedin"
+                placeholder="https://www.linkedin.com/in/ogabriel-henrique" />
+              <span class="icon is-small is-left">
+                <i class="fa-brands fa-linkedin-in"></i>
+              </span>
+            </div>
+          </div>
+
+          <div id="site" class="field pb-2">
+            <label for="site-inp" class="label">Site</label>
+            <div class="control has-icons-left">
+              <input th:value="${user.social.site}" id="site-inp" class="input" type="text" name="site"
+                placeholder="https://devify.cyou" />
+              <span class="icon is-small is-left">
+                <i class="fa-solid fa-globe"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="buttons py-5">
+            <button class="button is-primary" type="submit">
+              Salvar links
+            </button>
+            <button class="button" type="reset">Resetar</button>
+          </div>
+        </form>
+      </div>
+
     </main>
   </div>
 
   <th th:replace="~{partials/footer}"></th>
+
+  <script>
+    function clearLinks() {
+      $("#internal-profile-social-form").find("input").val("")
+    }
+
+    $("#clear-links").on("click", clearLinks)
+  </script>
 </body>
 
 </html>

@@ -15,14 +15,15 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Social {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
 
-    private String instagram;
-    private String youtube;
-    private String twitter;
-    private String github;
-    private String discord;
-    private String site;
+  private String instagram;
+  private String youtube;
+  private String twitter;
+  private String github;
+  private String discord;
+  private String linkedin;
+  private String site;
 }

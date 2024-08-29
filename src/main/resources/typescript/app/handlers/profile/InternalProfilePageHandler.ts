@@ -25,8 +25,9 @@ export class InternalProfilePageHandler extends BaseHandler {
     },
   }
 
-  public readonly links = {
-    form: $('#internal-profile-links-form'),
+  public readonly social = {
+    conatiner: $('#social-container'),
+    form: $('#internal-profile-social-form'),
   }
 
   private configureTabs() {
@@ -46,17 +47,17 @@ export class InternalProfilePageHandler extends BaseHandler {
         })
 
         this.profile.form.addClass('is-hidden')
-        this.links.form.addClass('is-hidden')
-        $(tab).addClass('is-active')
+        this.social.conatiner.addClass('is-hidden')
 
+        $(tab).addClass('is-active')
         if (tab.dataset.tab === 'profile') {
           this.profile.form.removeClass('is-hidden')
           history.pushState(null, '', location.pathname + `?tab=profile`)
           return
         }
-        if (tab.dataset.tab === 'links') {
-          this.links.form.removeClass('is-hidden')
-          history.pushState(null, '', location.pathname + `?tab=links`)
+        if (tab.dataset.tab === 'social') {
+          this.social.conatiner.removeClass('is-hidden')
+          history.pushState(null, '', location.pathname + `?tab=social`)
           return
         }
         if (tab.dataset.tab === 'security') {

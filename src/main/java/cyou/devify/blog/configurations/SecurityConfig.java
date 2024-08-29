@@ -39,7 +39,8 @@ public class SecurityConfig implements WebMvcConfigurer {
     return http.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
         .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(
-            request -> request.requestMatchers("/internal/profile").hasRole(Role.COMMON.asString())
+            request -> request.requestMatchers("/internal/profile", "/internal/profile/**")
+                .hasRole(Role.COMMON.asString())
                 .requestMatchers("/internal", "/internal/**").hasRole(Role.EDITOR.asString())
                 .anyRequest().permitAll())
         .exceptionHandling(ex -> ex

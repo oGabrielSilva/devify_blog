@@ -10,6 +10,7 @@ import cyou.devify.blog.services.UploadImageService;
 import cyou.devify.blog.services.UserService;
 import cyou.devify.blog.utils.StringUtils;
 import cyou.devify.blog.vm.ProfileFormViewModel;
+import cyou.devify.blog.vm.SocialViewModel;
 
 @RequestMapping("/internal/profile")
 @Controller
@@ -24,7 +25,6 @@ public class ProfileController {
   @PostMapping
   public String updateProfile(ProfileFormViewModel payload) {
     var user = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
-    System.out.println("User -> " + user.getEmail());
     boolean hasChanges = false;
 
     if (StringUtils.isNonNullOrBlank(payload.name()) && !payload.name().equals(user.getName())) {
@@ -59,5 +59,54 @@ public class ProfileController {
       userRepository.save(user);
     }
     return "redirect:/internal/profile";
+  }
+
+  @PostMapping("/social")
+  public String updateSocial(SocialViewModel payload) {
+    var user = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
+    var social = user.getSocial();
+    boolean hasChanges = false;
+
+    if (StringUtils.isNonNullOrBlank(payload.instagram()) && !payload.instagram().equals(social.getInstagram())) {
+      social.setInstagram(payload.instagram());
+      hasChanges = true;
+    }
+
+    if (StringUtils.isNonNullOrBlank(payload.discord()) && !payload.discord().equals(social.getDiscord())) {
+      social.setDiscord(payload.discord());
+      hasChanges = true;
+    }
+
+    if (StringUtils.isNonNullOrBlank(payload.github()) && !payload.github().equals(social.getGithub())) {
+      social.setGithub(payload.github());
+      hasChanges = true;
+    }
+
+    if (StringUtils.isNonNullOrBlank(payload.linkedin()) && !payload.linkedin().equals(social.getLinkedin())) {
+      social.setLinkedin(payload.linkedin());
+      hasChanges = true;
+    }
+
+    if (StringUtils.isNonNullOrBlank(payload.site()) && !payload.site().equals(social.getSite())) {
+      social.setSite(payload.site());
+      hasChanges = true;
+    }
+
+    if (StringUtils.isNonNullOrBlank(payload.twitter()) && !payload.twitter().equals(social.getTwitter())) {
+      social.setTwitter(payload.twitter());
+      hasChanges = true;
+    }
+
+    if (StringUtils.isNonNullOrBlank(payload.youtube()) && !payload.youtube().equals(social.getYoutube())) {
+      social.setYoutube(payload.youtube());
+      hasChanges = true;
+    }
+
+    if (hasChanges) {
+      user.setSocial(social);
+      userRepository.save(user);
+    }
+
+    return "redirect:/internal/profile?tab=social";
   }
 }
