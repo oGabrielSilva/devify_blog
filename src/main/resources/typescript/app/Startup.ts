@@ -1,5 +1,5 @@
 import { BulmaCss } from './lib/BulmaCss'
-import { anim, locker, toaster } from './lib/kassiopeia-tools'
+import { anim as animTool, locker as lockerTool, toaster } from './lib/kassiopeia-tools'
 import { configureDirectionButtons } from './utils/directionButtons'
 
 export class Startup {
@@ -12,6 +12,7 @@ export class Startup {
     bulma.animateNavMenu()
     bulma.listenAllThemeButton()
     bulma.updateColorScheme(bulma.recoveryDefinedColorScheme())
+    bulma.listenAllGoBackModalButton()
   }
 
   private configureMainMinHeight() {
@@ -27,9 +28,21 @@ export class Startup {
     if (this.error && this.error.dataset && this.error.dataset.message) {
       toaster.danger(this.error.dataset.message, 25000)
     }
+
+    const params = new URLSearchParams(location.search)
+    if (params.size > 0) {
+      params.forEach((val, key) => {
+        if (key.toLocaleLowerCase() === 'error') {
+          toaster.danger(val)
+        }
+      })
+    }
   }
 
   public run() {
+    globalThis.locker = lockerTool
+    globalThis.anim = animTool
+
     if (!this.root) console.error('Root container not found (404')
 
     this.configureBulmaCSS()
@@ -38,8 +51,6 @@ export class Startup {
     configureDirectionButtons()
 
     this.showError()
-    self.locker = locker
-    self.anim = anim
   }
 
   public static get fast() {

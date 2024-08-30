@@ -64,4 +64,88 @@ export class BulmaCss {
       $('#' + navBurger.attr('data-target')).css({ display: '' })
     })
   }
+
+  public listenAllGoBackModalButton() {
+    $('.modal').each((_, modal) => {
+      $(modal)
+        .find('.goBack')
+        .on('click', () => {
+          closeModal(modal)
+        })
+    })
+
+    globalThis.addEventListener('keydown', (e) => {
+      if (e.key.toLocaleLowerCase() === 'escape') {
+        closeAllModals()
+      }
+    })
+  }
+}
+
+export function openModal(modal: HTMLElement | string) {
+  const $el =
+    typeof modal === 'string'
+      ? document.querySelector<HTMLElement>(modal.startsWith('#') ? modal : '#' + modal)
+      : modal
+  if ($el) {
+    const animations = [
+      'animate__backInDown',
+      'animate__backInLeft',
+      'animate__backInRight',
+      'animate__backInUp',
+      'animate__fadeInDownBig',
+      'animate__fadeInRightBig',
+      'animate__zoomInLeft',
+      'animate__zoomInRight',
+      'animate__zoomInUp',
+    ]
+    const card = $el.querySelector<HTMLElement>('.modal-card')!
+    card.style.display = 'none'
+    anim.otherAnimationByName($el, 'animate__fadeIn', true, 200).addEventOnCompletion(() => {
+      card.style.display = ''
+      anim.otherAnimationByName(card, animations.pickRandom()!)
+      setTimeout(() => $el.classList.add('is-active'), 10)
+    })
+  }
+}
+
+export function closeModal(modal: HTMLElement | string, onComplete?: () => void) {
+  const $el =
+    typeof modal === 'string'
+      ? document.querySelector<HTMLElement>(modal.startsWith('#') ? modal : '#' + modal)
+      : modal
+
+  if ($el) {
+    const card = $el.querySelector<HTMLElement>('.modal-card')!
+
+    const animations = [
+      'animate__backOutDown',
+      'animate__backOutLeft',
+      'animate__backOutRight',
+      'animate__backOutUp',
+      'animate__bounceOutUp',
+      'animate__bounceOutDown',
+      'animate__bounceOutLeft',
+      'animate__bounceOutRight',
+      'animate__fadeOutDown',
+      'animate__zoomOut',
+      'animate__zoomOutDown',
+      'animate__zoomOutLeft',
+      'animate__zoomOutRight',
+      'animate__zoomOutUp',
+    ]
+
+    anim.otherAnimationByName(card, animations.pickRandom()!, false).addEventOnCompletion(() => {
+      anim.otherAnimationByName($el, 'fadeOut', false, 200).addEventOnCompletion(() => {
+        $el.classList.remove('is-active')
+        if (onComplete) onComplete()
+      })
+    })
+  }
+}
+
+export function closeAllModals() {
+  ;(document.querySelectorAll<HTMLElement>('.modal') || []).forEach(($modal) => {
+    closeModal($modal)
+  })
 }

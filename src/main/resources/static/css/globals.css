@@ -22,3 +22,7 @@
   bottom: 5vh;
   right: 0;
 }
+
+.modal-card {
+  padding: 0 1rem;
+}

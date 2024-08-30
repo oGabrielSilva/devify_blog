@@ -3,6 +3,8 @@ import { configureAvatar } from './profile/avatar'
 import { configureProfileForm } from './profile/form'
 import { configureName } from './profile/name'
 import { configurePseudonym } from './profile/pseudonym'
+import { configureSecurityPartEmail } from './security/email'
+import { configureChangePasswordPart } from './security/password'
 
 export class InternalProfilePageHandler extends BaseHandler {
   private readonly tabs = $('#tabs').find('li')
@@ -27,7 +29,43 @@ export class InternalProfilePageHandler extends BaseHandler {
 
   public readonly social = {
     conatiner: $('#social-container'),
-    form: $('#internal-profile-social-form'),
+  }
+
+  public readonly security = {
+    conatiner: $('#security-container'),
+    email: {
+      form: $<HTMLFormElement>('#email-form'),
+      lab: $('#email-lab'),
+      modal: $('#email-modal'),
+      input: $<HTMLInputElement>('#email'),
+      isValid: false,
+      password: {
+        input: $('#password'),
+        isValid: false,
+        helper: $('#password-helper'),
+      },
+    },
+    password: {
+      button: $('#change-pass'),
+      modal: $('#password-modal'),
+      form: $<HTMLFormElement>('#password-form'),
+      inputs: {
+        current: {
+          input: $('#current-password'),
+          isValid: false,
+          helper: $('#current-password-helper'),
+        },
+        new: {
+          input: $('#new-password'),
+          isValid: false,
+          helper: $('#new-password-helper'),
+        },
+        confirm: {
+          input: $('#confirm-password'),
+          isValid: false,
+        },
+      },
+    },
   }
 
   private configureTabs() {
@@ -48,6 +86,7 @@ export class InternalProfilePageHandler extends BaseHandler {
 
         this.profile.form.addClass('is-hidden')
         this.social.conatiner.addClass('is-hidden')
+        this.security.conatiner.addClass('is-hidden')
 
         $(tab).addClass('is-active')
         if (tab.dataset.tab === 'profile') {
@@ -62,6 +101,7 @@ export class InternalProfilePageHandler extends BaseHandler {
         }
         if (tab.dataset.tab === 'security') {
           history.pushState(null, '', location.pathname + `?tab=security`)
+          this.security.conatiner.removeClass('is-hidden')
           return
         }
       })
@@ -76,9 +116,20 @@ export class InternalProfilePageHandler extends BaseHandler {
     configureProfileForm(this)
   }
 
+  private configureSecurity() {
+    this.security.email.modal.find('button[type="reset"]').on('click', () => {
+      this.security.email.modal.find('input').removeClass('is-danger')
+      this.security.email.password.helper.addClass('is-hidden')
+    })
+
+    configureSecurityPartEmail(this)
+    configureChangePasswordPart(this)
+  }
+
   public handle(): void {
     this.configureTabs()
 
     this.configureProfile()
+    this.configureSecurity()
   }
 }

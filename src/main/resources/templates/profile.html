@@ -211,6 +211,136 @@
         </form>
       </div>
 
+      <div id="security-container" th:class="|py-5 ${tab != 'security' ? 'is-hidden' : ''}|">
+        <h1 class="title">Dados de segurança e email</h1>
+
+        <div class="field">
+          <label for="email-lab" class="label">Email</label>
+          <div class="control has-icons-left">
+            <input id="email-lab" class="input is-clickable" type="text" readonly="true" th:value="${user.email}" />
+            <span class="icon is-small is-left">
+              <i class="fa-solid fa-at"></i>
+            </span>
+          </div>
+
+          <form id="email-form" th:action="@{/internal/profile/email}" enctype="application/x-www-form-urlencoded"
+            method="post">
+            <div class="modal" id="email-modal">
+              <div class="modal-background"></div>
+              <div class="modal-card">
+                <header class="modal-card-head">
+                  <h1 class="modal-card-title">Trocar email?</h1>
+                  <button class="delete goBack" aria-label="Fechar" type="button"></button>
+                </header>
+                <section class="modal-card-body">
+                  <div>
+                    <div class="field">
+                      <label for="email" class="label">Novo email</label>
+                      <div class="control has-icons-left">
+                        <input id="email" name="email" class="input" type="text" th:value="${user.email}" />
+                        <span class="icon is-small is-left">
+                          <i class="fa-solid fa-envelope"></i>
+                        </span>
+                      </div>
+                      <p class="help">Trocar seu email? Digite um valor válido</p>
+                    </div>
+
+                    <div class="field">
+                      <label for="password" class="label">Confirme sua senha</label>
+                      <div class="control has-icons-left">
+                        <input id="password" name="password" class="input" type="password" />
+                        <span class="icon is-small is-left">
+                          <i class="fa-solid fa-lock"></i>
+                        </span>
+                      </div>
+                      <p id="password-helper" class="help pb-1 has-text-danger is-hidden">
+                        Senha não aceita. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra
+                        maiúscula, uma letra minúscula e um número
+                      </p>
+                    </div>
+                  </div>
+                </section>
+                <footer class="modal-card-foot">
+                  <div class="buttons">
+                    <button class="button is-success" type="submit">Salvar alteração</button>
+                    <button aria-label="Cancelar" type="reset" id="close-modal" class="button goBack">Cancelar</button>
+                  </div>
+                </footer>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div>
+          <button id="change-pass" type="button" class="button is-ghost has-text-warning px-0">
+            <span class="icon is-small">
+              <i class="fa-solid fa-key"></i>
+            </span>
+            <span>Trocar minha senha</span>
+          </button>
+
+          <form id="password-form" th:action="@{/internal/profile/password}" enctype="application/x-www-form-urlencoded"
+            method="post">
+            <div class="modal" id="password-modal">
+              <div class="modal-background"></div>
+              <div class="modal-card">
+                <header class="modal-card-head">
+                  <h1 class="modal-card-title">Trocar senha?</h1>
+                  <button class="delete goBack" aria-label="Fechar" type="button"></button>
+                </header>
+                <section class="modal-card-body">
+                  <div>
+                    <div class="field">
+                      <label for="current-password" class="label">Senha atual</label>
+                      <div class="control has-icons-left">
+                        <input id="current-password" name="currentPassword" class="input" type="password" />
+                        <span class="icon is-small is-left">
+                          <i class="fa-solid fa-lock-open"></i>
+                        </span>
+                      </div>
+                      <p id="current-password-helper" class="help password-helper pb-1 has-text-danger is-hidden">
+                        Senha não aceita. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra
+                        maiúscula, uma letra minúscula e um número
+                      </p>
+                    </div>
+
+                    <div class="field">
+                      <label for="new-password" class="label">Nova senha</label>
+                      <div class="control has-icons-left">
+                        <input id="new-password" name="newPassword" class="input" type="password" />
+                        <span class="icon is-small is-left">
+                          <i class="fa-solid fa-lock"></i>
+                        </span>
+                      </div>
+                      <p id="new-password-helper" class="help password-helper pb-1 has-text-danger is-hidden">
+                        Senha não aceita. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra
+                        maiúscula, uma letra minúscula e um número
+                      </p>
+                    </div>
+
+                    <div class="field">
+                      <label for="confirm-password" class="label">Confirme nova senha</label>
+                      <div class="control has-icons-left">
+                        <input id="confirm-password" name="confirmPassword" class="input" type="password" />
+                        <span class="icon is-small is-left">
+                          <i class="fa-solid fa-lock"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <footer class="modal-card-foot">
+                  <div class="buttons">
+                    <button class="button is-success" type="submit">Salvar alteração</button>
+                    <button aria-label="Cancelar" type="reset" id="close-pass-modal"
+                      class="button goBack">Cancelar</button>
+                  </div>
+                </footer>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </main>
   </div>
 

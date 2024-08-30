@@ -1,12 +1,13 @@
-import {
-  AnimationKassiopeiaTool,
-  ScreenLockerKassiopeiaTool,
-} from "kassiopeia-tools";
+import { AnimationKassiopeiaTool, ScreenLockerKassiopeiaTool } from 'kassiopeia-tools'
 
-export {};
+export {}
 declare global {
-  var locker: ScreenLockerKassiopeiaTool;
-  var anim: AnimationKassiopeiaTool;
+  interface Array<T> {
+    pickRandom(): T | null
+  }
 
-  type AppScheme = "dark" | "light";
+  var locker: ScreenLockerKassiopeiaTool
+  var anim: AnimationKassiopeiaTool
+
+  type AppScheme = 'dark' | 'light'
 }
