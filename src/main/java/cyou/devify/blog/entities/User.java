@@ -45,6 +45,7 @@ public class User implements UserDetails {
   private String avatarURL;
   private String avatarFilePath;
 
+  @Column(columnDefinition = "TEXT")
   private String bio;
 
   @Column(unique = true, length = 150, nullable = false)
