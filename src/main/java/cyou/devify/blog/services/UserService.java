@@ -43,4 +43,9 @@ public class UserService implements UserDetailsService {
     return getCurrentAuthenticatedUser() != null;
   }
 
+  public boolean isCommon() {
+    var user = getCurrentAuthenticatedUser();
+    return user != null && user.isCommon();
+  }
+
 }

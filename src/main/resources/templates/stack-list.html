@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <meta data-details="page" data-content="stack_list" />
+    <script src="/javascript/index.internal.js" defer></script>
+  </head>
+
+  <body>
+    <header id="header">
+      <th th:replace="~{partials/nav}"></th>
+    </header>
+
+    <div class="container" id="root">
+      <main class="pb-6 px-3">
+        <div class="table-container py-3 has-text-centered">
+          <table class="table is-fullwidth is-hoverable">
+            <thead>
+              <tr>
+                <th class="has-text-centered">Stack</th>
+                <th class="has-text-centered">Descrição</th>
+                <th class="has-text-centered">Meta descrição</th>
+                <th class="has-text-centered">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <th:block th:if="${#lists.isEmpty(stacks)}">
+                <tr>
+                  <td colspan="4">
+                    <div class="is-flex is-align-items-center gap-1">
+                      <span>Não há Stacks cadastradas ainda</span>
+                    </div>
+                  </td>
+                </tr>
+              </th:block>
+
+              <th:block th:unless="${#lists.isEmpty(stacks)}">
+                <tr th:each="stack : ${stacks}">
+                  <th class="has-text-centered" th:text="${stack.name}"></th>
+                  <td>
+                    <button
+                      class="see-stack-desc button is-ghost p-0 m-0"
+                      type="button"
+                      style="font-size: 14px"
+                      aria-label="Clique para ver a descrição"
+                    >
+                      Ver descrição
+                    </button>
+                    <div aria-hidden="true" class="is-hidden" th:text="${stack.description}"></div>
+                  </td>
+                  <td th:text="${stack.metaDescription}" class="meta-description"></td>
+                  <td>
+                    <div class="buttons is-justify-content-center has-text-left">
+                      <a
+                        th:href="@{/internal/stack/{id}/edit(id=${stack.id})}"
+                        class="button is-small is-warning"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        th:aria-label="|Clique para acessar a página de edição da Stack ${stack.name}|"
+                      >
+                        <i class="fa-solid fa-pen-to-square"></i>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </th:block>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+
+    <th th:replace="~{partials/footer}"></th>
+  </body>
+</html>

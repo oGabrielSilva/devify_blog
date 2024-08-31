@@ -4,8 +4,14 @@
       <h1 class="title is-4">Devify</h1>
     </a>
 
-    <a role="button" class="navbar-burger burger" aria-label="Exibir menu" aria-expanded="false"
-      data-target="default-navbar-target" id="navbar-burger-button">
+    <a
+      role="button"
+      class="navbar-burger burger"
+      aria-label="Exibir menu"
+      aria-expanded="false"
+      data-target="default-navbar-target"
+      id="navbar-burger-button"
+    >
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -53,27 +59,26 @@
               </span>
               <span>Painel administrativo </span>
             </a>
-            <a th:if="${#strings.isEmpty(currentURL) or !currentURL.contains('internal/profile')}" class="navbar-item"
-              th:href="@{/internal/profile}">
+            <a
+              th:if="${#strings.isEmpty(currentURL) or !currentURL.contains('internal/profile')}"
+              class="navbar-item"
+              th:href="@{/internal/profile}"
+            >
               <span class="icon is-small">
                 <i class="fa-solid fa-user-tie"></i>
               </span>
               <span>Perfil</span>
             </a>
-            <a th:if="${#strings.isEmpty(currentURL) or !currentURL.contains('internal/profile')}" class="navbar-item"
-              th:href="@{/internal/profile?tab=social}">
-              <span class="icon is-small">
-                <i class="fa-solid fa-link"></i>
-              </span>
-              <span>Seus links sociais</span>
-            </a>
-            <a th:if="${#strings.isEmpty(currentURL) or !currentURL.contains('internal/profile')}" class="navbar-item"
-              th:href="@{/internal/profile?tab=security}">
-              <span class="icon is-small">
-                <i class="fa-solid fa-key"></i>
-              </span>
-              <span>Segurança do seu perfil</span>
-            </a>
+
+            <th th:if="${not @userService.isCommon}">
+              <a class="navbar-item" th:href="@{/internal/stacks}">
+                <span class="icon is-small">
+                  <i class="fa-solid fa-link"></i>
+                </span>
+                <span>Stacks</span>
+              </a>
+            </th>
+
             <hr class="p-0 my-2" />
             <a class="navbar-item" id="logout" role="button">
               <span class="icon is-small">
@@ -95,8 +100,13 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-          <button data-design title="Troque o tema" aria-label="Clique para alternar entre o tema claro e escuro"
-            class="button is-text p-2" style="text-decoration: none">
+          <button
+            data-design
+            title="Troque o tema"
+            aria-label="Clique para alternar entre o tema claro e escuro"
+            class="button is-text p-2"
+            style="text-decoration: none"
+          >
             <span data-scheme="light" class="icon is-small has-text-warning p-0 m-0">
               <i class="fa-solid fa-sun"></i>
             </span>

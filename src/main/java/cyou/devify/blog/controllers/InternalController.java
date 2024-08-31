@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import cyou.devify.blog.repositories.StackRepository;
 import cyou.devify.blog.services.UserService;
 import cyou.devify.blog.utils.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +18,8 @@ import jakarta.servlet.http.HttpServletRequest;
 public class InternalController {
   @Autowired
   UserService userService;
+  @Autowired
+  StackRepository stackRepository;
 
   @ModelAttribute("currentURL")
   public String getCurrentURL(HttpServletRequest request) {
@@ -30,6 +33,16 @@ public class InternalController {
     mv.addObject("pageTitle", "Perfil de " + user.getName());
     mv.addObject("tab", StringUtils.isNonNullOrBlank(tab) ? tab.toLowerCase() : "profile");
     mv.addObject("user", user);
+    return mv;
+  }
+
+  @GetMapping("/stacks")
+  public ModelAndView stacks(ModelAndView mv) {
+    mv.setViewName("stack-list");
+    mv.addObject("pageTitle", "Lista de Stacks");
+
+    var stacks = stackRepository.findAll();
+    mv.addObject("stacks", stacks);
     return mv;
   }
 }

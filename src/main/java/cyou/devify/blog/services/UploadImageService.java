@@ -42,6 +42,9 @@ public class UploadImageService {
   public UploadResult saveAvatar(MultipartFile file, User user) throws IOException {
     String contentType = file.getContentType();
 
+    if (contentType == null)
+      return null;
+
     if (!contentType.equals("image/png") &&
         !contentType.equals("image/jpeg") &&
         !contentType.equals("image/webp")) {

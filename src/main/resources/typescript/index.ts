@@ -1,3 +1,3 @@
-import { Startup } from "./app/Startup";
+import { Startup } from './app/Startup'
 
-Startup.fast.run();
+Startup.fast.run()

@@ -160,4 +160,7 @@ public class User implements UserDetails {
     return email;
   }
 
+  public boolean isCommon() {
+    return authority == Role.COMMON;
+  }
 }
