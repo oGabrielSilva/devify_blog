@@ -59,7 +59,5 @@ export class StackListPageHandler extends BaseHandler {
     $<HTMLFormElement>('.stack-form-edit').each((_, form) => {
       new StackCreateForm(form).run()
     })
-
-    console.log(this)
   }
 }

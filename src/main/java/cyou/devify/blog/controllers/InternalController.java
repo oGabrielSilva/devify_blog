@@ -42,6 +42,8 @@ public class InternalController {
     mv.addObject("pageTitle", "Lista de Stacks");
 
     var stacks = stackRepository.findAll();
+    stacks.removeIf(stack -> stack.isLocked());
+
     mv.addObject("stacks", stacks);
     return mv;
   }
