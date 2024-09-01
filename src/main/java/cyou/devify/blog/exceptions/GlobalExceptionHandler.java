@@ -147,6 +147,23 @@ public class GlobalExceptionHandler {
         : new ModelAndView("401", HttpStatus.UNAUTHORIZED);
   }
 
+  // @ResponseStatus(HttpStatus.FORBIDDEN)
+  // @ExceptionHandler(org.springframework.web.client.HttpClientErrorException.Forbidden.class)
+  // public Object forbidden(HttpServletRequest request, HttpServletResponse
+  // response,
+  // org.springframework.web.client.HttpClientErrorException.Forbidden ex) {
+  // if (request.getServletPath().contains("/api/")) {
+  // return new ResponseEntity<>(
+  // new ExceptionResponseViewModel(LocalDateTime.now().toInstant(ZoneOffset.UTC),
+  // ex.getMessage(), request.getRequestURL().toString(),
+  // HttpStatus.NOT_FOUND.value()),
+  // HttpStatus.NOT_FOUND);
+  // }
+  // var mv = new ModelAndView("403", HttpStatus.NOT_FOUND);
+  // mv.addObject("pageTitle", "Solicitação rejeitada");
+  // return mv;
+  // }
+
   @ResponseStatus(HttpStatus.FORBIDDEN)
   @ExceptionHandler(Forbidden.class)
   public Object forbidden(HttpServletRequest request, HttpServletResponse response,

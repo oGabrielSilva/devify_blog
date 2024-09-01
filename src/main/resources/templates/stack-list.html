@@ -12,9 +12,27 @@
     </header>
 
     <div class="container" id="root">
-      <main class="pb-6 px-3">
+      <main class="py-6 px-3">
+        <div>
+          <h1 class="title mb-2">Stacks cadastradas</h1>
+          <p class="pb-5">
+            As Stacks funcionam como categorias, permitindo que um artigo possa ser categorizado. Elas servem
+            para agrupar temas relacionados, facilitando a organização e a busca por conteúdo.
+          </p>
+        </div>
+        <div class="is-flex is-justify-content-flex-end">
+          <th:block th:replace="~{partials/stack-create}"></th:block>
+
+          <button id="open-stack-modal" type="button" class="button is-info">
+            <span>Adicionar nova Stack</span>
+            <span class="icon is-small">
+              <i class="fa-solid fa-layer-group"></i>
+            </span>
+          </button>
+        </div>
+
         <div class="table-container py-3 has-text-centered">
-          <table class="table is-fullwidth is-hoverable">
+          <table id="stack-list" class="table is-fullwidth is-hoverable">
             <thead>
               <tr>
                 <th class="has-text-centered">Stack</th>
@@ -38,28 +56,213 @@
                 <tr th:each="stack : ${stacks}">
                   <th class="has-text-centered" th:text="${stack.name}"></th>
                   <td>
-                    <button
-                      class="see-stack-desc button is-ghost p-0 m-0"
-                      type="button"
-                      style="font-size: 14px"
-                      aria-label="Clique para ver a descrição"
-                    >
-                      Ver descrição
-                    </button>
-                    <div aria-hidden="true" class="is-hidden" th:text="${stack.description}"></div>
+                    <div th:if="${not #strings.isEmpty(stack.description)}">
+                      <button
+                        class="show-desc button is-ghost p-0 m-0"
+                        type="button"
+                        style="font-size: 14px"
+                        aria-label="Clique para ver a descrição"
+                      >
+                        Ver descrição
+                      </button>
+
+                      <div class="modal has-text-left">
+                        <div class="modal-background"></div>
+                        <div class="modal-card">
+                          <header class="modal-card-head">
+                            <h1 class="modal-card-title">
+                              Descrição da Stack
+                              <strong th:text="|[${stack.name}]|" th:title="${stack.name}"></strong>
+                            </h1>
+                            <button class="delete goBack" aria-label="Fechar" type="button"></button>
+                          </header>
+                          <section class="modal-card-body">
+                            <div th:utext="${stack.description}"></div>
+                          </section>
+                          <footer class="modal-card-foot">
+                            <div class="buttons">
+                              <button
+                                aria-label="Fechar"
+                                type="button"
+                                id="close-modal"
+                                class="button goBack"
+                              >
+                                Fechar
+                              </button>
+                            </div>
+                          </footer>
+                        </div>
+                      </div>
+                    </div>
+
+                    <span th:unless="${not #strings.isEmpty(stack.description)}">
+                      <small><em>Descrição vazia</em></small>
+                    </span>
                   </td>
-                  <td th:text="${stack.metaDescription}" class="meta-description"></td>
+                  <td class="meta-description">
+                    <span
+                      th:if="${not #strings.isEmpty(stack.metaDescription)}"
+                      th:text="${stack.metaDescription}"
+                    ></span>
+                    <span th:unless="${not #strings.isEmpty(stack.metaDescription)}">
+                      <small
+                        title="Não deixe a meta descrição vazia. Clique para editar"
+                        class="meta-description-empty button is-ghost has-text-danger"
+                      >
+                        <span class="icon is-small">
+                          <i class="fa-solid fa-triangle-exclamation"></i>
+                        </span>
+                        <em>Meta descrição vazia</em>
+                      </small>
+                    </span>
+                  </td>
                   <td>
                     <div class="buttons is-justify-content-center has-text-left">
-                      <a
+                      <button
                         th:href="@{/internal/stack/{id}/edit(id=${stack.id})}"
                         class="button is-small is-warning"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        th:data-edit="${stack.id}"
                         th:aria-label="|Clique para acessar a página de edição da Stack ${stack.name}|"
                       >
                         <i class="fa-solid fa-pen-to-square"></i>
-                      </a>
+                      </button>
+
+                      <form
+                        th:action="@{/internal/stack/{id}/edit(id=${stack.id})}"
+                        method="post"
+                        style="display: contents"
+                        class="stack-form-edit"
+                      >
+                        <div th:data-edit="${stack.id}" class="modal">
+                          <div class="modal-background"></div>
+                          <div class="modal-card">
+                            <header class="modal-card-head">
+                              <h1 class="modal-card-title">
+                                Editar Stack <strong th:text="|[${stack.name}]|"></strong>
+                              </h1>
+                              <button class="delete goBack" aria-label="Fechar" type="button"></button>
+                            </header>
+                            <section class="modal-card-body">
+                              <div>
+                                <div class="field">
+                                  <label for="stack-name" class="label">ID da Stack</label>
+                                  <div class="control has-icons-left">
+                                    <input
+                                      id="stack-name"
+                                      name="name"
+                                      class="input"
+                                      type="text"
+                                      placeholder="Nome"
+                                      maxlength="25"
+                                      th:value="${stack.name}"
+                                    />
+                                    <span class="icon is-small is-left">
+                                      <i class="fa-solid fa-layer-group"></i>
+                                    </span>
+                                  </div>
+                                  <p class="help">
+                                    As Stacks representam categorias, como Terror, Tecnologia, Matemática ou
+                                    One Piece. Seja criativo.
+                                  </p>
+                                </div>
+
+                                <div class="field">
+                                  <label for="meta-description" class="label">Meta descrição</label>
+                                  <div class="control" style="position: relative">
+                                    <textarea
+                                      rows="3"
+                                      id="meta-description"
+                                      name="metaDescription"
+                                      class="textarea"
+                                      maxlength="225"
+                                      th:text="${stack.metaDescription}"
+                                    ></textarea>
+                                    <span style="position: absolute; bottom: 2%; right: 2%; font-size: 12px">
+                                      <small
+                                        id="meta-size"
+                                        th:text="${#strings.isEmpty(stack.metaDescription) ? '0' : stack.metaDescription.length}"
+                                      ></small>
+                                    </span>
+                                  </div>
+                                  <p class="help">
+                                    Esta descrição aparece nos resultados de pesquisa dos motores de busca
+                                    (como Google, Bing, etc.) abaixo do título da página.
+                                    <strong>150-160</strong> caracteres
+                                  </p>
+                                </div>
+
+                                <div class="field">
+                                  <label for="description" class="label">Descrição</label>
+                                  <div class="control">
+                                    <textarea
+                                      id="description"
+                                      rows="8"
+                                      name="description"
+                                      class="textarea"
+                                      th:text="${stack.description}"
+                                    ></textarea>
+                                  </div>
+                                  <p class="help">
+                                    Descreva a Stack como um todo. O que esperar do conteúdo?
+                                  </p>
+                                </div>
+                              </div>
+                            </section>
+                            <footer class="modal-card-foot">
+                              <div class="buttons">
+                                <button class="button is-primary" type="submit">
+                                  Salvar Stack [<strong th:text="${stack.name}"></strong>]
+                                </button>
+                                <button aria-label="Cancelar" type="button" class="button goBack">
+                                  Cancelar
+                                </button>
+                              </div>
+                            </footer>
+                          </div>
+                        </div>
+                      </form>
+
+                      <th:block th:if="${@userService.isMod}">
+                        <button
+                          th:data-disable="${stack.id}"
+                          class="button is-small is-danger"
+                          th:aria-label="|Clique para desativar a Stack ${stack.name}|"
+                        >
+                          <i class="fa-solid fa-power-off"></i>
+                        </button>
+
+                        <form
+                          th:action="@{/internal/stack/{id}/disable(id=${stack.id})}"
+                          method="post"
+                          style="display: contents"
+                        >
+                          <div th:data-disable="${stack.id}" class="modal">
+                            <div class="modal-background"></div>
+                            <div class="modal-card">
+                              <header class="modal-card-head">
+                                <h1 class="modal-card-title">
+                                  Desativar Stack <strong th:text="|[${stack.name}]|"></strong>
+                                </h1>
+                                <button class="delete goBack" aria-label="Fechar" type="button"></button>
+                              </header>
+                              <section class="modal-card-body">
+                                <p>
+                                  Desativar a Stack a tornará inativa. Ela não poderá ser selecionada para
+                                  novos artigos, mas os artigos existentes não serão desativados
+                                </p>
+                              </section>
+                              <footer class="modal-card-foot">
+                                <div class="buttons">
+                                  <button class="button is-danger" type="submit">Desativar Stack</button>
+                                  <button aria-label="Cancelar" type="button" class="button goBack">
+                                    Cancelar
+                                  </button>
+                                </div>
+                              </footer>
+                            </div>
+                          </div>
+                        </form>
+                      </th:block>
                     </div>
                   </td>
                 </tr>

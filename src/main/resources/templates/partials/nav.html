@@ -48,7 +48,7 @@
         <span>Sobre a Devify</span>
       </a>
 
-      <th th:if="${@userService.isAuthenticated}">
+      <th:block th:if="${@userService.isAuthenticated}">
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link" role="button">Administração</a>
 
@@ -57,7 +57,7 @@
               <span class="icon is-small">
                 <i class="fa-solid fa-table-columns"></i>
               </span>
-              <span>Painel administrativo </span>
+              <span>Painel administrativo</span>
             </a>
             <a
               th:if="${#strings.isEmpty(currentURL) or !currentURL.contains('internal/profile')}"
@@ -73,7 +73,7 @@
             <th th:if="${not @userService.isCommon}">
               <a class="navbar-item" th:href="@{/internal/stacks}">
                 <span class="icon is-small">
-                  <i class="fa-solid fa-link"></i>
+                  <i class="fa-solid fa-layer-group"></i>
                 </span>
                 <span>Stacks</span>
               </a>
@@ -94,7 +94,7 @@
             <button type="submit" id="sign-out-btn">Sair</button>
           </form>
         </div>
-      </th>
+      </th:block>
     </div>
 
     <div class="navbar-end">

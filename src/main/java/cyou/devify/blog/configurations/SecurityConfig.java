@@ -43,7 +43,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .hasRole(Role.COMMON.asString())
                 .requestMatchers("/internal", "/internal/**").hasRole(Role.EDITOR.asString())
                 .anyRequest().permitAll())
-        .exceptionHandling(ex -> ex
+        .exceptionHandling(ex -> ex.accessDeniedPage("/403")
             .authenticationEntryPoint((req, res, exMet) -> res.sendRedirect("/session?next=" + req.getServletPath())))
         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
         .build();

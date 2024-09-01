@@ -1,5 +1,6 @@
 import { InternalProfilePageHandler } from './profile/InternalProfilePageHandler'
 import { SessionPageHandler } from './session/SessionPageHandler'
+import { StackListPageHandler } from './stack/StackListPageHandler'
 
 export class PageHandler {
   private readonly meta = document.head.querySelector<HTMLMetaElement>('meta[data-details="page"]')
@@ -16,6 +17,9 @@ export class PageHandler {
         break
       case 'profile':
         InternalProfilePageHandler.fast.handle()
+        break
+      case 'stack_list':
+        StackListPageHandler.fast.handle()
         break
     }
   }

@@ -2,7 +2,7 @@
 <html lang="pt-br">
   <head>
     <th th:replace="~{partials/head}"></th>
-    <meta data-details="page" data-content="index" />
+    <meta data-details="page" data-content="403" />
   </head>
 
   <body>
@@ -14,15 +14,15 @@
       <main
         class="py-6 px-3 is-flex is-justify-content-center is-align-items-center is-flex-direction-column has-text-centered"
       >
-        <h2 class="subtitle">404</h2>
+        <h2 class="subtitle">403</h2>
         <h1 class="title icon-text is-align-items-center gap-3">
-          <span id="ic" class="icon" aria-hidden="true">
-            <i class="has-text-danger fa-solid fa-file-circle-exclamation"></i>
+          <span id="ic" class="icon has-text-danger" aria-hidden="true">
+            <i class="fa-solid fa-ban"></i>
           </span>
-          <span>Recurso não encontrado!</span>
+          <span>Pedido rejeitado pelo emissor!</span>
         </h1>
-        <p>Oopss... parece que o que você está procurando não existe</p>
-        <p>Se você acredita que isto é um engano, entre em contato com o administrador</p>
+        <p>Oopss... não foi possível processar sua solicitação</p>
+        <p>Se você acredita que isto é um engano, entre em contato com um administrador</p>
         <div class="buttons pt-3">
           <a href="/" class="button">
             <span class="icon is-small" aria-hidden="true">

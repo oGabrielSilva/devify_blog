@@ -1,0 +1,71 @@
+<form
+  id="stack-form"
+  th:action="@{/internal/stack}"
+  enctype="application/x-www-form-urlencoded"
+  method="post"
+>
+  <div class="modal" id="stack-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <h1 class="modal-card-title">Adicione uma nova Stack</h1>
+        <button class="delete goBack" aria-label="Fechar" type="button"></button>
+      </header>
+      <section class="modal-card-body">
+        <div>
+          <div class="field">
+            <label for="stack-name" class="label">ID da Stack</label>
+            <div class="control has-icons-left">
+              <input
+                id="stack-name"
+                name="name"
+                class="input"
+                type="text"
+                placeholder="Nome"
+                maxlength="25"
+              />
+              <span class="icon is-small is-left">
+                <i class="fa-solid fa-layer-group"></i>
+              </span>
+            </div>
+            <p class="help">As Stacks representam categorias, como Terror, TI, Matemática e One Piece</p>
+          </div>
+
+          <div class="field">
+            <label for="meta-description" class="label">Meta descrição</label>
+            <div class="control" style="position: relative">
+              <textarea
+                rows="3"
+                id="meta-description"
+                name="metaDescription"
+                class="textarea"
+                maxlength="225"
+              ></textarea>
+              <span style="position: absolute; bottom: 2%; right: 2%; font-size: 12px">
+                <small id="meta-size">0</small>
+              </span>
+            </div>
+            <p class="help">
+              Esta descrição aparece nos resultados de pesquisa dos motores de busca (como Google, Bing, etc.)
+              abaixo do título da página. <strong>150-160</strong> caracteres
+            </p>
+          </div>
+
+          <div class="field">
+            <label for="description" class="label">Descrição</label>
+            <div class="control">
+              <textarea id="description" rows="8" name="description" class="textarea"></textarea>
+            </div>
+            <p class="help">Descreva a Stack como um todo. O que esperar do conteúdo?</p>
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <div class="buttons">
+          <button class="button is-success" type="submit">Salvar nova Stack</button>
+          <button aria-label="Cancelar" type="reset" id="close-modal" class="button goBack">Cancelar</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+</form>

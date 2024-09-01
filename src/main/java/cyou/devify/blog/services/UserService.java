@@ -48,4 +48,14 @@ public class UserService implements UserDetailsService {
     return user != null && user.isCommon();
   }
 
+  public boolean isEditor() {
+    var user = getCurrentAuthenticatedUser();
+    return user != null && user.isEditor();
+  }
+
+  public boolean isMod() {
+    var user = getCurrentAuthenticatedUser();
+    return user != null && user.isMod();
+  }
+
 }

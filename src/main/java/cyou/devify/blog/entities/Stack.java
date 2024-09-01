@@ -32,7 +32,9 @@ public class Stack {
   @Column(columnDefinition = "TEXT")
   private String description;
 
+  @Column(length = 225)
   private String metaDescription;
+
   private boolean isLocked = false;
 
   private UUID createdBy;
@@ -44,4 +46,12 @@ public class Stack {
 
   @UpdateTimestamp
   private Instant updatedAt;
+
+  public Stack(String name, String description, String metaDescription, UUID createdBy, UUID updatedBy) {
+    this.name = name;
+    this.description = description;
+    this.metaDescription = metaDescription;
+    this.createdBy = createdBy;
+    this.updatedBy = updatedBy;
+  }
 }

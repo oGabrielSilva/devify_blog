@@ -163,4 +163,12 @@ public class User implements UserDetails {
   public boolean isCommon() {
     return authority == Role.COMMON;
   }
+
+  public boolean isEditor() {
+    return allRoles().contains(Role.EDITOR);
+  }
+
+  public boolean isMod() {
+    return allRoles().contains(Role.MODERATOR);
+  }
 }

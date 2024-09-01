@@ -15,12 +15,32 @@
 }
 
 #direction-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
   position: fixed;
-  bottom: 5vh;
-  right: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  gap: 0.25rem;
+}
+
+#direction-buttons button {
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#direction-buttons button span {
+  display: block;
+  margin: 0;
+}
+
+#direction-buttons button span:has(svg) {
+  font-size: 1rem;
+}
+
+#direction-buttons button span:not(:has(svg)) {
+  font-size: smaller;
 }
 
 .modal-card {
