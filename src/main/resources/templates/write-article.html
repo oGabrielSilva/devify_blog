@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <meta data-details="page" data-content="write_article" />
+    <script src="/javascript/index.internal.js" defer></script>
+  </head>
+
+  <body>
+    <header id="header">
+      <th th:replace="~{partials/nav}"></th>
+    </header>
+
+    <div class="container" id="root">
+      <main class="py-6 px-3">
+        <div class="py-3">
+          <h1 class="title mb-2">Desenvolva seu novo artigo</h1>
+          <p>
+            Explore novas ideias e compartilhe seu conhecimento! Dê vida ao próximo grande artigo e inspire
+            desenvolvedores ao redor do mundo
+          </p>
+        </div>
+
+        <form
+          class="py-3"
+          th:action="@{/internal/stack}"
+          enctype="application/x-www-form-urlencoded"
+          method="post"
+        >
+          <div class="field">
+            <label for="title" class="label">Título do artigo</label>
+            <div class="control">
+              <input
+                id="title"
+                class="input"
+                type="text"
+                name="title"
+                placeholder="Ex: &ldquo;Como otimizar o desempenho de aplicativos React&rdquo;"
+              />
+            </div>
+            <p class="help">
+              Escolha um título envolvente que capture o tema do seu artigo e atraia os leitores. Não se
+              preocupe, você poderá ajustá-lo mais tarde
+            </p>
+          </div>
+
+          <div class="pb-3">
+            <label for="keywords" class="label">Palavras-chave</label>
+            <div class="field has-addons mb-0">
+              <div class="control" style="width: 100%">
+                <input
+                  id="keywords"
+                  class="input"
+                  type="text"
+                  placeholder="Ex: React, TypeScript, JavaScript, etc..."
+                />
+              </div>
+
+              <div class="control">
+                <button type="button" class="button is-info">Adicionar</button>
+              </div>
+            </div>
+            <p class="help">
+              Escolha um título envolvente que capture o tema do seu artigo e atraia os leitores. Não se
+              preocupe, você poderá ajustá-lo mais tarde
+            </p>
+          </div>
+
+          <label for="stack" class="label">Stack</label>
+          <div class="field has-addons">
+            <div class="control" style="width: 100%">
+              <div class="select" style="width: 100%">
+                <select name="stack" id="stack" style="width: 100%">
+                  <th:block th:if="${not #lists.isEmpty(stacks)}">
+                    <option
+                      th:each="stack : ${stacks}"
+                      th:text="${stack.name}"
+                      th:value="${stack.id}"
+                    ></option>
+                  </th:block>
+                  <th:block th:unless="${not #lists.isEmpty(stacks)}">
+                    <option value="---">Nenhuma Stack cadastrada</option>
+                  </th:block>
+                </select>
+                <p class="help">
+                  Selecione a stack à qual o artigo pertence. Não se preocupe, você poderá alterá-la mais
+                  tarde
+                </p>
+              </div>
+            </div>
+            <div class="control">
+              <button id="new-stack-button" type="button" class="button is-link">
+                <span class="icon is-small">
+                  <i class="fa-solid fa-plus"></i>
+                </span>
+                <span>Nova Stack</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </main>
+    </div>
+
+    <th th:replace="~{partials/footer}"></th>
+  </body>
+</html>

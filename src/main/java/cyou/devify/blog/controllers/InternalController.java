@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import cyou.devify.blog.repositories.StackRepository;
+import cyou.devify.blog.services.StackService;
 import cyou.devify.blog.services.UserService;
 import cyou.devify.blog.utils.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,6 +21,8 @@ public class InternalController {
   UserService userService;
   @Autowired
   StackRepository stackRepository;
+  @Autowired
+  StackService stackService;
 
   @ModelAttribute("currentURL")
   public String getCurrentURL(HttpServletRequest request) {
@@ -40,11 +43,20 @@ public class InternalController {
   public ModelAndView stacks(ModelAndView mv) {
     mv.setViewName("stack-list");
     mv.addObject("pageTitle", "Lista de Stacks");
-
-    var stacks = stackRepository.findAll();
-    stacks.removeIf(stack -> stack.isLocked());
+    var stacks = stackService.getUnlocked();
 
     mv.addObject("stacks", stacks);
+    return mv;
+  }
+
+  @GetMapping("/article")
+  public ModelAndView writeArticle(ModelAndView mv) {
+    mv.setViewName("write-article");
+    mv.addObject("pageTitle", "Escreva seu novo artigo");
+
+    var stacks = stackService.getUnlocked();
+    mv.addObject("stacks", stacks);
+
     return mv;
   }
 }

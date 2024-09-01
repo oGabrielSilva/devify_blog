@@ -70,14 +70,21 @@
               <span>Perfil</span>
             </a>
 
-            <th th:if="${not @userService.isCommon}">
+            <th:block th:if="${not @userService.isCommon}">
               <a class="navbar-item" th:href="@{/internal/stacks}">
                 <span class="icon is-small">
                   <i class="fa-solid fa-layer-group"></i>
                 </span>
                 <span>Stacks</span>
               </a>
-            </th>
+
+              <a class="navbar-item" th:href="@{/internal/article}">
+                <span class="icon is-small">
+                  <i class="fa-solid fa-file-circle-plus"></i>
+                </span>
+                <span>Escreva um novo artigo</span>
+              </a>
+            </th:block>
 
             <hr class="p-0 my-2" />
             <a class="navbar-item" id="logout" role="button">
