@@ -27,15 +27,28 @@ function cssInJsPlugin() {
 }
 
 ;(async () => {
+  const isDev = process.argv && process.argv.includes('--dev')
+
   const options = {
-    entryPoints: [resolve(__dirname, 'index.ts'), resolve(__dirname, 'index.internal.ts')],
+    entryPoints: [
+      resolve(__dirname, 'index.ts'),
+      resolve(__dirname, 'index.internal.ts'),
+      resolve(__dirname, 'index.editor.ts'),
+    ],
     bundle: true,
     minify: true,
-    sourcemap: false,
+    sourcemap: isDev ? 'inline' : false,
     target: ['es6'],
-    plugins: [cssInJsPlugin()],
+    // plugins: [cssInJsPlugin()],
+
     outdir: resolve(__dirname, '..', 'static', 'javascript'),
   }
+  if (!isDev) {
+    await esbuild.build(options)
+    console.log('Esbuild instruction completed')
+    return
+  }
+
   const context = await esbuild.context(options)
   console.log('Esbuild watch dev mode')
 

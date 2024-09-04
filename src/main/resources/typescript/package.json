@@ -4,7 +4,8 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "dev": "node esbuild.js"
+    "dev": "node esbuild.js --dev",
+    "build": "node esbuild"
   },
   "devDependencies": {
     "@types/jquery": "^3.5.30",
@@ -13,7 +14,23 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "kassiopeia-tools": "^1.7.1"
+    "@tiptap/core": "^2.6.6",
+    "@tiptap/extension-code-block-lowlight": "^2.6.6",
+    "@tiptap/extension-color": "^2.6.6",
+    "@tiptap/extension-highlight": "^2.6.6",
+    "@tiptap/extension-link": "^2.6.6",
+    "@tiptap/extension-placeholder": "^2.6.6",
+    "@tiptap/extension-subscript": "^2.6.6",
+    "@tiptap/extension-superscript": "^2.6.6",
+    "@tiptap/extension-text-align": "^2.6.6",
+    "@tiptap/extension-text-style": "^2.6.6",
+    "@tiptap/extension-typography": "^2.6.6",
+    "@tiptap/extension-underline": "^2.6.6",
+    "@tiptap/pm": "^2.6.6",
+    "@tiptap/starter-kit": "^2.6.6",
+    "@weiruo/tiptap-extension-indent": "^2.0.4-1",
+    "kassiopeia-tools": "^1.7.1",
+    "lowlight": "^3.1.0"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

@@ -23,9 +23,10 @@
 
         <form
           class="py-3"
-          th:action="@{/internal/stack}"
+          th:action="@{/internal/article}"
           enctype="application/x-www-form-urlencoded"
           method="post"
+          id="new-article"
         >
           <div class="field">
             <label for="title" class="label">Título do artigo</label>
@@ -44,30 +45,8 @@
             </p>
           </div>
 
-          <div class="pb-3">
-            <label for="keywords" class="label">Palavras-chave</label>
-            <div class="field has-addons mb-0">
-              <div class="control" style="width: 100%">
-                <input
-                  id="keywords"
-                  class="input"
-                  type="text"
-                  placeholder="Ex: React, TypeScript, JavaScript, etc..."
-                />
-              </div>
-
-              <div class="control">
-                <button type="button" class="button is-info">Adicionar</button>
-              </div>
-            </div>
-            <p class="help">
-              Escolha um título envolvente que capture o tema do seu artigo e atraia os leitores. Não se
-              preocupe, você poderá ajustá-lo mais tarde
-            </p>
-          </div>
-
           <label for="stack" class="label">Stack</label>
-          <div class="field has-addons">
+          <div class="field has-addons mb-0">
             <div class="control" style="width: 100%">
               <div class="select" style="width: 100%">
                 <select name="stack" id="stack" style="width: 100%">
@@ -82,10 +61,6 @@
                     <option value="---">Nenhuma Stack cadastrada</option>
                   </th:block>
                 </select>
-                <p class="help">
-                  Selecione a stack à qual o artigo pertence. Não se preocupe, você poderá alterá-la mais
-                  tarde
-                </p>
               </div>
             </div>
             <div class="control">
@@ -97,8 +72,16 @@
               </button>
             </div>
           </div>
+          <p class="help">
+            Selecione a stack à qual o artigo pertence. Não se preocupe, você poderá alterá-la mais tarde
+          </p>
+
+          <div class="buttons py-5">
+            <button class="button is-primary" type="submit">Escrever</button>
+          </div>
         </form>
       </main>
+      <th:block th:replace="~{partials/stack-create}"></th:block>
     </div>
 
     <th th:replace="~{partials/footer}"></th>

@@ -1,3 +1,4 @@
+import { NewArticlePageHandler } from './article/NewArticlePageHandler'
 import { InternalProfilePageHandler } from './profile/InternalProfilePageHandler'
 import { SessionPageHandler } from './session/SessionPageHandler'
 import { StackListPageHandler } from './stack/StackListPageHandler'
@@ -20,6 +21,9 @@ export class PageHandler {
         break
       case 'stack_list':
         StackListPageHandler.fast.handle()
+        break
+      case 'write_article':
+        NewArticlePageHandler.fast.handle()
         break
     }
   }

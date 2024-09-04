@@ -47,6 +47,13 @@
   padding: 0 1rem;
 }
 
+#keywords-preview {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-flow: wrap;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

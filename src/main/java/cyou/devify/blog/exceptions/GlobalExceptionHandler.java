@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -57,14 +58,33 @@ public class GlobalExceptionHandler {
 
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   @ExceptionHandler(Exception.class)
-  public ResponseEntity<ExceptionResponseViewModel> generic(HttpServletRequest request, Exception ex) {
+  public Object generic(HttpServletRequest request, HttpServletResponse response, Exception ex) {
     System.out.println(Instant.now());
     System.err.println("* Default exception handler: " + ex.getMessage() + "\n");
-    ex.printStackTrace();
-    return new ResponseEntity<>(new ExceptionResponseViewModel(LocalDateTime.now().toInstant(ZoneOffset.UTC),
-        "Unexpected exception", request.getRequestURL().toString(),
-        HttpStatus.INTERNAL_SERVER_ERROR.value()),
-        HttpStatus.INTERNAL_SERVER_ERROR);
+    // ex.printStackTrace();
+    // if (!request.getServletPath().contains("/api/")) {
+    // try {
+    // response.sendRedirect("/session?next=" + request.getServletPath());
+    // return null;
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // }
+    // }
+    return request.getServletPath().contains("/api/")
+        ? new ResponseEntity<>(HttpStatus.FORBIDDEN)
+        : new ModelAndView("error");
+  }
+
+  @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+  @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+  public Object methodNotSupported(HttpServletRequest request, HttpServletResponse response,
+      HttpRequestMethodNotSupportedException ex) {
+
+    return request.getServletPath().contains("/api/")
+        ? new ResponseEntity<>(new ExceptionResponseViewModel(LocalDateTime.now().toInstant(ZoneOffset.UTC),
+            "Verbo http proibido", request.getRequestURL().toString(), HttpStatus.BAD_REQUEST.value()),
+            HttpStatus.BAD_REQUEST)
+        : new ModelAndView("405");
   }
 
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

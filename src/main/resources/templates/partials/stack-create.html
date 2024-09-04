@@ -68,4 +68,10 @@
       </footer>
     </div>
   </div>
+  <input
+    th:if="${!#strings.isEmpty(newStackNextURL)}"
+    type="hidden"
+    name="next"
+    th:value="${newStackNextURL}"
+  />
 </form>

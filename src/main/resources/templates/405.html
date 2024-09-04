@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <meta data-details="page" data-content="index" />
+  </head>
+
+  <body>
+    <header id="header">
+      <th th:replace="~{partials/nav}"></th>
+    </header>
+
+    <div class="container" id="root">
+      <main
+        class="py-6 px-3 is-flex is-justify-content-center is-align-items-center is-flex-direction-column has-text-centered"
+      >
+        <h2 class="subtitle">405</h2>
+        <h1 class="title icon-text is-align-items-center gap-3">
+          <span id="ic" class="icon" aria-hidden="true">
+            <i class="has-text-danger fa-solid fa-file-circle-exclamation"></i>
+          </span>
+          <span>Recurso rejeitado</span>
+        </h1>
+        <p>Sua solicitação não foi processada, pois o verbo <em>http</em> utilizado não é permitido</p>
+        <p>Se você acredita que isto é um engano, entre em contato com o administrador</p>
+        <div class="buttons pt-3">
+          <a href="/" class="button">
+            <span class="icon is-small" aria-hidden="true">
+              <i class="fa-solid fa-house"></i>
+            </span>
+            <span>Início</span>
+          </a>
+
+          <a href="/report" class="button has-text-warning">
+            <span class="icon is-small" aria-hidden="true">
+              <i class="fa-solid fa-envelope"></i>
+            </span>
+            <span>Reportar</span>
+          </a>
+        </div>
+      </main>
+    </div>
+
+    <th th:replace="~{partials/footer}"></th>
+    <script>
+      addEventListener('DOMContentLoaded', function () {
+        if (innerWidth <= 427) {
+          $('#ic').addClass('is-hidden')
+        }
+      })
+    </script>
+  </body>
+</html>

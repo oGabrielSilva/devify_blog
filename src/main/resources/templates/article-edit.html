@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <link rel="stylesheet" href="/css/github-dark.min.css" />
+    <meta data-details="page" data-content="[**DATA_FOR_INTERNAL_JS**]" />
+    <script src="/javascript/index.internal.js" defer></script>
+  </head>
+
+  <body>
+    <header id="header">
+      <th th:replace="~{partials/nav}"></th>
+    </header>
+
+    <div class="container" id="root">
+      <main class="pb-6 pt-3 px-3">
+        <div id="editor" th:utext="${article.content}"></div>
+      </main>
+    </div>
+
+    <th th:replace="~{partials/article-edit-footer}"></th>
+    <script defer src="/javascript/index.editor.js"></script>
+  </body>
+</html>

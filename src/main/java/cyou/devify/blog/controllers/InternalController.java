@@ -1,13 +1,17 @@
 package cyou.devify.blog.controllers;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import cyou.devify.blog.repositories.ArticleRepository;
 import cyou.devify.blog.repositories.StackRepository;
 import cyou.devify.blog.services.StackService;
 import cyou.devify.blog.services.UserService;
@@ -23,6 +27,8 @@ public class InternalController {
   StackRepository stackRepository;
   @Autowired
   StackService stackService;
+  @Autowired
+  ArticleRepository articleRepository;
 
   @ModelAttribute("currentURL")
   public String getCurrentURL(HttpServletRequest request) {
@@ -57,6 +63,28 @@ public class InternalController {
     var stacks = stackService.getUnlocked();
     mv.addObject("stacks", stacks);
 
+    mv.addObject("newStackNextURL", "/internal/article");
+
     return mv;
   }
+
+  @GetMapping("/article/{articleId}/edit")
+  public ModelAndView getMethodName(ModelAndView mv, @PathVariable String articleId) {
+    var user = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
+    var article = articleRepository.findById(UUID.fromString(articleId));
+
+    if (article.isEmpty() || !user.getId().equals(article.get().getCreatedBy())) {
+      mv.addObject("pageTitle", "Artigo não encontrado");
+      mv.setViewName("404");
+      return mv;
+    }
+
+    mv.addObject("article", article.get());
+    mv.addObject("pageTitle", "Edição do artigo");
+    mv.addObject("isArticleEditing", true);
+    mv.setViewName("article-edit");
+
+    return mv;
+  }
+
 }

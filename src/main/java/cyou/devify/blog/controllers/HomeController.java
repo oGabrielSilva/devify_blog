@@ -15,6 +15,7 @@ public class HomeController {
   public ModelAndView ping(ModelAndView mv) {
     mv.setViewName("index");
     mv.addObject("pageTitle", "Início");
+
     return mv;
   }
 

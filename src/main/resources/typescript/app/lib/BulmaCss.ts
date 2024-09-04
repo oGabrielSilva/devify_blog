@@ -75,7 +75,7 @@ export class BulmaCss {
     })
 
     globalThis.addEventListener('keydown', (e) => {
-      if (e.key.toLocaleLowerCase() === 'escape') {
+      if (e.key && typeof e.key === 'string' && e.key.toLocaleLowerCase() === 'escape') {
         closeAllModals()
       }
     })

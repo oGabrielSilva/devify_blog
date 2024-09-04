@@ -1,5 +1,7 @@
 package cyou.devify.blog.utils;
 
+import com.github.slugify.Slugify;
+
 public class StringUtils {
 
   public static boolean isEquals(String test, String compare) {
@@ -24,6 +26,11 @@ public class StringUtils {
 
   public static String removeEnd(String str, String remove) {
     return endsWith(str, remove) ? str.substring(0, str.length() - remove.length()) : str;
+  }
+
+  public static String slugify(String content) {
+    // https://github.com/slugify/slugify
+    return Slugify.builder().build().slugify(content);
   }
 
 }

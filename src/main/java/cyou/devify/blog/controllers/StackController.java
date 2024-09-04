@@ -25,6 +25,9 @@ public class StackController {
   @PostMapping("/internal/stack")
   public ModelAndView create(ModelAndView mv, StackViewModel payload) {
     mv.setViewName("redirect:/internal/stacks");
+    if (StringUtils.isNonNullOrBlank(payload.next()) && payload.next().startsWith("/")) {
+      mv.setViewName(String.format("redirect:%s", payload.next()));
+    }
 
     String name = payload.name();
     if (name == null || name.trim().length() < 1) {

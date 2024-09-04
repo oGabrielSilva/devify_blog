@@ -17,11 +17,12 @@ export class Startup {
 
   private configureMainMinHeight() {
     const header = document.querySelector('#header')
-    const footer = document.querySelector('#footer')
+    const headerH = header ? header.clientHeight : 0
 
-    if (header && footer) {
-      this.root!.style.minHeight = `calc(100vh - ${header!.clientHeight}px - ${footer!.clientHeight / 2}px)`
-    }
+    // const footer = document.querySelector('#footer')
+    // const footerH = footer ? footer.clientHeight : 0
+
+    if (this.root) this.root!.style.minHeight = `calc(100vh - ${headerH}px)`
   }
 
   private showError() {
