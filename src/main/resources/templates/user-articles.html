@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <meta data-details="page" data-content="user_articles" />
+    <script src="/javascript/index.internal.js" defer></script>
+  </head>
+
+  <body>
+    <header id="header">
+      <th th:replace="~{partials/nav}"></th>
+    </header>
+
+    <div class="container" id="root">
+      <main class="pb-6 pt-5 px-3">
+        <div class="is-flex gap-3 is-justify-content-space-between is-align-items-center">
+          <h1 class="title">Meus artigos</h1>
+          <a href="/internal/article" class="button is-link">Escrever</a>
+        </div>
+
+        <div class="py-3">
+          <th:block th:if="${#lists.isEmpty(articles)}">
+            <div>
+              <p>Você não começou a escrever nenhum artigo</p>
+            </div>
+          </th:block>
+
+          <th:block th:unless="${#lists.isEmpty(articles)}">
+            <div class="mb-3" th:each="article : ${articles}">
+              <div>
+                <small>
+                  slug: <span th:text="${article.slug}"></span> |
+                  <em>
+                    Criado em:
+                    <time th:text="${article.createdAt}" th:datetime="${article.createdAt}"></time>
+                  </em>
+                </small>
+              </div>
+              <a
+                class="link-title"
+                th:href="@{/internal/article/{articleId}/edit(articleId=${article.id})}"
+                target="_blank"
+                title="Clique para editar"
+                rel="noopener noreferrer"
+                th:text="${article.title}"
+              ></a>
+              <div>
+                <small>
+                  <em>
+                    Última atualização:
+                    <time th:datetime="${article.updatedAt}" th:text="${article.updatedAt}"></time>
+                  </em>
+                </small>
+              </div>
+              <hr />
+            </div>
+          </th:block>
+        </div>
+      </main>
+    </div>
+
+    <th th:replace="~{partials/footer}"></th>
+  </body>
+</html>

@@ -10,6 +10,10 @@
   box-shadow: var(--bulma-shadow);
 }
 
+.gap {
+  gap: 0.25rem;
+}
+
 .gap-3 {
   gap: 1rem;
 }
@@ -54,6 +58,24 @@
   flex-flow: wrap;
 }
 
+.link-title {
+  color: var(--bulma-text-strong);
+  font-weight: 600;
+}
+
+.link-title:hover,
+.link-title:active {
+  text-decoration: underline;
+}
+
+[data-text] ul {
+  list-style: unset;
+}
+
+[data-text] a {
+  text-decoration: underline;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -68,4 +90,118 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.gap {
+  gap: 0.25rem;
+}
+
+.gap-1 {
+  gap: 0.5rem;
+}
+
+.gap-2 {
+  gap: 0.75rem;
+}
+
+.gap-3 {
+  gap: 1rem;
+}
+
+.gap-4 {
+  gap: 1.25rem;
+}
+
+.gap-5 {
+  gap: 1.5rem;
+}
+
+.gap-6 {
+  gap: 1.75rem;
+}
+
+.gap-7 {
+  gap: 2rem;
+}
+
+.tt-indent-1 {
+  text-indent: 1rem;
+}
+
+[data-indent='1'] {
+  text-indent: 1rem;
+}
+
+.tt-indent-2 {
+  text-indent: 2rem;
+}
+
+[data-indent='2'] {
+  text-indent: 2rem;
+}
+
+.tt-indent-3 {
+  text-indent: 3rem;
+}
+
+[data-indent='3'] {
+  text-indent: 3rem;
+}
+
+.tt-indent-4 {
+  text-indent: 4rem;
+}
+
+[data-indent='4'] {
+  text-indent: 4rem;
+}
+
+.tt-indent-5 {
+  text-indent: 5rem;
+}
+
+[data-indent='5'] {
+  text-indent: 5rem;
+}
+
+.tt-indent-6 {
+  text-indent: 6rem;
+}
+
+[data-indent='6'] {
+  text-indent: 6rem;
+}
+
+.tt-indent-7 {
+  text-indent: 7rem;
+}
+
+[data-indent='7'] {
+  text-indent: 7rem;
+}
+
+.tt-indent-8 {
+  text-indent: 8rem;
+}
+
+[data-indent='8'] {
+  text-indent: 8rem;
+}
+
+blockquote {
+  border-left: 4px solid var(--bulma-border);
+  padding: 0.5rem 0.5rem 0.5rem 1.5em;
+  margin: 0.5rem 0 0.5rem 0;
+  font-style: italic;
+  background: var(--bulma-code-background);
+  color: var(--bulma-text-bold);
+  font-size: 0.9em;
+}
+
+[data-text] *.is-empty::before {
+  color: var(--bulma-grey);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
 }

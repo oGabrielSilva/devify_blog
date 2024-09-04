@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cyou.devify.blog.repositories.ArticleRepository;
 import cyou.devify.blog.repositories.StackRepository;
+import cyou.devify.blog.services.ArticleService;
 import cyou.devify.blog.services.StackService;
 import cyou.devify.blog.services.UserService;
 import cyou.devify.blog.utils.StringUtils;
@@ -29,6 +30,8 @@ public class InternalController {
   StackService stackService;
   @Autowired
   ArticleRepository articleRepository;
+  @Autowired
+  ArticleService articleService;
 
   @ModelAttribute("currentURL")
   public String getCurrentURL(HttpServletRequest request) {
@@ -52,6 +55,22 @@ public class InternalController {
     var stacks = stackService.getUnlocked();
 
     mv.addObject("stacks", stacks);
+    return mv;
+  }
+
+  @GetMapping("/articles")
+  public ModelAndView listUserArticles(ModelAndView mv) {
+    var user = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
+
+    mv.setViewName("user-articles");
+    mv.addObject("pageTitle", "Seus artigos");
+
+    var articles = articleService.findAllByUser(user);
+    for (var article : articles) {
+      System.out.println("**** \n" + article);
+    }
+
+    mv.addObject("articles", articles);
     return mv;
   }
 

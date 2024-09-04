@@ -1,6 +1,7 @@
 import { BulmaCss } from './lib/BulmaCss'
 import { anim as animTool, locker as lockerTool, toaster } from './lib/kassiopeia-tools'
 import { configureDirectionButtons } from './utils/directionButtons'
+import { formatDate, supportedLangs } from './utils/formatDate'
 
 export class Startup {
   static #instance: Startup
@@ -40,6 +41,22 @@ export class Startup {
     }
   }
 
+  private formatAllDate() {
+    $<HTMLTimeElement>('time').each((_, element) => {
+      if (element.dateTime) {
+        const lang = supportedLangs.find((l) => l === element.dataset.timeLang)
+        $(element).text(formatDate(new Date(element.dateTime), lang))
+      }
+    })
+
+    $('[data-time-format]').each((_, element) => {
+      if (element.textContent) {
+        const lang = supportedLangs.find((l) => l === element.dataset.timeLang)
+        $(element).text(formatDate(new Date(element.textContent), lang))
+      }
+    })
+  }
+
   public run() {
     globalThis.locker = lockerTool
     globalThis.anim = animTool
@@ -52,6 +69,7 @@ export class Startup {
     configureDirectionButtons()
 
     this.showError()
+    this.formatAllDate()
   }
 
   public static get fast() {

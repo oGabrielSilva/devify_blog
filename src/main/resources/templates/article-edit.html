@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="/css/github-dark.min.css" />
     <meta data-details="page" data-content="[**DATA_FOR_INTERNAL_JS**]" />
     <script src="/javascript/index.internal.js" defer></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.es5.min.js" defer></script>
   </head>
 
   <body>
@@ -14,7 +17,10 @@
 
     <div class="container" id="root">
       <main class="pb-6 pt-3 px-3">
-        <div id="editor" th:utext="${article.content}"></div>
+        <div class="editor-container">
+          <div class="topbar"></div>
+          <div data-text class="editor" th:utext="${article.content}"></div>
+        </div>
       </main>
     </div>
 

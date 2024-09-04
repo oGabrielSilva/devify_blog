@@ -6,8 +6,10 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,6 +38,7 @@ public class Article {
 
   @Lob
   @Column(columnDefinition = "TEXT")
+  @Basic(fetch = FetchType.LAZY)
   private String content = "<p>Hello world</p>";
 
   @Column(columnDefinition = "TEXT")
@@ -44,7 +47,7 @@ public class Article {
   @Column(length = 225)
   private String metaDescription = "";
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "stack_id", nullable = false)
   private Stack stack;
 
