@@ -205,3 +205,22 @@ blockquote {
   height: 0;
   pointer-events: none;
 }
+
+.topbar * {
+  transition: 50ms ease-in-out;
+}
+
+[data-text] h1,
+[data-text] h2 {
+  color: var(--bulma-title-color);
+  font-size: var(--bulma-title-size);
+  font-weight: var(--bulma-title-weight);
+  line-height: var(--bulma-title-line-height);
+}
+
+[data-text] h2 {
+  font-size: 1.5rem;
+  color: var(--bulma-subtitle-color);
+  font-weight: var(--bulma-subtitle-weight);
+  line-height: var(--bulma-subtitle-line-height);
+}
