@@ -1,3 +1,4 @@
+import { EditArticlePageHandler } from './article/EditArticlePageHandler'
 import { NewArticlePageHandler } from './article/NewArticlePageHandler'
 import { InternalProfilePageHandler } from './profile/InternalProfilePageHandler'
 import { SessionPageHandler } from './session/SessionPageHandler'
@@ -24,6 +25,9 @@ export class PageHandler {
         break
       case 'write_article':
         NewArticlePageHandler.fast.handle()
+        break
+      case 'edit_article':
+        EditArticlePageHandler.fast.handle()
         break
     }
   }

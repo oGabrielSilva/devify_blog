@@ -4,16 +4,21 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.servlet.ModelAndView;
 
 import cyou.devify.blog.entities.Article;
+import cyou.devify.blog.exceptions.BadRequest;
+import cyou.devify.blog.exceptions.NotFound;
+import cyou.devify.blog.exceptions.Unauthorized;
 import cyou.devify.blog.repositories.ArticleRepository;
 import cyou.devify.blog.repositories.StackRepository;
 import cyou.devify.blog.services.UserService;
 import cyou.devify.blog.utils.StringUtils;
 import cyou.devify.blog.vm.ArticleViewModel;
+import cyou.devify.blog.vm.EditArticleViewModel;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -62,6 +67,32 @@ public class ArticleController {
     article = articleRepository.save(article);
 
     mv.setViewName(String.format("redirect:/internal/article/%s/edit", article.getId().toString()));
+    return mv;
+  }
+
+  @PostMapping("/internal/article/{articleId}/save")
+  public ModelAndView save(ModelAndView mv, EditArticleViewModel payload, @PathVariable String articleId) {
+    if (payload == null) {
+      throw new BadRequest("Conteúdo não informado");
+    }
+    var articleOpt = articleRepository.findById(UUID.fromString(articleId));
+
+    if (articleOpt.isEmpty()) {
+      throw new NotFound("Artigo não encontrado");
+    }
+
+    var article = articleOpt.get();
+
+    var user = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
+    if (!user.getId().equals(article.getCreatedBy())) {
+      throw new Unauthorized("Usuário não tem permissão para alterar o artigo designado");
+    }
+
+    article.setContent(payload.content());
+    article = articleRepository.save(article);
+
+    mv.setViewName(String.format("redirect:/internal/article/%s/edit", article.getId()));
+
     return mv;
   }
 }

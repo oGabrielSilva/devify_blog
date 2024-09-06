@@ -71,7 +71,7 @@ public class GlobalExceptionHandler {
     // }
     // }
     return request.getServletPath().contains("/api/")
-        ? new ResponseEntity<>(HttpStatus.FORBIDDEN)
+        ? new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR)
         : new ModelAndView("error");
   }
 

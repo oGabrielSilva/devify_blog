@@ -788,15 +788,13 @@ export function generateTopbar(editor: Editor) {
     },
   })
 
-  const titles = generateHTML({ tag: 'div' })
-  titles.append(h1, h2)
-
   container.append(
     bold,
     italic,
     underline,
     strike,
-    titles,
+    h1,
+    h2,
     ol,
     ul,
     colorPicker,

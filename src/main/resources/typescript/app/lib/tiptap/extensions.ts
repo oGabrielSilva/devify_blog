@@ -41,6 +41,11 @@ export const requireTiptapBasicExtensions = () => [
     },
     listItem: false,
     blockquote: false,
+    paragraph: {
+      HTMLAttributes: {
+        class: 'pb-2',
+      },
+    },
   }),
   Typography,
   Underline,

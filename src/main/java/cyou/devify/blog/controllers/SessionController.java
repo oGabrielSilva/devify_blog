@@ -1,5 +1,8 @@
 package cyou.devify.blog.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -7,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cyou.devify.blog.entities.User;
@@ -16,6 +20,7 @@ import cyou.devify.blog.services.UserService;
 import cyou.devify.blog.utils.AuthValidation;
 import cyou.devify.blog.utils.StringUtils;
 import cyou.devify.blog.vm.SessionViewModel;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
@@ -104,6 +109,29 @@ public class SessionController {
   public String signOut(HttpServletResponse response) {
     response.addCookie(tokenService.createInvalidAuthorizationCookie());
     return "redirect:/";
+  }
+
+  @ResponseBody
+  @GetMapping(path = "/is-logged-in", produces = { "application/json" })
+  public Map<String, Boolean> isLoggedIn(HttpServletRequest request) {
+    Map<String, Boolean> map = new HashMap<>();
+    map.put("isLoggedIn", false);
+
+    var token = tokenService.recoveryToken(request);
+
+    if (token == null) {
+      return map;
+    }
+
+    var email = tokenService.requireSubject(token);
+    if (email == null) {
+      return map;
+    }
+
+    var user = userRepository.existsByEmail(email);
+
+    map.replace("isLoggedIn", user);
+    return map;
   }
 
   private ModelAndView generateGenericMV(String next) {

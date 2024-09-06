@@ -3,11 +3,8 @@
   <head>
     <th th:replace="~{partials/head}"></th>
     <link rel="stylesheet" href="/css/github-dark.min.css" />
-    <meta data-details="page" data-content="[**DATA_FOR_INTERNAL_JS**]" />
+    <meta data-details="page" data-content="edit_article" />
     <script src="/javascript/index.internal.js" defer></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.es5.min.js" defer></script>
   </head>
 
   <body>
@@ -17,10 +14,24 @@
 
     <div class="container" id="root">
       <main class="pb-6 pt-3 px-3">
-        <div class="editor-container">
-          <div class="topbar"></div>
-          <div data-text class="editor" th:utext="${article.content}"></div>
-        </div>
+        <form
+          method="post"
+          enctype="application/x-www-form-urlencoded"
+          id="save"
+          th:action="@{/internal/article/{articleId}/save(articleId=${article.id})}"
+        >
+          <div id="article-content" class="editor-container">
+            <div class="topbar"></div>
+            <div data-text class="editor" th:utext="${article.content}"></div>
+          </div>
+
+          <div class="py-5">
+            <button type="submit" class="button is-primary">
+              <span>Salvar <span aria-hidden="true">[Ctrl + S]</span></span>
+            </button>
+          </div>
+          <input type="hidden" name="content" id="content" />
+        </form>
       </main>
     </div>
 

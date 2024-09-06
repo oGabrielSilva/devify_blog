@@ -29,11 +29,17 @@
             <div class="mb-3" th:each="article : ${articles}">
               <div>
                 <small>
-                  slug: <span th:text="${article.slug}"></span> |
                   <em>
                     Criado em:
                     <time th:text="${article.createdAt}" th:datetime="${article.createdAt}"></time>
+                    por você
                   </em>
+                  | slug:
+                  <a
+                    class="has-text-current"
+                    th:href="@{/internal/article/{articleId}/edit(articleId=${article.id})}"
+                    th:text="${article.slug}"
+                  ></a>
                 </small>
               </div>
               <a

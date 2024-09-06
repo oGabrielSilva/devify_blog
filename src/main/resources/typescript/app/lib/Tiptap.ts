@@ -6,6 +6,14 @@ import { listenEditorChanges } from './tiptap/listenEditorChanges'
 export class TiptapEditor {
   private readonly elements = document.querySelectorAll<HTMLElement>('.editor-container')
 
+  private toGlobals(id: string, editor: Editor) {
+    if (!globalThis.editors) globalThis.editors = []
+    globalThis.editors.push({
+      id,
+      editor,
+    })
+  }
+
   public run() {
     this.elements.forEach((container) => {
       const element = container.querySelector('.editor')!
@@ -30,6 +38,8 @@ export class TiptapEditor {
       bar.appendChild(topbar.container)
 
       listenEditorChanges(editor, topbar)
+
+      this.toGlobals(container.id, editor)
     })
   }
 

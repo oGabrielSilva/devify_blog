@@ -10,6 +10,9 @@ export class SessionPageHandler extends BaseHandler {
   private isPasswordValid = false
   private readonly signUpButton = this.form.querySelector('#sign-up') as HTMLButtonElement
 
+  private readonly params = new URLSearchParams(globalThis.location.search)
+  private isForbidden = false
+
   private configureEmail() {
     const input = $(this.email).find('input')
     const helper = $(this.email).find('.help')
@@ -81,11 +84,20 @@ export class SessionPageHandler extends BaseHandler {
 
     $(this.form).on('submit', (e) => {
       e.preventDefault()
-      if (this.isFormValid()) this.form.submit()
+      if (this.isFormValid()) {
+        // if (!this.isForbidden) return this.form.submit()
+        //Implementar login por json
+        this.form.submit()
+      }
     })
   }
 
   public handle() {
     this.configureForm()
+
+    if (this.params.get('forbidden') === 'true') {
+      toaster.danger('Sua sessão expirou. Por favor, faça login novamente para continuar', 12000)
+      this.isForbidden = true
+    }
   }
 }

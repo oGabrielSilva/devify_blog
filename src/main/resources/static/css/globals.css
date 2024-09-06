@@ -1,3 +1,4 @@
+/* Avatar Styles */
 .avatar {
   width: 32px;
   height: 32px;
@@ -5,19 +6,37 @@
   object-fit: cover;
   cursor: pointer;
 }
-
 .avatar:hover {
   box-shadow: var(--bulma-shadow);
 }
 
+/* Gap Utilities */
 .gap {
   gap: 0.25rem;
 }
-
+.gap-1 {
+  gap: 0.5rem;
+}
+.gap-2 {
+  gap: 0.75rem;
+}
 .gap-3 {
   gap: 1rem;
 }
+.gap-4 {
+  gap: 1.25rem;
+}
+.gap-5 {
+  gap: 1.5rem;
+}
+.gap-6 {
+  gap: 1.75rem;
+}
+.gap-7 {
+  gap: 2rem;
+}
 
+/* Direction Buttons */
 #direction-buttons {
   position: fixed;
   bottom: 0;
@@ -26,31 +45,29 @@
   margin: 0;
   gap: 0.25rem;
 }
-
 #direction-buttons button {
   cursor: pointer;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-
 #direction-buttons button span {
   display: block;
   margin: 0;
 }
-
 #direction-buttons button span:has(svg) {
   font-size: 1rem;
 }
-
 #direction-buttons button span:not(:has(svg)) {
   font-size: smaller;
 }
 
+/* Modal and Card */
 .modal-card {
   padding: 0 1rem;
 }
 
+/* Keywords Preview */
 #keywords-preview {
   display: flex;
   align-items: baseline;
@@ -58,136 +75,72 @@
   flex-flow: wrap;
 }
 
+/* Links and Text Styles */
 .link-title {
   color: var(--bulma-text-strong);
   font-weight: 600;
 }
-
 .link-title:hover,
 .link-title:active {
   text-decoration: underline;
 }
-
 [data-text] ul {
   list-style: unset;
 }
-
 [data-text] a {
   text-decoration: underline;
 }
 
+/* Scrollbar Styles */
 ::-webkit-scrollbar {
   width: 10px;
+  height: 4px;
 }
-
 ::-webkit-scrollbar-track {
   background: var(--bulma-body-background-color);
 }
-
 ::-webkit-scrollbar-thumb {
   background: #888;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
-.gap {
-  gap: 0.25rem;
-}
-
-.gap-1 {
-  gap: 0.5rem;
-}
-
-.gap-2 {
-  gap: 0.75rem;
-}
-
-.gap-3 {
-  gap: 1rem;
-}
-
-.gap-4 {
-  gap: 1.25rem;
-}
-
-.gap-5 {
-  gap: 1.5rem;
-}
-
-.gap-6 {
-  gap: 1.75rem;
-}
-
-.gap-7 {
-  gap: 2rem;
-}
-
-.tt-indent-1 {
-  text-indent: 1rem;
-}
-
+/* Indentation Utilities */
+.tt-indent-1,
 [data-indent='1'] {
   text-indent: 1rem;
 }
-
-.tt-indent-2 {
-  text-indent: 2rem;
-}
-
+.tt-indent-2,
 [data-indent='2'] {
   text-indent: 2rem;
 }
-
-.tt-indent-3 {
-  text-indent: 3rem;
-}
-
+.tt-indent-3,
 [data-indent='3'] {
   text-indent: 3rem;
 }
-
-.tt-indent-4 {
-  text-indent: 4rem;
-}
-
+.tt-indent-4,
 [data-indent='4'] {
   text-indent: 4rem;
 }
-
-.tt-indent-5 {
-  text-indent: 5rem;
-}
-
+.tt-indent-5,
 [data-indent='5'] {
   text-indent: 5rem;
 }
-
-.tt-indent-6 {
-  text-indent: 6rem;
-}
-
+.tt-indent-6,
 [data-indent='6'] {
   text-indent: 6rem;
 }
-
-.tt-indent-7 {
-  text-indent: 7rem;
-}
-
+.tt-indent-7,
 [data-indent='7'] {
   text-indent: 7rem;
 }
-
-.tt-indent-8 {
-  text-indent: 8rem;
-}
-
+.tt-indent-8,
 [data-indent='8'] {
   text-indent: 8rem;
 }
 
+/* Blockquote Styles */
 blockquote {
   border-left: 4px solid var(--bulma-border);
   padding: 0.5rem 0.5rem 0.5rem 1.5em;
@@ -198,6 +151,7 @@ blockquote {
   font-size: 0.9em;
 }
 
+/* Empty Placeholder */
 [data-text] *.is-empty::before {
   color: var(--bulma-grey);
   content: attr(data-placeholder);
@@ -206,10 +160,21 @@ blockquote {
   pointer-events: none;
 }
 
+/* Topbar Styles */
+.topbar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  background: var(--bulma-body-background-color);
+  border-bottom: 1px solid var(--bulma-border);
+  border-radius: 8px 8px 0 0;
+}
 .topbar * {
   transition: 50ms ease-in-out;
 }
 
+/* Text Headers */
 [data-text] h1,
 [data-text] h2 {
   color: var(--bulma-title-color);
@@ -217,10 +182,43 @@ blockquote {
   font-weight: var(--bulma-title-weight);
   line-height: var(--bulma-title-line-height);
 }
-
 [data-text] h2 {
   font-size: 1.5rem;
   color: var(--bulma-subtitle-color);
   font-weight: var(--bulma-subtitle-weight);
   line-height: var(--bulma-subtitle-line-height);
+}
+
+[data-text] > p {
+  padding-bottom: 0.5rem;
+}
+
+[data-text] ul,
+[data-text] ol {
+  padding: 0.5rem 0 0.5rem 2rem;
+}
+
+/* Editor Container */
+.editor-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 70vh;
+  border: 1px solid var(--bulma-border);
+  border-radius: 8px;
+}
+.editor-container .editor {
+  padding: 0 0.75em;
+}
+.editor-container:focus-visible,
+.editor-container *:focus-visible {
+  outline: none;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 600px) {
+  .topbar .buttons {
+    flex-wrap: nowrap;
+    overflow: auto;
+  }
 }

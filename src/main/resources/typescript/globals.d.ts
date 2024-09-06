@@ -1,3 +1,4 @@
+import { Editor } from '@tiptap/core'
 import { AnimationKassiopeiaTool, ScreenLockerKassiopeiaTool } from 'kassiopeia-tools'
 
 export {}
@@ -10,4 +11,6 @@ declare global {
   var anim: AnimationKassiopeiaTool
 
   type AppScheme = 'dark' | 'light'
+
+  var editors: { id: string; editor: Editor }[] | undefined
 }
