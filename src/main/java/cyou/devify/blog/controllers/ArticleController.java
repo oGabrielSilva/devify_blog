@@ -18,6 +18,7 @@ import cyou.devify.blog.repositories.StackRepository;
 import cyou.devify.blog.services.UserService;
 import cyou.devify.blog.utils.StringUtils;
 import cyou.devify.blog.vm.ArticleViewModel;
+import cyou.devify.blog.vm.EditArticleMetadataViewModel;
 import cyou.devify.blog.vm.EditArticleViewModel;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -92,6 +93,57 @@ public class ArticleController {
     article = articleRepository.save(article);
 
     mv.setViewName(String.format("redirect:/internal/article/%s/edit", article.getId()));
+
+    return mv;
+  }
+
+  @PostMapping("/internal/article/{articleId}/save/metadata")
+  public ModelAndView saveMetadata(ModelAndView mv, EditArticleMetadataViewModel payload,
+      @PathVariable String articleId) {
+    if (payload == null) {
+      throw new BadRequest("Conteúdo não informado");
+    }
+    var articleOpt = articleRepository.findById(UUID.fromString(articleId));
+
+    if (articleOpt.isEmpty()) {
+      throw new NotFound("Artigo não encontrado");
+    }
+
+    var article = articleOpt.get();
+
+    var user = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
+    if (!user.getId().equals(article.getCreatedBy())) {
+      throw new Unauthorized("Usuário não tem permissão para alterar o artigo designado");
+    }
+
+    if (StringUtils.isNullOrBlank(payload.title())) {
+      mv.addObject("error", "Título inválido");
+      return mv;
+    }
+    article.setTitle(payload.title());
+    article.setSlug(StringUtils.slugify(article.getTitle()));
+
+    if (payload.stack() == null) {
+      mv.addObject("error", "Stack não informada");
+      return mv;
+    }
+
+    var stack = stackRepository.findById(payload.stack());
+    if (stack.isEmpty()) {
+      mv.addObject("error", "Stack informada não existe");
+      return mv;
+    }
+    article.setStack(stack.get());
+
+    if (StringUtils.isNonNullOrBlank(payload.metaDescription()) && payload.metaDescription().length() <= 225) {
+      article.setMetaDescription(payload.metaDescription());
+    }
+
+    article.setDescription(payload.description());
+
+    articleRepository.save(article);
+
+    mv.setViewName(String.format("redirect:/internal/article/%s/edit/metadata", article.getId()));
 
     return mv;
   }

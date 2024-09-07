@@ -113,6 +113,7 @@ public class InternalController {
       return mv;
     }
 
+    mv.addObject("newStackNextURL", String.format("/internal/article/%s/edit/metadata", articleId));
     mv.addObject("article", article.get());
     mv.addObject("pageTitle", "Edição dos metadados do artigo");
     mv.setViewName("article-edit-metadata");

@@ -16,7 +16,6 @@ export class NewArticlePageHandler extends BaseHandler {
   // private readonly addKeywordBtn = $('#add-keyword-btn')
 
   private isTitleValid = false
-  private readonly keywords = new Set<string>()
 
   private configureNewStackModule() {
     this.newStack.button.on('click', () => this.newStack.handler.openFormModal())

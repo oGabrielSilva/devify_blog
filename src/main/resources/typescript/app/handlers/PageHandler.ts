@@ -1,3 +1,4 @@
+import { EditArticleMetadataPageHandler } from './article/EditArticleMetadataPageHandler'
 import { EditArticlePageHandler } from './article/EditArticlePageHandler'
 import { NewArticlePageHandler } from './article/NewArticlePageHandler'
 import { InternalProfilePageHandler } from './profile/InternalProfilePageHandler'
@@ -28,6 +29,9 @@ export class PageHandler {
         break
       case 'edit_article':
         EditArticlePageHandler.fast.handle()
+        break
+      case 'edit_article_metadata':
+        EditArticleMetadataPageHandler.fast.handle()
         break
     }
   }
