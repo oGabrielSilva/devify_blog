@@ -15,7 +15,12 @@
       <main class="pb-6 pt-5 px-3">
         <div class="is-flex gap-3 is-justify-content-space-between is-align-items-center">
           <h1 class="title">Meus artigos</h1>
-          <a href="/internal/article" class="button is-link">Escrever</a>
+          <a href="/internal/article" class="button is-link">
+            <span class="icon is-small">
+              <i class="fa-solid fa-file-circle-plus"></i>
+            </span>
+            <span>Escrever</span>
+          </a>
         </div>
 
         <div class="py-3">
@@ -27,6 +32,15 @@
 
           <th:block th:unless="${#lists.isEmpty(articles)}">
             <div class="mb-3" th:each="article : ${articles}">
+              <a
+                class="link-title"
+                th:href="@{/internal/article/{articleId}/edit(articleId=${article.id})}"
+                target="_blank"
+                title="Clique para editar"
+                rel="noopener noreferrer"
+                th:text="${article.title}"
+              ></a>
+
               <div>
                 <small>
                   <em>
@@ -40,16 +54,14 @@
                     th:href="@{/internal/article/{articleId}/edit(articleId=${article.id})}"
                     th:text="${article.slug}"
                   ></a>
+                  |
+                  <span
+                    th:text="${article.isPublished ? 'Publicado' : 'Não publicado'}"
+                    th:class="${article.isPublished ? 'has-text-primary' : 'has-text-danger'}"
+                  ></span>
                 </small>
               </div>
-              <a
-                class="link-title"
-                th:href="@{/internal/article/{articleId}/edit(articleId=${article.id})}"
-                target="_blank"
-                title="Clique para editar"
-                rel="noopener noreferrer"
-                th:text="${article.title}"
-              ></a>
+
               <div>
                 <small>
                   <em>
@@ -58,7 +70,20 @@
                   </em>
                 </small>
               </div>
-              <hr />
+              <div>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="button is-text m-0 is-small"
+                  th:href="@{/internal/article/{articleId}/edit/metadata(articleId=${article.id})}"
+                >
+                  <span class="icon is-small">
+                    <i class="fa-solid fa-database"></i>
+                  </span>
+                  <span>Editar metadados</span>
+                </a>
+              </div>
+              <hr class="mx-0 mt-1" />
             </div>
           </th:block>
         </div>

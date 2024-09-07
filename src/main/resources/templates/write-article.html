@@ -45,36 +45,38 @@
             </p>
           </div>
 
-          <label for="stack" class="label">Stack</label>
-          <div class="field has-addons mb-0">
-            <div class="control" style="width: 100%">
-              <div class="select" style="width: 100%">
-                <select name="stack" id="stack" style="width: 100%">
-                  <th:block th:if="${not #lists.isEmpty(stacks)}">
-                    <option
-                      th:each="stack : ${stacks}"
-                      th:text="${stack.name}"
-                      th:value="${stack.id}"
-                    ></option>
-                  </th:block>
-                  <th:block th:unless="${not #lists.isEmpty(stacks)}">
-                    <option value="---">Nenhuma Stack cadastrada</option>
-                  </th:block>
-                </select>
+          <div>
+            <label for="stack" class="label">Stack</label>
+            <div class="field has-addons mb-0">
+              <div class="control" style="width: 100%">
+                <div class="select" style="width: 100%">
+                  <select name="stack" id="stack" style="width: 100%">
+                    <th:block th:if="${not #lists.isEmpty(stacks)}">
+                      <option
+                        th:each="stack : ${stacks}"
+                        th:text="${stack.name}"
+                        th:value="${stack.id}"
+                      ></option>
+                    </th:block>
+                    <th:block th:unless="${not #lists.isEmpty(stacks)}">
+                      <option value="---">Nenhuma Stack cadastrada</option>
+                    </th:block>
+                  </select>
+                </div>
+              </div>
+              <div class="control">
+                <button id="new-stack-button" type="button" class="button is-link">
+                  <span class="icon is-small">
+                    <i class="fa-solid fa-plus"></i>
+                  </span>
+                  <span>Nova Stack</span>
+                </button>
               </div>
             </div>
-            <div class="control">
-              <button id="new-stack-button" type="button" class="button is-link">
-                <span class="icon is-small">
-                  <i class="fa-solid fa-plus"></i>
-                </span>
-                <span>Nova Stack</span>
-              </button>
-            </div>
+            <p class="help">
+              Selecione a stack à qual o artigo pertence. Não se preocupe, você poderá alterá-la mais tarde
+            </p>
           </div>
-          <p class="help">
-            Selecione a stack à qual o artigo pertence. Não se preocupe, você poderá alterá-la mais tarde
-          </p>
 
           <div class="buttons py-5">
             <button class="button is-primary" type="submit">Escrever</button>

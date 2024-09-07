@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <meta data-details="page" data-content="edit_article_metadata" />
+    <script src="/javascript/index.editor.js" defer></script>
+    <script src="/javascript/index.internal.js" defer></script>
+  </head>
+
+  <body>
+    <header id="header">
+      <th th:replace="~{partials/nav}"></th>
+    </header>
+
+    <div class="container" id="root">
+      <main class="pb-6 pt-3 px-3">
+        <form
+          class="py-5"
+          method="post"
+          enctype="application/x-www-form-urlencoded"
+          id="metadata"
+          th:action="@{/internal/article/{articleId}/save/metadata(articleId=${article.id})}"
+        >
+          <h1 class="title">Edite os metadados do artigo</h1>
+          <div class="field">
+            <label for="title" class="label">Título do artigo</label>
+            <div class="control">
+              <input
+                id="title"
+                class="input"
+                type="text"
+                name="title"
+                placeholder="Ex: &ldquo;Como otimizar o desempenho de aplicativos React&rdquo;"
+                th:value="${article.title}"
+              />
+            </div>
+            <p class="help">
+              Escolha um título envolvente que capture o tema do seu artigo e atraia os leitores. Não se
+              preocupe, você poderá ajustá-lo mais tarde
+            </p>
+          </div>
+
+          <div>
+            <label for="stack" class="label">Stack</label>
+            <div class="field has-addons mb-0">
+              <div class="control" style="width: 100%">
+                <div class="select" style="width: 100%">
+                  <select name="stack" id="stack" style="width: 100%">
+                    <th:block th:if="${not #lists.isEmpty(stacks)}">
+                      <th:block th:each="stack : ${stacks}">
+                        <option
+                          th:selected="${stack.id == article.stack.id}"
+                          th:text="${stack.name}"
+                          th:value="${stack.id}"
+                        ></option>
+                      </th:block>
+                    </th:block>
+                    <th:block th:unless="${not #lists.isEmpty(stacks)}">
+                      <option value="---">Nenhuma Stack cadastrada</option>
+                    </th:block>
+                  </select>
+                </div>
+              </div>
+              <div class="control">
+                <button id="new-stack-button" type="button" class="button is-link">
+                  <span class="icon is-small">
+                    <i class="fa-solid fa-plus"></i>
+                  </span>
+                  <span>Nova Stack</span>
+                </button>
+              </div>
+            </div>
+            <p class="help">
+              Selecione a stack à qual o artigo pertence. Não se preocupe, você poderá alterá-la mais tarde
+            </p>
+          </div>
+
+          <div class="field pt-3">
+            <label for="meta-description" class="label">Meta descrição</label>
+            <div class="control" style="position: relative">
+              <textarea
+                rows="3"
+                id="meta-description"
+                name="metaDescription"
+                class="textarea"
+                maxlength="225"
+                th:text="${article.metaDescription}"
+              ></textarea>
+              <span style="position: absolute; bottom: 2%; right: 2%; font-size: 12px">
+                <small id="meta-size">0</small>
+              </span>
+            </div>
+            <p class="help">
+              Esta descrição aparece nos resultados de pesquisa dos motores de busca (como Google, Bing, etc.)
+              abaixo do título da página. <strong>150-160</strong> caracteres
+            </p>
+          </div>
+
+          <div class="pb-3">
+            <label class="label">Descrição</label>
+            <div id="article-description" class="editor-container">
+              <div class="topbar"></div>
+              <div data-text class="editor" th:utext="${article.description}"></div>
+            </div>
+            <input type="hidden" name="description" id="description" th:value="${article.description}" />
+          </div>
+
+          <div class="buttons py-3">
+            <button class="button is-primary" type="submit">Salvar</button>
+          </div>
+        </form>
+      </main>
+    </div>
+
+    <th th:replace="~{partials/article-edit-footer}"></th>
+  </body>
+</html>

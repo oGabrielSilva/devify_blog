@@ -66,9 +66,6 @@ public class InternalController {
     mv.addObject("pageTitle", "Seus artigos");
 
     var articles = articleService.findAllByUser(user);
-    for (var article : articles) {
-      System.out.println("**** \n" + article);
-    }
 
     mv.addObject("articles", articles);
     return mv;
@@ -88,7 +85,7 @@ public class InternalController {
   }
 
   @GetMapping("/article/{articleId}/edit")
-  public ModelAndView getMethodName(ModelAndView mv, @PathVariable String articleId) {
+  public ModelAndView editArticle(ModelAndView mv, @PathVariable String articleId) {
     var user = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
     var article = articleRepository.findById(UUID.fromString(articleId));
 
@@ -100,9 +97,28 @@ public class InternalController {
 
     mv.addObject("article", article.get());
     mv.addObject("pageTitle", "Edição do artigo");
-    mv.addObject("isArticleEditing", true);
     mv.setViewName("article-edit");
 
+    return mv;
+  }
+
+  @GetMapping("/article/{articleId}/edit/metadata")
+  public ModelAndView editArticleMetadata(ModelAndView mv, @PathVariable String articleId) {
+    var user = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
+    var article = articleRepository.findById(UUID.fromString(articleId));
+
+    if (article.isEmpty() || !user.getId().equals(article.get().getCreatedBy())) {
+      mv.addObject("pageTitle", "Artigo não encontrado");
+      mv.setViewName("404");
+      return mv;
+    }
+
+    mv.addObject("article", article.get());
+    mv.addObject("pageTitle", "Edição dos metadados do artigo");
+    mv.setViewName("article-edit-metadata");
+
+    var stacks = stackService.getUnlocked();
+    mv.addObject("stacks", stacks);
     return mv;
   }
 
