@@ -35,10 +35,21 @@
           </span>
           <span>Stacks</span>
         </a>
+        <!-- getUnlocked -->
 
-        <div class="navbar-dropdown">
-          <a class="navbar-item" role="none">Nenhuma Stack cadastrada</a>
-        </div>
+        <th:block th:with="stacks=${@stackService.getUnlocked()}">
+          <div th:if="${#lists.isEmpty(stacks)}" class="navbar-dropdown">
+            <a class="navbar-item" role="none">Nenhuma Stack cadastrada</a>
+          </div>
+          <div th:unless="${#lists.isEmpty(stacks)}" class="navbar-dropdown">
+            <a
+              th:each="stack : ${stacks}"
+              class="navbar-item"
+              th:text="${stack.name}"
+              th:href="@{/stack/{stackName}(stackName=${stack.name})}"
+            ></a>
+          </div>
+        </th:block>
       </div>
 
       <a class="navbar-item gap-3 is-flex is-align-items-center" href="/about">
@@ -50,15 +61,20 @@
 
       <th:block th:if="${@userService.isAuthenticated}">
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" role="button">Administração</a>
+          <a class="navbar-link" role="button">
+            <span class="icon is-small">
+              <i class="fa-solid fa-screwdriver-wrench"></i>
+            </span>
+            <span>Administração</span>
+          </a>
 
           <div class="navbar-dropdown">
-            <a class="navbar-item" href="/internal">
+            <!-- <a class="navbar-item" href="/internal">
               <span class="icon is-small">
                 <i class="fa-solid fa-table-columns"></i>
               </span>
               <span>Painel administrativo</span>
-            </a>
+            </a> -->
             <a
               th:if="${#strings.isEmpty(currentURL) or !currentURL.contains('internal/profile')}"
               class="navbar-item"
@@ -71,11 +87,12 @@
             </a>
 
             <th:block th:if="${not @userService.isCommon}">
-              <a class="navbar-item" th:href="@{/internal/stacks}">
+              <hr class="p-0 my-2" />
+              <a class="navbar-item" th:href="@{/internal/articles}">
                 <span class="icon is-small">
-                  <i class="fa-solid fa-layer-group"></i>
+                  <i class="fa-solid fa-scroll"></i>
                 </span>
-                <span>Stacks</span>
+                <span>Meus artigos</span>
               </a>
 
               <a class="navbar-item" th:href="@{/internal/article}">
@@ -84,11 +101,36 @@
                 </span>
                 <span>Escreva um novo artigo</span>
               </a>
-              <a class="navbar-item" th:href="@{/internal/articles}">
+
+              <a class="navbar-item" th:href="@{/internal/stacks}">
                 <span class="icon is-small">
-                  <i class="fa-solid fa-scroll"></i>
+                  <i class="fa-solid fa-layer-group"></i>
                 </span>
-                <span>Meus artigos</span>
+                <span>Stacks</span>
+              </a>
+            </th:block>
+
+            <th:block th:if="${@userService.isMod}">
+              <hr class="p-0 my-2" />
+              <a class="navbar-item" th:href="@{/internal/mod/articles}">
+                <span class="icon is-small">
+                  <i class="fa-regular fa-folder-open"></i>
+                </span>
+                <span>Todos os artigos</span>
+              </a>
+
+              <a class="navbar-item" th:href="@{/internal/mod/articles/published}">
+                <span class="icon is-small">
+                  <i class="fa-solid fa-chart-bar"></i>
+                </span>
+                <span>Artigos publicados</span>
+              </a>
+
+              <a class="navbar-item" th:href="@{/internal/mod/articles/unpublished}">
+                <span class="icon is-small">
+                  <i class="fa-solid fa-house-laptop"></i>
+                </span>
+                <span>Artigos <em>não</em> publicados</span>
               </a>
             </th:block>
 

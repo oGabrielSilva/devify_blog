@@ -10,6 +10,7 @@ export function configureName(handler: InternalProfilePageHandler) {
 
 export function updateNameState(handler: InternalProfilePageHandler) {
   handler.profile.name.len.text(50 - handler.profile.name.input.value.length)
+
   if (handler.profile.name.input.value.length < 2) {
     $(handler.profile.name.input).addClass('is-danger')
     handler.profile.name.isValid = false

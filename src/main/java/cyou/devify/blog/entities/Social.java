@@ -26,4 +26,10 @@ public class Social {
   private String discord;
   private String linkedin;
   private String site;
+  private String facebook;
+  private String tiktok;
+  private String threads;
+  private String bluesky;
+  private String mastodon;
+  private String reddit;
 }

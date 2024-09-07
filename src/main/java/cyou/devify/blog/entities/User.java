@@ -12,7 +12,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import cyou.devify.blog.configurations.StartupSeedConfiguration;
 import cyou.devify.blog.enums.Role;
+import cyou.devify.blog.utils.StringUtils;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,6 +42,9 @@ public class User implements UserDetails {
 
   @Column(length = 25)
   private String pseudonym;
+
+  @Column(unique = true, length = 30)
+  private String username;
 
   @Column(name = "avatarURL")
   private String avatarURL;
@@ -73,6 +78,8 @@ public class User implements UserDetails {
     this.email = email;
     this.avatarURL = avatarURL;
     this.password = password;
+
+    username = StringUtils.slugify(email);
   }
 
   public List<Role> allRoles() {
@@ -157,7 +164,7 @@ public class User implements UserDetails {
 
   @Override
   public String getUsername() {
-    return email;
+    return username;
   }
 
   public boolean isCommon() {
@@ -171,4 +178,48 @@ public class User implements UserDetails {
   public boolean isMod() {
     return allRoles().contains(Role.MODERATOR);
   }
+
+  public String getProcessedName() {
+    return StringUtils.isNullOrBlank(pseudonym) ? name : pseudonym;
+  }
+
+  public String getReducedBio(int size) {
+    if (StringUtils.isNullOrBlank(bio) || bio.length() <= size)
+      return bio;
+    return bio.substring(0, size).concat("...");
+  }
+
+  public boolean isRootEmail() {
+    return StartupSeedConfiguration.firstUserEmail.equals(email);
+  }
+
+  // public List<Map<String, String>> listOfSocial() {
+  // var list = new ArrayList<Map<String, String>>();
+
+  // if (!email.equals(StartupSeedConfiguration.firstUserEmail)) {
+  // list.add(Map.of("link", String.format("mailto:%s", email)));
+  // }
+
+  // if (StringUtils.isNonNullOrBlank(social.getGithub())) {
+  // list.add(Map.of("link", social.getGithub()));
+  // }
+
+  // if (StringUtils.isNonNullOrBlank(social.getDiscord())) {
+  // list.add(Map.of("link", social.getDiscord()));
+  // }
+
+  // if (StringUtils.isNonNullOrBlank(social.getInstagram())) {
+  // list.add(Map.of("link", social.getInstagram()));
+  // }
+
+  // if (StringUtils.isNonNullOrBlank(social.getLinkedin())) {
+  // list.add(Map.of("link", social.getLinkedin()));
+  // }
+
+  // if (StringUtils.isNonNullOrBlank(social.getLinkedin())) {
+  // list.add(Map.of("link", social.getLinkedin()));
+  // }
+
+  // return list;
+  // }
 }

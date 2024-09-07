@@ -5,6 +5,7 @@ import { configureName } from './profile/name'
 import { configurePseudonym } from './profile/pseudonym'
 import { configureSecurityPartEmail } from './security/email'
 import { configureChangePasswordPart } from './security/password'
+import { configureSecurityUsernamePart } from './security/username'
 
 export class InternalProfilePageHandler extends BaseHandler {
   private readonly tabs = $('#tabs').find('li')
@@ -44,6 +45,14 @@ export class InternalProfilePageHandler extends BaseHandler {
         isValid: false,
         helper: $('#password-helper'),
       },
+    },
+    username: {
+      form: $<HTMLFormElement>('#username-form'),
+      lab: $('#inp-username-readonly'),
+      modal: $('#username-modal'),
+      input: document.querySelector('#inp-username') as HTMLInputElement,
+      isValid: false,
+      len: $('#username-len'),
     },
     password: {
       button: $('#change-pass'),
@@ -122,6 +131,7 @@ export class InternalProfilePageHandler extends BaseHandler {
       this.security.email.password.helper.addClass('is-hidden')
     })
 
+    configureSecurityUsernamePart(this)
     configureSecurityPartEmail(this)
     configureChangePasswordPart(this)
   }

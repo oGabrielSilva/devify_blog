@@ -1,5 +1,7 @@
 package cyou.devify.blog.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import cyou.devify.blog.entities.User;
+import cyou.devify.blog.enums.Role;
 import cyou.devify.blog.exceptions.Forbidden;
 import cyou.devify.blog.repositories.UserRepository;
 
@@ -56,6 +59,14 @@ public class UserService implements UserDetailsService {
   public boolean isMod() {
     var user = getCurrentAuthenticatedUser();
     return user != null && user.isMod();
+  }
+
+  public List<User> getEditors() {
+    return repository.findByAuthority(Role.EDITOR);
+  }
+
+  public List<User> getStaff() {
+    return repository.findByAuthorityNot(Role.COMMON);
   }
 
 }

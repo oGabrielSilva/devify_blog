@@ -1,3 +1,4 @@
+import KassiopeiaTools from 'kassiopeia-tools'
 import { BulmaCss } from './lib/BulmaCss'
 import { anim as animTool, locker as lockerTool, toaster } from './lib/kassiopeia-tools'
 import { configureDirectionButtons } from './utils/directionButtons'
@@ -58,6 +59,7 @@ export class Startup {
   }
 
   public run() {
+    ;(globalThis as any).tools = KassiopeiaTools
     globalThis.locker = lockerTool
     globalThis.anim = animTool
 

@@ -15,7 +15,7 @@ import cyou.devify.blog.repositories.UserRepository;
 
 @Component
 public class StartupSeedConfiguration implements ApplicationRunner {
-  private final String firstUserEmail = "root@devify.cyou";
+  public static final String firstUserEmail = "root@devify.cyou";
 
   @Value("${devify.root.initial.pass}")
   String firstRootPass;

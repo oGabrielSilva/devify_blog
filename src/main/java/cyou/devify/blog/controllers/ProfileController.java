@@ -17,6 +17,7 @@ import cyou.devify.blog.vm.ChangePasswordViewModel;
 import cyou.devify.blog.vm.ProfileFormViewModel;
 import cyou.devify.blog.vm.SessionViewModel;
 import cyou.devify.blog.vm.SocialViewModel;
+import cyou.devify.blog.vm.UpdateUsernameViewModel;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RequestMapping("/internal/profile")
@@ -43,7 +44,10 @@ public class ProfileController {
       hasChanges = true;
     }
 
-    if (StringUtils.isNonNullOrBlank(payload.pseudonym()) && !payload.pseudonym().equals(user.getPseudonym())) {
+    if (StringUtils.isNullOrBlank(payload.pseudonym()) && StringUtils.isNonNullOrBlank(user.getPseudonym())) {
+      user.setPseudonym(payload.pseudonym());
+      hasChanges = true;
+    } else if (StringUtils.isNonNullOrBlank(payload.pseudonym()) && !payload.pseudonym().equals(user.getPseudonym())) {
       user.setPseudonym(payload.pseudonym());
       hasChanges = true;
     }
@@ -153,6 +157,34 @@ public class ProfileController {
       user = userRepository.save(user);
 
       response.addCookie(tokenService.createCookie(tokenService.create(user)));
+    }
+
+    return mv;
+  }
+
+  @PostMapping("/username")
+  public ModelAndView updateUsername(UpdateUsernameViewModel payload, ModelAndView mv) {
+    mv.setViewName("redirect:/internal/profile?tab=security");
+
+    var username = payload.username();
+    System.out.println(username);
+
+    if (StringUtils.isNonNullOrBlank(username)) {
+      var user = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
+
+      if (username.equals(user.getUsername())) {
+        mv.addObject("error", "Por favor, insira um username diferente do seu atual");
+        return mv;
+      }
+      var userByUsername = userRepository.findByUsername(username);
+
+      if (userByUsername != null) {
+        mv.addObject("error", "Username informado já está em uso");
+        return mv;
+      }
+
+      user.setUsername(username);
+      userRepository.save(user);
     }
 
     return mv;

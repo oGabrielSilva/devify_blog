@@ -1,261 +1,435 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <meta data-details="page" data-content="profile" />
+    <script src="/javascript/index.internal.js" defer></script>
+  </head>
 
-<head>
-  <th th:replace="~{partials/head}"></th>
-  <meta data-details="page" data-content="profile" />
-  <script src="/javascript/index.internal.js" defer></script>
-</head>
+  <body>
+    <header id="header">
+      <th th:replace="~{partials/nav}"></th>
+    </header>
 
-<body>
-  <header id="header">
-    <th th:replace="~{partials/nav}"></th>
-  </header>
+    <div class="container" id="root">
+      <div id="tabs" class="tabs is-right is-boxed pt-6">
+        <ul style="font-size: 13px">
+          <li th:class="${tab == 'profile' ? 'is-active' : ''}" data-tab="profile">
+            <a role="button">
+              <span class="icon is-small" aria-hidden="true">
+                <i class="fa-solid fa-user-tie"></i>
+              </span>
+              <span>Perfil</span>
+            </a>
+          </li>
+          <li th:class="${tab == 'social' ? 'is-active' : ''}" data-tab="social">
+            <a role="button">
+              <span class="icon is-small" aria-hidden="true">
+                <i class="fa-solid fa-link"></i>
+              </span>
+              <span>Social</span>
+            </a>
+          </li>
+          <li th:class="${tab == 'security' ? 'is-active' : ''}" data-tab="security">
+            <a role="button">
+              <span class="icon is-small" aria-hidden="true">
+                <i class="fa-solid fa-shield-halved"></i>
+              </span>
+              <span>Segurança</span>
+            </a>
+          </li>
+        </ul>
+      </div>
 
-  <div class="container" id="root">
-    <div id="tabs" class="tabs is-right is-boxed pt-6">
-      <ul style="font-size: 13px">
-        <li th:class="${tab == 'profile' ? 'is-active' : ''}" data-tab="profile">
-          <a role="button">
-            <span class="icon is-small" aria-hidden="true">
-              <i class="fa-solid fa-user-tie"></i>
-            </span>
-            <span>Perfil</span>
-          </a>
-        </li>
-        <li th:class="${tab == 'social' ? 'is-active' : ''}" data-tab="social">
-          <a role="button">
-            <span class="icon is-small" aria-hidden="true">
-              <i class="fa-solid fa-link"></i>
-            </span>
-            <span>Social</span>
-          </a>
-        </li>
-        <li th:class="${tab == 'security' ? 'is-active' : ''}" data-tab="security">
-          <a role="button">
-            <span class="icon is-small" aria-hidden="true">
-              <i class="fa-solid fa-shield-halved"></i>
-            </span>
-            <span>Segurança</span>
-          </a>
-        </li>
-      </ul>
-    </div>
+      <main class="pb-6 px-3">
+        <form
+          id="internal-profile-form"
+          enctype="multipart/form-data"
+          th:class="|py-5 ${tab != 'profile' ? 'is-hidden' : ''}|"
+          method="post"
+          th:action="@{/internal/profile}"
+        >
+          <h1 class="pb-3 title">Seu perfil</h1>
 
-    <main class="pb-6 px-3">
-      <form id="internal-profile-form" enctype="multipart/form-data"
-        th:class="|py-5 ${tab != 'profile' ? 'is-hidden' : ''}|" method="post" th:action="@{/internal/profile}">
-        <h1 class="pb-3 title">Seu perfil</h1>
+          <div class="is-flex is-justify-content-center align-items-sm-center py-3">
+            <div>
+              <img
+                th:src="${user.avatarURL}"
+                class="avatar"
+                th:aria-label="|Avatar do usuário ${user.name}|"
+                title="Avatar do usuário"
+                width="128"
+                height="128"
+                style="width: 128px; height: 128px"
+              />
+              <input name="avatar" class="is-hidden" type="file" accept="image/png, image/jpeg, image/webp" />
+            </div>
+          </div>
 
-        <div class="is-flex is-justify-content-center align-items-sm-center py-3">
+          <div class="field-body pb-3">
+            <div class="field">
+              <label class="label" for="inp-name">Nome</label>
+              <div class="control is-expanded has-icons-left has-icons-right">
+                <input
+                  th:value="${user.name}"
+                  name="name"
+                  class="input"
+                  id="inp-name"
+                  type="text"
+                  maxlength="50"
+                  placeholder="Nico Robin"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-solid fa-signature"></i>
+                </span>
+                <span class="is-small icon is-right">
+                  <small id="name-len" th:text="${50 - user.name.length}"></small>
+                </span>
+              </div>
+              <p id="name-helper" class="help is-danger is-hidden">Nome precisa ser maior</p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="inp-pseud" class="label">Pseudônimo</label>
+            <div class="control is-expanded has-icons-left has-icons-right">
+              <input
+                id="inp-pseud"
+                th:value="${user.pseudonym}"
+                name="pseudonym"
+                class="input"
+                type="text"
+                placeholder="Monet"
+                maxlength="25"
+              />
+              <span class="icon is-small is-left">
+                <i class="fa-solid fa-user-astronaut"></i>
+              </span>
+              <span class="is-small icon is-right">
+                <small
+                  id="pseudonym-len"
+                  th:text="${25 - (#strings.isEmpty(user.pseudonym) ? 0 : user.pseudonym.length)}"
+                ></small>
+              </span>
+            </div>
+            <p class="help">
+              O pseudônimo é o nome que será exibido publicamente. Você pode deixá-lo em branco, se preferir.
+              Se escolher definir um pseudônimo, apenas outros usuários internos do sistema terão acesso ao
+              seu nome verdadeiro.
+            </p>
+          </div>
+
+          <div class="control">
+            <label for="inp-bio" class="label">Bio</label>
+            <textarea
+              maxlength="500"
+              class="textarea"
+              id="inp-bio"
+              name="bio"
+              placeholder="Fale um pouco sobre você para seus leitores"
+              th:text="${user.bio}"
+              style="min-height: 200px"
+            ></textarea>
+          </div>
+
+          <div class="py-5 buttons">
+            <button type="submit" class="button is-primary">Salvar perfil</button>
+          </div>
+
           <div>
-            <img th:src="${user.avatarURL}" class="avatar" th:aria-label="|Avatar do usuário ${user.name}|"
-              title="Avatar do usuário" width="128" height="128" style="width: 128px; height: 128px" />
-            <input name="avatar" class="is-hidden" type="file" accept="image/png, image/jpeg, image/webp" />
-          </div>
-        </div>
-
-        <div class="field">
-          <label class="label" for="inp-name">Nome</label>
-          <div class="control has-icons-left has-icons-right">
-            <input th:value="${user.name}" name="name" class="input" id="inp-name" type="text" maxlength="50"
-              placeholder="Nico Robin" />
-            <span class="icon is-small is-left">
-              <i class="fa-solid fa-signature"></i>
-            </span>
-            <span class="is-small icon is-right">
-              <small id="name-len" th:text="${50 - user.name.length}"></small>
-            </span>
-          </div>
-          <p id="name-helper" class="help is-danger is-hidden">Nome precisa ser maior</p>
-        </div>
-
-        <div class="field">
-          <label for="inp-pseud" class="label">Pseudônimo</label>
-          <div class="control has-icons-left has-icons-right">
-            <input id="inp-pseud" th:value="${user.pseudonym}" name="pseudonym" class="input" type="text"
-              placeholder="Monet" maxlength="25" />
-            <span class="icon is-small is-left">
-              <i class="fa-solid fa-user-astronaut"></i>
-            </span>
-            <span class="is-small icon is-right">
-              <small id="pseudonym-len"
-                th:text="${25 - (#strings.isEmpty(user.pseudonym) ? 0 : user.pseudonym.length)}"></small>
-            </span>
-          </div>
-          <p class="help">
-            O pseudônimo é o nome que será exibido publicamente. Você pode deixá-lo em branco, se preferir.
-            Se escolher definir um pseudônimo, apenas outros usuários internos do sistema terão acesso ao
-            seu nome verdadeiro.
-          </p>
-        </div>
-
-        <div class="control">
-          <label for="inp-bio" class="label">Bio</label>
-          <textarea maxlength="500" class="textarea" id="inp-bio" name="Bio"
-            placeholder="Fale um pouco sobre você para seus leitores" th:text="${user.bio}"
-            style="min-height: 200px;"></textarea>
-        </div>
-
-        <div class="py-5 buttons">
-          <button type="submit" class="button is-primary">Salvar perfil</button>
-        </div>
-
-        <div>
-          <small>
-            Profile icon made by
-            <a target="_blank" rel="noopener noreferrer" href="https://www.flaticon.com/authors/md-tanvirul-haque"
-              title="Md Tanvirul Haque">
-              Md Tanvirul Haque
-            </a>
-            from
-            <a target="_blank" rel="noopener noreferrer" href="https://www.flaticon.com/" title="Flaticon">
-              www.flaticon.com
-            </a>
-          </small>
-        </div>
-      </form>
-
-      <div id="social-container" th:class="|py-5 ${tab != 'social' ? 'is-hidden' : ''}|">
-        <div class="pb-3 mb-5 is-flex is-justify-content-space-between is-align-items-center gap-3">
-          <h1 class="title mb-0">Seus links sociais</h1>
-          <button id="clear-links" class="button is-ghost has-text-danger is-small" type="button">Limpar campos</button>
-        </div>
-
-        <form id="internal-profile-social-form" enctype="application/x-www-form-urlencoded" method="post"
-          th:action="@{/internal/profile/social}">
-
-          <div id="instagram" class="field pb-2">
-            <label for="insta-inp" class="label">Instagram</label>
-            <div class="control has-icons-left">
-              <input id="insta-inp" th:value="${user.social.instagram}" class="input" type="text" name="instagram"
-                placeholder="https://www.instagram.com/ojcdevg" />
-              <span class="icon is-small is-left">
-                <i class="fa-brands fa-instagram"></i>
-              </span>
-            </div>
-          </div>
-
-          <div id="youtube" class="field pb-2">
-            <label for="youtube-inp" class="label">YouTube</label>
-            <div class="control has-icons-left">
-              <input th:value="${user.social.youtube}" id="youtube-inp" class="input" type="text" name="youtube"
-                placeholder="https://www.youtube.com/@YouTube" />
-              <span class="icon is-small is-left">
-                <i class="fa-brands fa-youtube"></i>
-              </span>
-            </div>
-          </div>
-
-          <div id="twitter" class="field pb-2">
-            <label for="twitter-inp" class="label">Twitter/X</label>
-            <div class="control has-icons-left">
-              <input th:value="${user.social.twitter}" id="twitter-inp" class="input" type="text" name="twitter"
-                placeholder="https://x.com/odev_gabriel | https://twitter.com/odev_gabriel" />
-              <span class="icon is-small is-left">
-                <i class="fa-brands fa-x-twitter"></i>
-              </span>
-            </div>
-          </div>
-
-          <div id="github" class="field pb-2">
-            <label for="github-inp" class="label">GitHub</label>
-            <div class="control has-icons-left">
-              <input th:value="${user.social.github}" id="github-inp" class="input" type="text" name="github"
-                placeholder="https://github.com/oGabrielSilva" />
-              <span class="icon is-small is-left">
-                <i class="fa-brands fa-github"></i>
-              </span>
-            </div>
-          </div>
-
-          <div id="discord" class="field pb-2">
-            <label for="discord-inp" class="label">Discord</label>
-            <div class="control has-icons-left">
-              <input th:value="${user.social.discord}" id="discord-inp" class="input" type="text" name="discord"
-                placeholder="" />
-              <span class="icon is-small is-left">
-                <i class="fa-brands fa-discord"></i>
-              </span>
-            </div>
-          </div>
-
-          <div id="linkedin" class="field pb-2">
-            <label for="linkedin-inp" class="label">LinkedIn</label>
-            <div class="control has-icons-left">
-              <input th:value="${user.social.linkedin}" id="linkedin-inp" class="input" type="text" name="linkedin"
-                placeholder="https://www.linkedin.com/in/ogabriel-henrique" />
-              <span class="icon is-small is-left">
-                <i class="fa-brands fa-linkedin-in"></i>
-              </span>
-            </div>
-          </div>
-
-          <div id="site" class="field pb-2">
-            <label for="site-inp" class="label">Site</label>
-            <div class="control has-icons-left">
-              <input th:value="${user.social.site}" id="site-inp" class="input" type="text" name="site"
-                placeholder="https://devify.cyou" />
-              <span class="icon is-small is-left">
-                <i class="fa-solid fa-globe"></i>
-              </span>
-            </div>
-          </div>
-
-          <div class="buttons py-5">
-            <button class="button is-primary" type="submit">
-              Salvar links
-            </button>
-            <button class="button" type="reset">Resetar</button>
+            <small>
+              Profile icon made by
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.flaticon.com/authors/md-tanvirul-haque"
+                title="Md Tanvirul Haque"
+              >
+                Md Tanvirul Haque
+              </a>
+              from
+              <a target="_blank" rel="noopener noreferrer" href="https://www.flaticon.com/" title="Flaticon">
+                www.flaticon.com
+              </a>
+            </small>
           </div>
         </form>
-      </div>
 
-      <div id="security-container" th:class="|py-5 ${tab != 'security' ? 'is-hidden' : ''}|">
-        <h1 class="title">Dados de segurança e email</h1>
-
-        <div class="field">
-          <label for="email-lab" class="label">Email</label>
-          <div class="control has-icons-left">
-            <input id="email-lab" class="input is-clickable" type="text" readonly="true" th:value="${user.email}" />
-            <span class="icon is-small is-left">
-              <i class="fa-solid fa-at"></i>
-            </span>
+        <div id="social-container" th:class="|py-5 ${tab != 'social' ? 'is-hidden' : ''}|">
+          <div class="pb-3 mb-5 is-flex is-justify-content-space-between is-align-items-center gap-3">
+            <h1 class="title mb-0">Seus links sociais</h1>
+            <button id="clear-links" class="button is-ghost has-text-danger is-small" type="button">
+              Limpar campos
+            </button>
           </div>
 
-          <form id="email-form" th:action="@{/internal/profile/email}" enctype="application/x-www-form-urlencoded"
-            method="post">
-            <div class="modal" id="email-modal">
+          <form
+            id="internal-profile-social-form"
+            enctype="application/x-www-form-urlencoded"
+            method="post"
+            th:action="@{/internal/profile/social}"
+          >
+            <div id="instagram" class="field pb-2">
+              <label for="insta-inp" class="label">Instagram</label>
+              <div class="control has-icons-left">
+                <input
+                  id="insta-inp"
+                  th:value="${user.social.instagram}"
+                  class="input"
+                  type="text"
+                  name="instagram"
+                  placeholder="https://www.instagram.com/ojcdevg"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-brands fa-instagram"></i>
+                </span>
+              </div>
+            </div>
+
+            <div id="youtube" class="field pb-2">
+              <label for="youtube-inp" class="label">YouTube</label>
+              <div class="control has-icons-left">
+                <input
+                  th:value="${user.social.youtube}"
+                  id="youtube-inp"
+                  class="input"
+                  type="text"
+                  name="youtube"
+                  placeholder="https://www.youtube.com/@YouTube"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-brands fa-youtube"></i>
+                </span>
+              </div>
+            </div>
+
+            <div id="twitter" class="field pb-2">
+              <label for="twitter-inp" class="label">Twitter/X</label>
+              <div class="control has-icons-left">
+                <input
+                  th:value="${user.social.twitter}"
+                  id="twitter-inp"
+                  class="input"
+                  type="text"
+                  name="twitter"
+                  placeholder="https://x.com/odev_gabriel | https://twitter.com/odev_gabriel"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-brands fa-x-twitter"></i>
+                </span>
+              </div>
+            </div>
+
+            <div id="github" class="field pb-2">
+              <label for="github-inp" class="label">GitHub</label>
+              <div class="control has-icons-left">
+                <input
+                  th:value="${user.social.github}"
+                  id="github-inp"
+                  class="input"
+                  type="text"
+                  name="github"
+                  placeholder="https://github.com/oGabrielSilva"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-brands fa-github"></i>
+                </span>
+              </div>
+            </div>
+
+            <div id="discord" class="field pb-2">
+              <label for="discord-inp" class="label">Discord</label>
+              <div class="control has-icons-left">
+                <input
+                  th:value="${user.social.discord}"
+                  id="discord-inp"
+                  class="input"
+                  type="text"
+                  name="discord"
+                  placeholder=""
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-brands fa-discord"></i>
+                </span>
+              </div>
+            </div>
+
+            <div id="linkedin" class="field pb-2">
+              <label for="linkedin-inp" class="label">LinkedIn</label>
+              <div class="control has-icons-left">
+                <input
+                  th:value="${user.social.linkedin}"
+                  id="linkedin-inp"
+                  class="input"
+                  type="text"
+                  name="linkedin"
+                  placeholder="https://www.linkedin.com/in/ogabriel-henrique"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-brands fa-linkedin-in"></i>
+                </span>
+              </div>
+            </div>
+
+            <div id="site" class="field pb-2">
+              <label for="site-inp" class="label">Site</label>
+              <div class="control has-icons-left">
+                <input
+                  th:value="${user.social.site}"
+                  id="site-inp"
+                  class="input"
+                  type="text"
+                  name="site"
+                  placeholder="https://devify.cyou"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-solid fa-globe"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="buttons py-5">
+              <button class="button is-primary" type="submit">Salvar links</button>
+              <button class="button" type="reset">Resetar</button>
+            </div>
+          </form>
+        </div>
+
+        <div id="security-container" th:class="|py-5 ${tab != 'security' ? 'is-hidden' : ''}|">
+          <h1 class="title">Dados de segurança e email</h1>
+
+          <div class="field">
+            <label for="email-lab" class="label">Email</label>
+            <div class="control has-icons-left">
+              <input
+                id="email-lab"
+                class="input is-clickable"
+                type="text"
+                readonly="true"
+                th:value="${user.email}"
+              />
+              <span class="icon is-small is-left">
+                <i class="fa-solid fa-at"></i>
+              </span>
+            </div>
+
+            <form
+              id="email-form"
+              th:action="@{/internal/profile/email}"
+              enctype="application/x-www-form-urlencoded"
+              method="post"
+            >
+              <div class="modal" id="email-modal">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                  <header class="modal-card-head">
+                    <h1 class="modal-card-title">Trocar email?</h1>
+                    <button class="delete goBack" aria-label="Fechar" type="button"></button>
+                  </header>
+                  <section class="modal-card-body">
+                    <div>
+                      <div class="field">
+                        <label for="email" class="label">Novo email</label>
+                        <div class="control has-icons-left">
+                          <input id="email" name="email" class="input" type="text" th:value="${user.email}" />
+                          <span class="icon is-small is-left">
+                            <i class="fa-solid fa-envelope"></i>
+                          </span>
+                        </div>
+                        <p class="help">Trocar seu email? Digite um valor válido</p>
+                      </div>
+
+                      <div class="field">
+                        <label for="password" class="label">Confirme sua senha</label>
+                        <div class="control has-icons-left">
+                          <input id="password" name="password" class="input" type="password" />
+                          <span class="icon is-small is-left">
+                            <i class="fa-solid fa-lock"></i>
+                          </span>
+                        </div>
+                        <p id="password-helper" class="help pb-1 has-text-danger is-hidden">
+                          Senha não aceita. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma
+                          letra maiúscula, uma letra minúscula e um número
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+                  <footer class="modal-card-foot">
+                    <div class="buttons">
+                      <button class="button is-success" type="submit">Salvar alteração</button>
+                      <button aria-label="Cancelar" type="reset" id="close-modal" class="button goBack">
+                        Cancelar
+                      </button>
+                    </div>
+                  </footer>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="field">
+            <label class="label" for="inp-username">Username</label>
+            <div class="control is-expanded has-icons-left has-icons-right">
+              <input
+                th:value="${username}"
+                name="username"
+                class="input is-clickable"
+                id="inp-username-readonly"
+                type="text"
+                maxlength="30"
+                placeholder="adevrobin"
+                readonly
+              />
+              <span class="icon is-small is-left">
+                <i class="fa-solid fa-id-badge"></i>
+              </span>
+              <span class="is-small icon is-right">
+                <small th:text="${30 - user.username.length}"></small>
+              </span>
+            </div>
+          </div>
+
+          <form
+            id="username-form"
+            th:action="@{/internal/profile/username}"
+            enctype="application/x-www-form-urlencoded"
+            method="post"
+          >
+            <div class="modal" id="username-modal">
               <div class="modal-background"></div>
               <div class="modal-card">
                 <header class="modal-card-head">
-                  <h1 class="modal-card-title">Trocar email?</h1>
+                  <h1 class="modal-card-title">Trocar username?</h1>
                   <button class="delete goBack" aria-label="Fechar" type="button"></button>
                 </header>
                 <section class="modal-card-body">
                   <div>
                     <div class="field">
-                      <label for="email" class="label">Novo email</label>
-                      <div class="control has-icons-left">
-                        <input id="email" name="email" class="input" type="text" th:value="${user.email}" />
+                      <label for="inp-username" class="label">Novo username</label>
+                      <div class="control is-expanded has-icons-left has-icons-right">
+                        <input
+                          th:value="${username}"
+                          name="username"
+                          class="input"
+                          id="inp-username"
+                          type="text"
+                          maxlength="30"
+                          placeholder="adevrobin"
+                          required
+                        />
                         <span class="icon is-small is-left">
-                          <i class="fa-solid fa-envelope"></i>
+                          <i class="fa-solid fa-id-badge"></i>
+                        </span>
+                        <span class="is-small icon is-right">
+                          <small id="username-len" th:text="${30 - user.username.length}"></small>
                         </span>
                       </div>
-                      <p class="help">Trocar seu email? Digite um valor válido</p>
-                    </div>
-
-                    <div class="field">
-                      <label for="password" class="label">Confirme sua senha</label>
-                      <div class="control has-icons-left">
-                        <input id="password" name="password" class="input" type="password" />
-                        <span class="icon is-small is-left">
-                          <i class="fa-solid fa-lock"></i>
-                        </span>
-                      </div>
-                      <p id="password-helper" class="help pb-1 has-text-danger is-hidden">
-                        Senha não aceita. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra
-                        maiúscula, uma letra minúscula e um número
+                      <p class="help">
+                        Seu nome de usuário precisa ser exclusivo. Ele é público. Utilizado para localizar seu
+                        perfil e identificá-lo sem expor seu email ou ID.
+                        <em>
+                          <strong>Recomendamos que você o mantenha igual ao seu pseudônimo</strong>
+                        </em>
                       </p>
                     </div>
                   </div>
@@ -263,96 +437,112 @@
                 <footer class="modal-card-foot">
                   <div class="buttons">
                     <button class="button is-success" type="submit">Salvar alteração</button>
-                    <button aria-label="Cancelar" type="reset" id="close-modal" class="button goBack">Cancelar</button>
+                    <button
+                      aria-label="Cancelar"
+                      type="button"
+                      id="close-username-modal"
+                      class="button goBack"
+                    >
+                      Cancelar
+                    </button>
                   </div>
                 </footer>
               </div>
             </div>
           </form>
-        </div>
 
-        <div>
-          <button id="change-pass" type="button" class="button is-ghost has-text-warning px-0">
-            <span class="icon is-small">
-              <i class="fa-solid fa-key"></i>
-            </span>
-            <span>Trocar minha senha</span>
-          </button>
+          <div>
+            <button id="change-pass" type="button" class="button is-ghost has-text-warning px-0">
+              <span class="icon is-small">
+                <i class="fa-solid fa-key"></i>
+              </span>
+              <span>Trocar minha senha</span>
+            </button>
 
-          <form id="password-form" th:action="@{/internal/profile/password}" enctype="application/x-www-form-urlencoded"
-            method="post">
-            <div class="modal" id="password-modal">
-              <div class="modal-background"></div>
-              <div class="modal-card">
-                <header class="modal-card-head">
-                  <h1 class="modal-card-title">Trocar senha?</h1>
-                  <button class="delete goBack" aria-label="Fechar" type="button"></button>
-                </header>
-                <section class="modal-card-body">
-                  <div>
-                    <div class="field">
-                      <label for="current-password" class="label">Senha atual</label>
-                      <div class="control has-icons-left">
-                        <input id="current-password" name="currentPassword" class="input" type="password" />
-                        <span class="icon is-small is-left">
-                          <i class="fa-solid fa-lock-open"></i>
-                        </span>
+            <form
+              id="password-form"
+              th:action="@{/internal/profile/password}"
+              enctype="application/x-www-form-urlencoded"
+              method="post"
+            >
+              <div class="modal" id="password-modal">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                  <header class="modal-card-head">
+                    <h1 class="modal-card-title">Trocar senha?</h1>
+                    <button class="delete goBack" aria-label="Fechar" type="button"></button>
+                  </header>
+                  <section class="modal-card-body">
+                    <div>
+                      <div class="field">
+                        <label for="current-password" class="label">Senha atual</label>
+                        <div class="control has-icons-left">
+                          <input id="current-password" name="currentPassword" class="input" type="password" />
+                          <span class="icon is-small is-left">
+                            <i class="fa-solid fa-lock-open"></i>
+                          </span>
+                        </div>
+                        <p
+                          id="current-password-helper"
+                          class="help password-helper pb-1 has-text-danger is-hidden"
+                        >
+                          Senha não aceita. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma
+                          letra maiúscula, uma letra minúscula e um número
+                        </p>
                       </div>
-                      <p id="current-password-helper" class="help password-helper pb-1 has-text-danger is-hidden">
-                        Senha não aceita. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra
-                        maiúscula, uma letra minúscula e um número
-                      </p>
-                    </div>
 
-                    <div class="field">
-                      <label for="new-password" class="label">Nova senha</label>
-                      <div class="control has-icons-left">
-                        <input id="new-password" name="newPassword" class="input" type="password" />
-                        <span class="icon is-small is-left">
-                          <i class="fa-solid fa-lock"></i>
-                        </span>
+                      <div class="field">
+                        <label for="new-password" class="label">Nova senha</label>
+                        <div class="control has-icons-left">
+                          <input id="new-password" name="newPassword" class="input" type="password" />
+                          <span class="icon is-small is-left">
+                            <i class="fa-solid fa-lock"></i>
+                          </span>
+                        </div>
+                        <p
+                          id="new-password-helper"
+                          class="help password-helper pb-1 has-text-danger is-hidden"
+                        >
+                          Senha não aceita. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma
+                          letra maiúscula, uma letra minúscula e um número
+                        </p>
                       </div>
-                      <p id="new-password-helper" class="help password-helper pb-1 has-text-danger is-hidden">
-                        Senha não aceita. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra
-                        maiúscula, uma letra minúscula e um número
-                      </p>
-                    </div>
 
-                    <div class="field">
-                      <label for="confirm-password" class="label">Confirme nova senha</label>
-                      <div class="control has-icons-left">
-                        <input id="confirm-password" name="confirmPassword" class="input" type="password" />
-                        <span class="icon is-small is-left">
-                          <i class="fa-solid fa-lock"></i>
-                        </span>
+                      <div class="field">
+                        <label for="confirm-password" class="label">Confirme nova senha</label>
+                        <div class="control has-icons-left">
+                          <input id="confirm-password" name="confirmPassword" class="input" type="password" />
+                          <span class="icon is-small is-left">
+                            <i class="fa-solid fa-lock"></i>
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </section>
-                <footer class="modal-card-foot">
-                  <div class="buttons">
-                    <button class="button is-success" type="submit">Salvar alteração</button>
-                    <button aria-label="Cancelar" type="reset" id="close-pass-modal"
-                      class="button goBack">Cancelar</button>
-                  </div>
-                </footer>
+                  </section>
+                  <footer class="modal-card-foot">
+                    <div class="buttons">
+                      <button class="button is-success" type="submit">Salvar alteração</button>
+                      <button aria-label="Cancelar" type="reset" id="close-pass-modal" class="button goBack">
+                        Cancelar
+                      </button>
+                    </div>
+                  </footer>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
-    </main>
-  </div>
+      </main>
+    </div>
 
-  <th th:replace="~{partials/footer}"></th>
+    <th th:replace="~{partials/footer}"></th>
 
-  <script>
-    function clearLinks() {
-      $("#internal-profile-social-form").find("input").val("")
-    }
+    <script>
+      function clearLinks() {
+        $('#internal-profile-social-form').find('input').val('')
+      }
 
-    $("#clear-links").on("click", clearLinks)
-  </script>
-</body>
-
+      $('#clear-links').on('click', clearLinks)
+    </script>
+  </body>
 </html>

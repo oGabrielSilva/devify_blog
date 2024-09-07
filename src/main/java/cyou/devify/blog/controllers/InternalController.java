@@ -45,6 +45,7 @@ public class InternalController {
     mv.addObject("pageTitle", "Perfil de " + user.getName());
     mv.addObject("tab", StringUtils.isNonNullOrBlank(tab) ? tab.toLowerCase() : "profile");
     mv.addObject("user", user);
+    mv.addObject("username", user.getUsername());
     return mv;
   }
 
