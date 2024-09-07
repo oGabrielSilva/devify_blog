@@ -22,7 +22,6 @@
           <span>Recurso não encontrado!</span>
         </h1>
         <p>Oopss... parece que o que você está procurando não existe</p>
-        <p>Se você acredita que isto é um engano, entre em contato com o administrador</p>
         <div class="buttons pt-3">
           <a href="/" class="button">
             <span class="icon is-small" aria-hidden="true">
@@ -30,16 +29,18 @@
             </span>
             <span>Início</span>
           </a>
-
-          <a href="/report" class="button has-text-warning">
-            <span class="icon is-small" aria-hidden="true">
-              <i class="fa-solid fa-envelope"></i>
-            </span>
-            <span>Reportar</span>
-          </a>
         </div>
       </main>
     </div>
+
+    <!--
+
+    Exception:  ${exception.message}
+        <c:forEach items="${exception.stackTrace}" var="ste">    ${ste}
+    </c:forEach>
+  -->
+
+    <div th:text="|Failed URL: ${exception}|"></div>
 
     <th th:replace="~{partials/footer}"></th>
     <script>

@@ -169,6 +169,22 @@
             method="post"
             th:action="@{/internal/profile/social}"
           >
+            <div id="threads" class="field pb-2">
+              <label for="threads-inp" class="label">Threads</label>
+              <div class="control has-icons-left">
+                <input
+                  id="threads-inp"
+                  th:value="${user.social.threads}"
+                  class="input"
+                  type="text"
+                  name="threads"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-brands fa-threads"></i>
+                </span>
+              </div>
+            </div>
+
             <div id="instagram" class="field pb-2">
               <label for="insta-inp" class="label">Instagram</label>
               <div class="control has-icons-left">
@@ -178,10 +194,25 @@
                   class="input"
                   type="text"
                   name="instagram"
-                  placeholder="https://www.instagram.com/ojcdevg"
                 />
                 <span class="icon is-small is-left">
                   <i class="fa-brands fa-instagram"></i>
+                </span>
+              </div>
+            </div>
+
+            <div id="facebook" class="field pb-2">
+              <label for="facebook-inp" class="label">Facebook</label>
+              <div class="control has-icons-left">
+                <input
+                  id="facebook-inp"
+                  th:value="${user.social.facebook}"
+                  class="input"
+                  type="text"
+                  name="facebook"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-brands fa-facebook"></i>
                 </span>
               </div>
             </div>
@@ -195,10 +226,57 @@
                   class="input"
                   type="text"
                   name="youtube"
-                  placeholder="https://www.youtube.com/@YouTube"
                 />
                 <span class="icon is-small is-left">
                   <i class="fa-brands fa-youtube"></i>
+                </span>
+              </div>
+            </div>
+
+            <div id="bluesky" class="field pb-2">
+              <label for="bluesky-inp" class="label">BlueSky</label>
+              <div class="control has-icons-left">
+                <input
+                  id="bluesky-inp"
+                  th:value="${user.social.bluesky}"
+                  class="input"
+                  type="text"
+                  name="bluesky"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-brands fa-bluesky"></i>
+                </span>
+              </div>
+            </div>
+
+            <div id="mastodon" class="field pb-2">
+              <label for="mastodon-inp" class="label">Mastodon</label>
+              <div class="control has-icons-left">
+                <input
+                  id="mastodon-inp"
+                  th:value="${user.social.mastodon}"
+                  class="input"
+                  type="text"
+                  name="mastodon"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-brands fa-mastodon"></i>
+                </span>
+              </div>
+            </div>
+
+            <div id="reddit" class="field pb-2">
+              <label for="reddit-inp" class="label">Reddit</label>
+              <div class="control has-icons-left">
+                <input
+                  id="reddit-inp"
+                  th:value="${user.social.reddit}"
+                  class="input"
+                  type="text"
+                  name="reddit"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-brands fa-reddit"></i>
                 </span>
               </div>
             </div>
@@ -212,7 +290,6 @@
                   class="input"
                   type="text"
                   name="twitter"
-                  placeholder="https://x.com/odev_gabriel | https://twitter.com/odev_gabriel"
                 />
                 <span class="icon is-small is-left">
                   <i class="fa-brands fa-x-twitter"></i>
@@ -229,7 +306,6 @@
                   class="input"
                   type="text"
                   name="github"
-                  placeholder="https://github.com/oGabrielSilva"
                 />
                 <span class="icon is-small is-left">
                   <i class="fa-brands fa-github"></i>
@@ -263,7 +339,6 @@
                   class="input"
                   type="text"
                   name="linkedin"
-                  placeholder="https://www.linkedin.com/in/ogabriel-henrique"
                 />
                 <span class="icon is-small is-left">
                   <i class="fa-brands fa-linkedin-in"></i>
@@ -274,16 +349,25 @@
             <div id="site" class="field pb-2">
               <label for="site-inp" class="label">Site</label>
               <div class="control has-icons-left">
-                <input
-                  th:value="${user.social.site}"
-                  id="site-inp"
-                  class="input"
-                  type="text"
-                  name="site"
-                  placeholder="https://devify.cyou"
-                />
+                <input th:value="${user.social.site}" id="site-inp" class="input" type="text" name="site" />
                 <span class="icon is-small is-left">
                   <i class="fa-solid fa-globe"></i>
+                </span>
+              </div>
+            </div>
+
+            <div id="tiktok" class="field pb-2">
+              <label for="tiktok-inp" class="label">TikTok</label>
+              <div class="control has-icons-left">
+                <input
+                  id="tiktok-inp"
+                  th:value="${user.social.tiktok}"
+                  class="input"
+                  type="text"
+                  name="tiktok"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-brands fa-tiktok"></i>
                 </span>
               </div>
             </div>

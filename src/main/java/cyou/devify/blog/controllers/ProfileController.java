@@ -80,47 +80,22 @@ public class ProfileController {
   public String updateSocial(SocialViewModel payload) {
     var user = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
     var social = user.getSocial();
-    boolean hasChanges = false;
 
-    if (StringUtils.isNonNullOrBlank(payload.instagram()) && !payload.instagram().equals(social.getInstagram())) {
-      social.setInstagram(payload.instagram());
-      hasChanges = true;
-    }
+    social.setInstagram(payload.instagram());
+    social.setDiscord(payload.discord());
+    social.setGithub(payload.github());
+    social.setLinkedin(payload.linkedin());
+    social.setSite(payload.site());
+    social.setTwitter(payload.twitter());
+    social.setYoutube(payload.youtube());
+    social.setBluesky(payload.bluesky());
+    social.setFacebook(payload.facebook());
+    social.setMastodon(payload.mastodon());
+    social.setReddit(payload.reddit());
+    social.setThreads(payload.threads());
+    social.setTiktok(payload.tiktok());
 
-    if (StringUtils.isNonNullOrBlank(payload.discord()) && !payload.discord().equals(social.getDiscord())) {
-      social.setDiscord(payload.discord());
-      hasChanges = true;
-    }
-
-    if (StringUtils.isNonNullOrBlank(payload.github()) && !payload.github().equals(social.getGithub())) {
-      social.setGithub(payload.github());
-      hasChanges = true;
-    }
-
-    if (StringUtils.isNonNullOrBlank(payload.linkedin()) && !payload.linkedin().equals(social.getLinkedin())) {
-      social.setLinkedin(payload.linkedin());
-      hasChanges = true;
-    }
-
-    if (StringUtils.isNonNullOrBlank(payload.site()) && !payload.site().equals(social.getSite())) {
-      social.setSite(payload.site());
-      hasChanges = true;
-    }
-
-    if (StringUtils.isNonNullOrBlank(payload.twitter()) && !payload.twitter().equals(social.getTwitter())) {
-      social.setTwitter(payload.twitter());
-      hasChanges = true;
-    }
-
-    if (StringUtils.isNonNullOrBlank(payload.youtube()) && !payload.youtube().equals(social.getYoutube())) {
-      social.setYoutube(payload.youtube());
-      hasChanges = true;
-    }
-
-    if (hasChanges) {
-      user.setSocial(social);
-      userRepository.save(user);
-    }
+    userRepository.save(user);
 
     return "redirect:/internal/profile?tab=social";
   }

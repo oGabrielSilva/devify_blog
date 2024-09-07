@@ -19,7 +19,8 @@
         </p>
 
         <div class="py-5">
-          <h3 class="subtitle">Nossa equipe</h3>
+          <h3 class="subtitle">Nossa equipe:</h3>
+          <hr />
           <th:block th:if="${#lists.isEmpty(staff)}">
             <p><em>Nenhuma staff cadastrada</em></p>
           </th:block>
@@ -29,7 +30,7 @@
               <div
                 class="has-text-centered is-flex is-flex-direction-column gap-2 is-justify-content-flex-start is-align-items-center"
               >
-                <a th:href="@{/profile/username(username=${user.username})}">
+                <a th:href="@{/profile/{username}(username=${user.username})}">
                   <img
                     th:src="${user.avatarURL}"
                     th:alt="|Avatar - ${name}|"
@@ -41,192 +42,194 @@
                     loading="lazy"
                   />
                 </a>
-                <h3 class="subtitle is-5 m-0" th:text="${name}"></h3>
-                <p th:text="${user.getReducedBio(340)}" style="font-size: small"></p>
-
                 <div>
-                  <div th:with="social=${user.social}" class="buttons pt-1 gap pb-0 mb-0">
-                    <a
-                      th:if="${user.isRootEmail}"
-                      th:href="@{mailto:{email}(email=user.email)}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="button is-text"
-                      title="Envie-me um email"
-                    >
-                      <span class="icon is-small">
-                        <i class="fa-solid fa-envelope"></i>
-                      </span>
-                    </a>
+                  <h3 class="subtitle is-5 m-0" th:text="${name}"></h3>
+                  <p th:text="${user.getReducedBio(340)}" style="font-size: small"></p>
 
-                    <a
-                      th:if="${!#strings.isEmpty(social.threads)}"
-                      th:href="${social.threads}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Link para meu Thread"
-                      class="button is-text"
-                    >
-                      <span class="icon is-small">
-                        <i class="fa-brands fa-threads"></i>
-                      </span>
-                    </a>
+                  <div>
+                    <div th:with="social=${user.social}" class="buttons gap is-justify-content-center">
+                      <a
+                        th:if="${user.isRootEmail}"
+                        th:href="@{mailto:{email}(email=user.email)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="button is-text"
+                        title="Envie-me um email"
+                      >
+                        <span class="icon is-small">
+                          <i class="fa-solid fa-envelope"></i>
+                        </span>
+                      </a>
 
-                    <a
-                      th:if="${!#strings.isEmpty(social.instagram)}"
-                      th:href="${social.instagram}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Link para meu Instagram"
-                      class="button is-text"
-                    >
-                      <span class="icon is-small">
-                        <i class="fa-brands fa-instagram"></i>
-                      </span>
-                    </a>
+                      <a
+                        th:if="${!#strings.isEmpty(social.threads)}"
+                        th:href="${social.threads}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Link para meu Thread"
+                        class="button is-text"
+                      >
+                        <span class="icon is-small">
+                          <i class="fa-brands fa-threads"></i>
+                        </span>
+                      </a>
 
-                    <a
-                      th:if="${!#strings.isEmpty(social.facebook)}"
-                      th:href="${social.facebook}"
-                      target="_blank"
-                      title="Link para meu Facebook"
-                      rel="noopener noreferrer"
-                      class="button is-text"
-                    >
-                      <span class="icon is-small">
-                        <i class="fa-brands fa-facebook"></i>
-                      </span>
-                    </a>
+                      <a
+                        th:if="${!#strings.isEmpty(social.instagram)}"
+                        th:href="${social.instagram}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Link para meu Instagram"
+                        class="button is-text"
+                      >
+                        <span class="icon is-small">
+                          <i class="fa-brands fa-instagram"></i>
+                        </span>
+                      </a>
 
-                    <a
-                      th:if="${!#strings.isEmpty(social.youtube)}"
-                      th:href="${social.youtube}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Link para meu canal do YouTube"
-                      class="button is-text"
-                    >
-                      <span class="icon is-small">
-                        <i class="fa-brands fa-youtube"></i>
-                      </span>
-                    </a>
+                      <a
+                        th:if="${!#strings.isEmpty(social.facebook)}"
+                        th:href="${social.facebook}"
+                        target="_blank"
+                        title="Link para meu Facebook"
+                        rel="noopener noreferrer"
+                        class="button is-text"
+                      >
+                        <span class="icon is-small">
+                          <i class="fa-brands fa-facebook"></i>
+                        </span>
+                      </a>
 
-                    <a
-                      th:if="${!#strings.isEmpty(social.bluesky)}"
-                      th:href="${social.bluesky}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Link para meu BlueSky"
-                      class="button is-text"
-                    >
-                      <span class="icon is-small">
-                        <i class="fa-brands fa-bluesky"></i>
-                      </span>
-                    </a>
+                      <a
+                        th:if="${!#strings.isEmpty(social.youtube)}"
+                        th:href="${social.youtube}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Link para meu canal do YouTube"
+                        class="button is-text"
+                      >
+                        <span class="icon is-small">
+                          <i class="fa-brands fa-youtube"></i>
+                        </span>
+                      </a>
 
-                    <a
-                      th:if="${!#strings.isEmpty(social.mastodon)}"
-                      th:href="${social.mastodon}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Link para meu Mastodon"
-                      class="button is-text"
-                    >
-                      <span class="icon is-small">
-                        <i class="fa-brands fa-mastodon"></i>
-                      </span>
-                    </a>
+                      <a
+                        th:if="${!#strings.isEmpty(social.bluesky)}"
+                        th:href="${social.bluesky}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Link para meu BlueSky"
+                        class="button is-text"
+                      >
+                        <span class="icon is-small">
+                          <i class="fa-brands fa-bluesky"></i>
+                        </span>
+                      </a>
 
-                    <a
-                      th:if="${!#strings.isEmpty(social.reddit)}"
-                      th:href="${social.reddit}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Link para meu Reddit"
-                      class="button is-text"
-                    >
-                      <span class="icon is-small">
-                        <i class="fa-brands fa-reddit"></i>
-                      </span>
-                    </a>
+                      <a
+                        th:if="${!#strings.isEmpty(social.mastodon)}"
+                        th:href="${social.mastodon}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Link para meu Mastodon"
+                        class="button is-text"
+                      >
+                        <span class="icon is-small">
+                          <i class="fa-brands fa-mastodon"></i>
+                        </span>
+                      </a>
 
-                    <a
-                      th:if="${!#strings.isEmpty(social.twitter)}"
-                      th:href="${social.twitter}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Link para meu X/Twitter"
-                      class="button is-text"
-                    >
-                      <span class="icon is-small">
-                        <i class="fa-brands fa-x-twitter"></i>
-                      </span>
-                    </a>
+                      <a
+                        th:if="${!#strings.isEmpty(social.reddit)}"
+                        th:href="${social.reddit}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Link para meu Reddit"
+                        class="button is-text"
+                      >
+                        <span class="icon is-small">
+                          <i class="fa-brands fa-reddit"></i>
+                        </span>
+                      </a>
 
-                    <a
-                      th:if="${!#strings.isEmpty(social.github)}"
-                      th:href="${social.github}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Link para meu GitHub"
-                      class="button is-text"
-                    >
-                      <span class="icon is-small">
-                        <i class="fa-brands fa-github"></i>
-                      </span>
-                    </a>
+                      <a
+                        th:if="${!#strings.isEmpty(social.twitter)}"
+                        th:href="${social.twitter}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Link para meu X/Twitter"
+                        class="button is-text"
+                      >
+                        <span class="icon is-small">
+                          <i class="fa-brands fa-x-twitter"></i>
+                        </span>
+                      </a>
 
-                    <a
-                      th:if="${!#strings.isEmpty(social.tiktok)}"
-                      th:href="${social.tiktok}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Link para meu TikTok"
-                      class="button is-text"
-                    >
-                      <span class="icon is-small">
-                        <i class="fa-brands fa-tiktok"></i>
-                      </span>
-                    </a>
+                      <a
+                        th:if="${!#strings.isEmpty(social.github)}"
+                        th:href="${social.github}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Link para meu GitHub"
+                        class="button is-text"
+                      >
+                        <span class="icon is-small">
+                          <i class="fa-brands fa-github"></i>
+                        </span>
+                      </a>
 
-                    <a
-                      th:if="${!#strings.isEmpty(social.discord)}"
-                      th:href="${social.discord}"
-                      target="_blank"
-                      title="Link para meu Discord"
-                      rel="noopener noreferrer"
-                      class="button is-text"
-                    >
-                      <span class="icon is-small">
-                        <i class="fa-brands fa-discord"></i>
-                      </span>
-                    </a>
+                      <a
+                        th:if="${!#strings.isEmpty(social.tiktok)}"
+                        th:href="${social.tiktok}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Link para meu TikTok"
+                        class="button is-text"
+                      >
+                        <span class="icon is-small">
+                          <i class="fa-brands fa-tiktok"></i>
+                        </span>
+                      </a>
 
-                    <a
-                      th:if="${!#strings.isEmpty(social.linkedin)}"
-                      th:href="${social.linkedin}"
-                      target="_blank"
-                      title="Link para meu LinkedIn"
-                      rel="noopener noreferrer"
-                      class="button is-text"
-                    >
-                      <span class="icon is-small">
-                        <i class="fa-brands fa-linkedin-in"></i>
-                      </span>
-                    </a>
+                      <a
+                        th:if="${!#strings.isEmpty(social.discord)}"
+                        th:href="${social.discord}"
+                        target="_blank"
+                        title="Link para meu Discord"
+                        rel="noopener noreferrer"
+                        class="button is-text"
+                      >
+                        <span class="icon is-small">
+                          <i class="fa-brands fa-discord"></i>
+                        </span>
+                      </a>
 
-                    <a
-                      th:if="${!#strings.isEmpty(social.site)}"
-                      th:href="${social.site}"
-                      title="Link para meu Site"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="button is-text"
-                    >
-                      <span class="icon is-small">
-                        <i class="fa-solid fa-globe"></i>
-                      </span>
-                    </a>
+                      <a
+                        th:if="${!#strings.isEmpty(social.linkedin)}"
+                        th:href="${social.linkedin}"
+                        target="_blank"
+                        title="Link para meu LinkedIn"
+                        rel="noopener noreferrer"
+                        class="button is-text"
+                      >
+                        <span class="icon is-small">
+                          <i class="fa-brands fa-linkedin-in"></i>
+                        </span>
+                      </a>
+
+                      <a
+                        th:if="${!#strings.isEmpty(social.site)}"
+                        th:href="${social.site}"
+                        title="Link para meu Site"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="button is-text"
+                      >
+                        <span class="icon is-small">
+                          <i class="fa-solid fa-globe"></i>
+                        </span>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

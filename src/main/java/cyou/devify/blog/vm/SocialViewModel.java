@@ -7,6 +7,12 @@ public record SocialViewModel(
     String github,
     String discord,
     String linkedin,
-    String site) {
+    String site,
+    String facebook,
+    String tiktok,
+    String threads,
+    String bluesky,
+    String mastodon,
+    String reddit) {
 
 }
