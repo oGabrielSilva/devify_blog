@@ -29,14 +29,12 @@
       </a>
 
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link" href="/stacks">
+        <a class="navbar-link" role="button">
           <span class="icon is-small" aria-hidden="true">
             <i class="fa-solid fa-layer-group"></i>
           </span>
           <span>Stacks</span>
         </a>
-        <!-- getUnlocked -->
-
         <th:block th:with="stacks=${@stackService.getUnlocked()}">
           <div th:if="${#lists.isEmpty(stacks)}" class="navbar-dropdown">
             <a class="navbar-item" role="none">Nenhuma Stack cadastrada</a>
@@ -69,12 +67,6 @@
           </a>
 
           <div class="navbar-dropdown">
-            <!-- <a class="navbar-item" href="/internal">
-              <span class="icon is-small">
-                <i class="fa-solid fa-table-columns"></i>
-              </span>
-              <span>Painel administrativo</span>
-            </a> -->
             <a
               th:if="${#strings.isEmpty(currentURL) or !currentURL.contains('internal/profile')}"
               class="navbar-item"

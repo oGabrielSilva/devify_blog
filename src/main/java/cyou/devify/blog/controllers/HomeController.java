@@ -1,20 +1,47 @@
 package cyou.devify.blog.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import cyou.devify.blog.configurations.StartupSeedConfiguration;
+import cyou.devify.blog.services.UserService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class HomeController {
+
+  @Autowired
+  UserService userService;
+
   @GetMapping("/")
   public ModelAndView ping(ModelAndView mv) {
     mv.setViewName("index");
     mv.addObject("pageTitle", "Início");
+
+    return mv;
+  }
+
+  @GetMapping("/about")
+  public ModelAndView about(ModelAndView mv) {
+    mv.setViewName("about");
+    mv.addObject("pageTitle", "Quem somos?");
+    var owner = userService.getRepository().findByEmail(StartupSeedConfiguration.firstUserEmail);
+
+    mv.addObject("owner", owner);
+    return mv;
+  }
+
+  @GetMapping("/contact")
+  public ModelAndView contact(ModelAndView mv) {
+    mv.setViewName("contact");
+    mv.addObject("pageTitle", "Entrar em contato");
+
+    mv.addObject("staff", userService.getStaff());
 
     return mv;
   }

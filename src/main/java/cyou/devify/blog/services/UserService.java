@@ -69,4 +69,8 @@ public class UserService implements UserDetailsService {
     return repository.findByAuthorityNot(Role.COMMON);
   }
 
+  public UserRepository getRepository() {
+    return repository;
+  }
+
 }

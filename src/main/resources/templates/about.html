@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <meta data-details="page" data-content="about" />
+  </head>
+
+  <body>
+    <header id="header">
+      <th:block th:replace="~{partials/nav}"></th:block>
+    </header>
+
+    <div class="container" id="root">
+      <main class="content py-6 px-3">
+        <h1 class="title">Devify</h1>
+        <p>
+          <strong>O que é Devify?</strong>
+          Para ser direto ao ponto, Devify é um projeto pessoal criado por mim,
+          <a
+            th:href="@{/profile/{username}(username=${owner.username})}"
+            th:text="|${owner.name}.|"
+            target="_blank"
+            rel="noopener noreferrer"
+          ></a>
+          Minha missão com este projeto é compartilhar meus conhecimentos e experiências sobre o mundo do
+          desenvolvimento web, que é minha área principal. Desde 2019, venho me dedicando a entender cada vez
+          mais sobre programação, acreditando naquela ideia comum de que seria possível aprender várias
+          linguagens ao mesmo tempo. No entanto, logo percebi que a realidade não é bem assim.
+        </p>
+        <p>
+          Comecei, então, a cursar o ensino superior em Gestão da Tecnologia da Informação, onde conheci um
+          professor que também era desenvolvedor. Ele me aconselhou a focar em uma única linguagem para me
+          especializar antes de passar para outras, se necessário. Segui o conselho e me concentrei em
+          JavaScript, ou melhor, TypeScript e seus frameworks como React, React Native, Express, Vue.js e
+          outros.
+        </p>
+        <p>
+          Um pouco mais para frente, me deparei com algumas vagas para backend, mas todas exigiam ou PHP ou
+          Java. Coincidentemente, um amigo meu que estava fazendo uma especialização também teve que escolher
+          entre essas duas linguagens. Então achei que era o momento de escolher a próxima, afinal, eu já
+          estudava um pouco de ambas em outras matérias da faculdade. Decidi que era hora de focar em uma
+          delas e aprender de verdade, assim como estava fazendo com JavaScript e TypeScript. Optei por Java,
+          conheci o Spring Boot, e aqui estou até hoje &mdash; sem arrependimentos. Atualmente, Spring Boot e
+          Node estão entre as minhas principais habilidades em backend. Já tive experiências com outras,
+          claro, assim como ASP.NET, mas não é o mesmo carinho. <em>Sim, gosto bastante de Java.</em>
+        </p>
+        <p>
+          Mas, afinal, onde quero chegar com isso? Ao criar projetos pessoais, me deparei com muitos problemas
+          e dúvidas que eram comuns, como pude perceber no Stack Overflow. Muitos desses problemas consegui
+          resolver de forma diferente, simplesmente estudando a documentação, como, por exemplo, alguns que
+          enfrentei ao tentar aprender Android nativo. Havia muitas funções depreciadas e poucas discussões
+          sobre as alternativas, então precisei mergulhar fundo na documentação, experimentando e ajustando o
+          código até encontrar soluções, <strong>eu realmente me esforcei aqui</strong>. Com isso, percebi que
+          poderia ser interessante criar a Devify &mdash; me esforcei para criar um nome legal, tá? &mdash;,
+          um projeto para compartilhar as soluções que encontrei e falar sobre tecnologia do meu jeito. E aqui
+          estamos.
+        </p>
+        <p>
+          Sinceramente eu espero que esse projeto dê certo, trarei várias atualizações que estou planejando de
+          agora, não somente no código, mas incluindo essa página. Enfim, seja bem-vindo ao meu projeto.
+          Sinta-se à vontade para enviar mensagens; você pode conhecer todos os editores responsáveis
+          <a href="/contact">aqui</a>. Feedbacks são sempre bem-vindos!
+        </p>
+      </main>
+    </div>
+
+    <th th:replace="~{partials/footer}"></th>
+  </body>
+</html>
