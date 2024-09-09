@@ -45,6 +45,14 @@ public class HomeController {
     return mv;
   }
 
+  @GetMapping("/privacy-policy")
+  public ModelAndView privacyPolicy(ModelAndView mv) {
+    mv.setViewName("privacy-policy");
+    mv.addObject("pageTitle", "Política Privacidade");
+
+    return mv;
+  }
+
   @GetMapping("/error")
   public String handleError(HttpServletRequest request) {
     Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
