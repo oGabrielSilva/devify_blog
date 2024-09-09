@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import cyou.devify.blog.configurations.StartupSeedConfiguration;
 import cyou.devify.blog.services.UserService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,7 +29,7 @@ public class HomeController {
   public ModelAndView about(ModelAndView mv) {
     mv.setViewName("about");
     mv.addObject("pageTitle", "Quem somos?");
-    var owner = userService.getRepository().findByEmail(StartupSeedConfiguration.firstUserEmail);
+    var owner = userService.getOwner();
 
     mv.addObject("owner", owner);
     return mv;

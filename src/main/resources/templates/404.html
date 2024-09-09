@@ -33,15 +33,6 @@
       </main>
     </div>
 
-    <!--
-
-    Exception:  ${exception.message}
-        <c:forEach items="${exception.stackTrace}" var="ste">    ${ste}
-    </c:forEach>
-  -->
-
-    <div th:text="|Failed URL: ${exception}|"></div>
-
     <th th:replace="~{partials/footer}"></th>
     <script>
       addEventListener('DOMContentLoaded', function () {

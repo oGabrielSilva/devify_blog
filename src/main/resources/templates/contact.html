@@ -49,8 +49,7 @@
                   <div>
                     <div th:with="social=${user.social}" class="buttons gap is-justify-content-center">
                       <a
-                        th:if="${user.isRootEmail}"
-                        th:href="@{mailto:{email}(email=user.email)}"
+                        th:href="@{mailto:{email}(email=${user.email})}"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="button is-text"

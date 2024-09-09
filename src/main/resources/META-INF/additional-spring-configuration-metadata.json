@@ -1,0 +1,49 @@
+{
+  "properties": [
+    {
+      "name": "devify.jwt.secret",
+      "type": "java.lang.String",
+      "description": "Segredo para o token JWT"
+    },
+    {
+      "name": "devify.jwt.issuer",
+      "type": "java.lang.String",
+      "description": "Emissor do Token JWT"
+    },
+    {
+      "name": "devify.jwt.audience",
+      "type": "java.lang.String",
+      "description": "Quem receberá o Token?"
+    },
+    {
+      "name": "devify.upload.path",
+      "type": "java.lang.String",
+      "description": "Caminho para salvar arquivos como imagens a partir da HOME"
+    },
+    {
+      "name": "devify.seed-java-stack",
+      "type": "java.lang.String",
+      "description": "Deve ser criado, caso não exista, a Stack Java ao iniciar o servidor?"
+    },
+    {
+      "name": "devify.owner.name",
+      "type": "java.lang.String",
+      "description": "Nome do responsável - usuário root"
+    },
+    {
+      "name": "devify.owner.username",
+      "type": "java.lang.String",
+      "description": "Username do root"
+    },
+    {
+      "name": "devify.owner.email",
+      "type": "java.lang.String",
+      "description": "E-mail do usuário root"
+    },
+    {
+      "name": "devify.owner.password",
+      "type": "java.lang.String",
+      "description": "Senha inicial do usuário root - trocar o quanto antes!"
+    }
+  ]
+}

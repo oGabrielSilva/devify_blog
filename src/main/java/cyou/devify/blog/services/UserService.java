@@ -3,6 +3,7 @@ package cyou.devify.blog.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,8 @@ import cyou.devify.blog.repositories.UserRepository;
 public class UserService implements UserDetailsService {
   @Autowired
   UserRepository repository;
+  @Value("${devify.owner.username}")
+  String ownerUsername;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -71,6 +74,10 @@ public class UserService implements UserDetailsService {
 
   public UserRepository getRepository() {
     return repository;
+  }
+
+  public User getOwner() {
+    return repository.findByUsername(ownerUsername);
   }
 
 }

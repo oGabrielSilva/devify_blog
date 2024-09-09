@@ -12,7 +12,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import cyou.devify.blog.configurations.StartupSeedConfiguration;
 import cyou.devify.blog.enums.Role;
 import cyou.devify.blog.utils.StringUtils;
 import jakarta.persistence.CascadeType;
@@ -187,10 +186,6 @@ public class User implements UserDetails {
     if (StringUtils.isNullOrBlank(bio) || bio.length() <= size)
       return bio;
     return bio.substring(0, size).concat("...");
-  }
-
-  public boolean isRootEmail() {
-    return StartupSeedConfiguration.firstUserEmail.equals(email);
   }
 
   // public List<Map<String, String>> listOfSocial() {

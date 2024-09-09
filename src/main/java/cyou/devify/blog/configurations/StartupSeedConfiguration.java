@@ -15,10 +15,16 @@ import cyou.devify.blog.repositories.UserRepository;
 
 @Component
 public class StartupSeedConfiguration implements ApplicationRunner {
-  public static final String firstUserEmail = "root@devify.cyou";
 
-  @Value("${devify.root.initial.pass}")
-  String firstRootPass;
+  @Value("${devify.owner.name}")
+  String rootName;
+  @Value("${devify.owner.username}")
+  String rootUsername;
+  @Value("${devify.owner.email}")
+  String rootEmail;
+  @Value("${devify.owner.password}")
+  String rootPassword;
+
   @Value("${devify.seed-java-stack}")
   boolean seedJavaStack;
 
@@ -31,13 +37,16 @@ public class StartupSeedConfiguration implements ApplicationRunner {
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
-    User rootUser = userRepository.findByEmail(firstUserEmail);
+    User rootUser = userRepository.findByEmail(rootEmail);
     if (rootUser == null) {
-      var u = new User("Root", firstUserEmail, "/images/avatar_placeholder.png",
-          passwordEncoder.encode(firstRootPass));
-      u.setAuthority(Role.ROOT);
-      rootUser = userRepository.save(u);
-      System.out.println(String.format("User seed -> %s. Change your password", firstRootPass));
+      var owner = new User("Root", rootEmail, "/images/avatar_placeholder.png",
+          passwordEncoder.encode(rootPassword));
+      owner.setName(rootName);
+      owner.setPseudonym(rootUsername);
+      owner.setUsername(rootUsername);
+      owner.setAuthority(Role.ROOT);
+      rootUser = userRepository.save(owner);
+      System.out.println(String.format("User seed -> %s. Change your password", rootPassword));
     }
 
     if (seedJavaStack && stackRepository.findByName("Java") == null) {
