@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <meta data-details="page" data-content="403" />
+  </head>
+
+  <body>
+    <header id="header">
+      <th th:replace="~{partials/nav}"></th>
+    </header>
+
+    <div class="container" id="root">
+      <main
+        class="py-6 px-3 is-flex is-justify-content-center is-align-items-center is-flex-direction-column has-text-centered"
+      >
+        <h2 class="subtitle">401</h2>
+        <h1 class="title icon-text is-align-items-center gap-3">
+          <span id="ic" class="icon has-text-danger" aria-hidden="true">
+            <i class="fa-solid fa-ban"></i>
+          </span>
+          <span>Você não possui autorização para esta ação</span>
+        </h1>
+        <p>Oopss... não foi possível processar sua solicitação</p>
+        <div class="buttons pt-3">
+          <a href="/" class="button">
+            <span class="icon is-small" aria-hidden="true">
+              <i class="fa-solid fa-house"></i>
+            </span>
+            <span>Início</span>
+          </a>
+        </div>
+      </main>
+    </div>
+
+    <th th:replace="~{partials/footer}"></th>
+    <script>
+      addEventListener('DOMContentLoaded', function () {
+        if (innerWidth <= 427) {
+          $('#ic').addClass('is-hidden')
+        }
+      })
+    </script>
+  </body>
+</html>

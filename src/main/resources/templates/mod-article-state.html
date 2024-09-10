@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <meta data-details="page" data-content="mod_articles" />
+    <script src="/javascript/index.internal.js" defer></script>
+  </head>
+
+  <body>
+    <header id="header">
+      <th th:replace="~{partials/nav}"></th>
+    </header>
+
+    <div class="container" id="root">
+      <main class="pb-6 pt-5 px-3">
+        <div>
+          <h1 class="title">Estado do artigo</h1>
+        </div>
+
+        <div class="content py-6">
+          <h3 class="subtitle" th:text="|Artigo: ${article.title}|"></h3>
+          <strong>Descrição:</strong>
+          <p th:utext="${article.title}"></p>
+
+          <div>
+            <hr />
+            <div class="is-flex gap-3 is-align-items-flex-start">
+              <img
+                th:src="${creator.avatarURL}"
+                th:alt="|Avatar - ${creator.name}|"
+                th:title="|Avatar - ${creator.name}|"
+                width="64"
+                height="64"
+                class="avatar"
+                loading="eager"
+              />
+              <div>
+                <div>
+                  <span>
+                    Criado por
+                    <a
+                      th:href="@{/profile/{username}(username=${creator.username})}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      th:text="|${creator.name} - ${creator.email}|"
+                    ></a>
+                  </span>
+                </div>
+                <div>
+                  <small>
+                    <em>
+                      Última atualização:
+                      <time th:datetime="${article.updatedAt}" th:text="${article.updatedAt}"></time>
+                    </em>
+                  </small>
+                </div>
+              </div>
+            </div>
+            <hr />
+          </div>
+
+          <th:block th:if="${article.isPublished}">
+            <div class="is-flex is-align-items-center gap-3 has-text-primary">
+              <span class="icon is-small">
+                <i class="fa-regular fa-circle-dot"></i>
+              </span>
+              <span>Artigo publicado</span>
+            </div>
+          </th:block>
+
+          <th:block th:unless="${article.isPublished}">
+            <div class="is-flex is-align-items-center gap-3 has-text-danger">
+              <span class="icon is-small">
+                <i class="fa-regular fa-circle-dot"></i>
+              </span>
+              <span>Artigo não publicado</span>
+            </div>
+          </th:block>
+
+          <div class="buttons py-6">
+            <button
+              type="button"
+              th:class="'button ' + ${article.isPublished ? 'is-danger' : 'is-primary'}"
+              th:text="${article.isPublished ? 'Desativar' : 'Publicar'}"
+              id="open-form"
+            ></button>
+          </div>
+
+          <form
+            id="change-state"
+            style="display: contents"
+            action=""
+            enctype="application/x-www-form-urlencoded"
+            method="post"
+          >
+            <div class="modal">
+              <div class="modal-background"></div>
+              <div class="modal-card">
+                <header class="modal-card-head">
+                  <h3
+                    class="modal-card-title"
+                    th:text="${article.isPublished ? 'Desativar artigo?' : 'Publicar artigo?'}"
+                  ></h3>
+                  <button type="button" class="delete goBack" aria-label="Fechar"></button>
+                </header>
+                <section class="modal-card-body">
+                  <!-- Content ... -->
+                </section>
+                <footer class="modal-card-foot">
+                  <div class="buttons">
+                    <button type="submit" class="button is-success">Confirmar</button>
+                    <button class="button goBack" aria-label="Cancelar">Cancelar</button>
+                  </div>
+                </footer>
+              </div>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+
+    <th th:replace="~{partials/footer}"></th>
+  </body>
+</html>

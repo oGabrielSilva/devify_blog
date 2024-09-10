@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <meta data-details="page" data-content="mod_articles" />
+    <script src="/javascript/index.internal.js" defer></script>
+  </head>
+
+  <body>
+    <header id="header">
+      <th th:replace="~{partials/nav}"></th>
+    </header>
+
+    <div class="container" id="root">
+      <main class="pb-6 pt-5 px-3">
+        <div class="is-flex gap-3 is-justify-content-space-between is-align-items-center">
+          <h1 class="title">Todos os artigos cadastrados</h1>
+          <a href="/internal/article" class="button is-link">
+            <span class="icon is-small">
+              <i class="fa-solid fa-file-circle-plus"></i>
+            </span>
+            <span>Escrever</span>
+          </a>
+        </div>
+
+        <div class="py-3">
+          <th:block th:if="${#lists.isEmpty(articles)}">
+            <div>
+              <p>Não há nenhum artigo cadastrado</p>
+            </div>
+          </th:block>
+
+          <th:block th:unless="${#lists.isEmpty(articles)}">
+            <div class="mb-3" th:each="article : ${articles}">
+              <th:block th:if="${article.createdBy.equals(moder.id)}">
+                <a
+                  class="link-title"
+                  th:href="@{/internal/article/{articleId}/edit(articleId=${article.id})}"
+                  target="_blank"
+                  title="Clique para editar"
+                  rel="noopener noreferrer"
+                  th:text="${article.title}"
+                ></a>
+                <div>
+                  <small>
+                    <em>
+                      Criado em:
+                      <time th:text="${article.createdAt}" th:datetime="${article.createdAt}"></time>
+                      por você
+                    </em>
+                    | slug:
+                    <a
+                      class="has-text-current"
+                      th:href="@{/internal/article/{articleId}/edit(articleId=${article.id})}"
+                      th:text="${article.slug}"
+                    ></a>
+                    |
+                    <span
+                      th:text="${article.isPublished ? 'Publicado' : 'Não publicado'}"
+                      th:class="${article.isPublished ? 'has-text-primary' : 'has-text-danger'}"
+                    ></span>
+                  </small>
+                </div>
+
+                <div>
+                  <small>
+                    <em>
+                      Última atualização:
+                      <time th:datetime="${article.updatedAt}" th:text="${article.updatedAt}"></time>
+                    </em>
+                  </small>
+                </div>
+                <div class="buttons">
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="button is-text m-0 is-small"
+                    th:href="@{/internal/article/{articleId}/edit/metadata(articleId=${article.id})}"
+                  >
+                    <span class="icon is-small">
+                      <i class="fa-solid fa-database"></i>
+                    </span>
+                    <span>Editar metadados</span>
+                  </a>
+
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="button is-text m-0 is-small"
+                    th:href="@{/internal/mod/article/{articleId}/state(articleId=${article.id})}"
+                  >
+                    <span class="icon is-small">
+                      <i class="fa-solid fa-gears"></i>
+                    </span>
+                    <span>Mudar estado do artigo</span>
+                  </a>
+                </div>
+              </th:block>
+
+              <th:block th:unless="${article.createdBy.equals(moder.id)}">
+                <div th:with="user=${@articleService.getCreator(article)}">
+                  <a
+                    class="link-title"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    th:title="|Artigo criado por ${user.name} - ${user.email}|"
+                    th:text="${article.title}"
+                    th:href="@{/{stackName}/{slug}(stackName=${article.stack.name}, slug=${article.slug})}"
+                  ></a>
+                  <div>
+                    <small>
+                      <em>
+                        Criado em:
+                        <time th:text="${article.createdAt}" th:datetime="${article.createdAt}"></time>
+                        por
+                        <a
+                          th:href="@{/profile/{username}(username=${user.username})}"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          th:text="|${user.name} - ${user.email}|"
+                        ></a>
+                      </em>
+                      | slug:
+                      <a
+                        class="has-text-current"
+                        th:href="@{/internal/article/{articleId}/edit(articleId=${article.id})}"
+                        th:text="${article.slug}"
+                      ></a>
+                      |
+                      <span
+                        th:text="${article.isPublished ? 'Publicado' : 'Não publicado'}"
+                        th:class="${article.isPublished ? 'has-text-primary' : 'has-text-danger'}"
+                      ></span>
+                    </small>
+                  </div>
+
+                  <div>
+                    <small>
+                      <em>
+                        Última atualização:
+                        <time th:datetime="${article.updatedAt}" th:text="${article.updatedAt}"></time>
+                      </em>
+                    </small>
+                  </div>
+
+                  <div class="buttons">
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="button is-text m-0 is-small"
+                      th:href="@{/{stackName}/{slug}(stackName=${article.stack.name}, slug=${article.slug})}"
+                    >
+                      <span class="icon is-small">
+                        <i class="fa-regular fa-eye"></i>
+                      </span>
+                      <span>Visualizar</span>
+                    </a>
+
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="button is-text m-0 is-small"
+                      th:href="@{/internal/mod/article/{articleId}/state(articleId=${article.id})}"
+                    >
+                      <span class="icon is-small">
+                        <i class="fa-solid fa-gears"></i>
+                      </span>
+                      <span>Mudar estado do artigo</span>
+                    </a>
+                  </div>
+                </div>
+              </th:block>
+
+              <hr class="mx-0 mt-1" />
+            </div>
+          </th:block>
+        </div>
+      </main>
+    </div>
+
+    <th th:replace="~{partials/footer}"></th>
+  </body>
+</html>

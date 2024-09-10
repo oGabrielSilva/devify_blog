@@ -3,6 +3,7 @@ package cyou.devify.blog.controllers;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -90,9 +91,17 @@ public class InternalController {
     var user = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
     var article = articleRepository.findById(UUID.fromString(articleId));
 
-    if (article.isEmpty() || !user.getId().equals(article.get().getCreatedBy())) {
+    if (article.isEmpty()) {
       mv.addObject("pageTitle", "Artigo não encontrado");
       mv.setViewName("404");
+      mv.setStatus(HttpStatus.NOT_FOUND);
+      return mv;
+    }
+
+    if (!user.getId().equals(article.get().getCreatedBy())) {
+      mv.addObject("pageTitle", "Você não tem permissão para editar este artigo");
+      mv.setViewName("401");
+      mv.setStatus(HttpStatus.UNAUTHORIZED);
       return mv;
     }
 
@@ -108,9 +117,17 @@ public class InternalController {
     var user = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
     var article = articleRepository.findById(UUID.fromString(articleId));
 
-    if (article.isEmpty() || !user.getId().equals(article.get().getCreatedBy())) {
+    if (article.isEmpty()) {
       mv.addObject("pageTitle", "Artigo não encontrado");
       mv.setViewName("404");
+      mv.setStatus(HttpStatus.NOT_FOUND);
+      return mv;
+    }
+
+    if (!user.getId().equals(article.get().getCreatedBy())) {
+      mv.addObject("pageTitle", "Você não tem permissão para editar este artigo");
+      mv.setViewName("401");
+      mv.setStatus(HttpStatus.UNAUTHORIZED);
       return mv;
     }
 
