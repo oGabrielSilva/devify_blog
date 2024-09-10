@@ -89,11 +89,11 @@
           <form
             id="change-state"
             style="display: contents"
-            action=""
+            th:action="@{/internal/mod/article/{id}/state(id=${article.id})}"
             enctype="application/x-www-form-urlencoded"
             method="post"
           >
-            <div class="modal">
+            <div id="state-modal" class="modal">
               <div class="modal-background"></div>
               <div class="modal-card">
                 <header class="modal-card-head">
@@ -103,13 +103,10 @@
                   ></h3>
                   <button type="button" class="delete goBack" aria-label="Fechar"></button>
                 </header>
-                <section class="modal-card-body">
-                  <!-- Content ... -->
-                </section>
                 <footer class="modal-card-foot">
                   <div class="buttons">
                     <button type="submit" class="button is-success">Confirmar</button>
-                    <button class="button goBack" aria-label="Cancelar">Cancelar</button>
+                    <button class="button goBack" type="button" aria-label="Cancelar">Cancelar</button>
                   </div>
                 </footer>
               </div>

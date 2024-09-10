@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -55,6 +56,37 @@ public class InternalModController {
     mv.addObject("creator", creator);
 
     mv.setViewName("mod-article-state");
+
+    return mv;
+  }
+
+  @PostMapping("/article/{articleId}/state")
+  public ModelAndView setArticleState(ModelAndView mv, @PathVariable String articleId) {
+    var articleOpt = articleRepository.findById(UUID.fromString(articleId));
+
+    if (articleOpt.isEmpty()) {
+      mv.addObject("pageTitle", "Artigo não encontrado");
+      mv.setViewName("404");
+      mv.setStatus(HttpStatus.NOT_FOUND);
+      return mv;
+    }
+
+    var user = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
+    var article = articleOpt.get();
+
+    if (article.isPublished()) {
+      article.setPublished(false);
+      article.setUpdatedBy(user.getId());
+      article.setUnpublishedBy(user.getId());
+    } else {
+      article.setPublished(true);
+      article.setUpdatedBy(user.getId());
+      article.setPublishedBy(user.getId());
+    }
+
+    articleRepository.save(article);
+
+    mv.setViewName(String.format("redirect:/internal/mod/article/%s/state", article.getId()));
 
     return mv;
   }

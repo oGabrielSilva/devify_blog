@@ -1,5 +1,6 @@
 import { EditArticleMetadataPageHandler } from './article/EditArticleMetadataPageHandler'
 import { EditArticlePageHandler } from './article/EditArticlePageHandler'
+import { ModArticlesPageHandler } from './article/ModArticlesPageHandler'
 import { NewArticlePageHandler } from './article/NewArticlePageHandler'
 import { InternalProfilePageHandler } from './profile/InternalProfilePageHandler'
 import { SessionPageHandler } from './session/SessionPageHandler'
@@ -32,6 +33,9 @@ export class PageHandler {
         break
       case 'edit_article_metadata':
         EditArticleMetadataPageHandler.fast.handle()
+        break
+      case 'mod_articles':
+        ModArticlesPageHandler.fast.handle()
         break
     }
   }

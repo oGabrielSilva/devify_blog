@@ -110,19 +110,15 @@
                 </span>
                 <span>Todos os artigos</span>
               </a>
+            </th:block>
 
-              <a class="navbar-item" th:href="@{/internal/mod/articles/published}">
+            <th:block th:if="${@userService.isAdmin}">
+              <hr class="p-0 my-2" />
+              <a class="navbar-item" th:href="@{/internal/admin/users}">
                 <span class="icon is-small">
-                  <i class="fa-solid fa-chart-bar"></i>
+                  <i class="fa-solid fa-user-group"></i>
                 </span>
-                <span>Artigos publicados</span>
-              </a>
-
-              <a class="navbar-item" th:href="@{/internal/mod/articles/unpublished}">
-                <span class="icon is-small">
-                  <i class="fa-solid fa-house-laptop"></i>
-                </span>
-                <span>Artigos <em>não</em> publicados</span>
+                <span>Usuários</span>
               </a>
             </th:block>
 

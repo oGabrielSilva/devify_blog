@@ -1,10 +1,24 @@
 <title th:text="${pageTitle != null ? pageTitle + ' - Devify' : '- Devify'}"></title>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" th:content="${noIndexPage != null && noIndexPage ? 'noindex' : 'index, follow'}" />
 <meta name="author" content="Gabriel Henrique da Silva" />
+<meta name="copyright" content="Devify - Gabriel Henrique da Silva" />
 <meta data-details="error" th:data-message="${error}" />
+<!-- META -->
+<meta property="og:url" content="https://devify.cyou" />
+<meta property="og:type" content="blog" />
+<meta property="og:title" content="Devify" />
+<meta property="og:description" content="Blank" />
+<meta property="og:image" content="blank" />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:site_name" content="Devify" />
+<!-- GOOGLE -->
+<meta itemprop="name" content="Devify" />
+<meta itemprop="description" content="Blank" />
+<meta itemprop="image" content="blank" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />

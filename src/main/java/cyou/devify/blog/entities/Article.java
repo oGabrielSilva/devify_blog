@@ -56,6 +56,7 @@ public class Article {
   private boolean isPublished = false;
   private boolean isLocked = false;
   private UUID publishedBy = null;
+  private UUID unpublishedBy = null;
   private UUID createdBy;
   private UUID updatedBy;
 

@@ -95,16 +95,14 @@ export function openModal(modal: HTMLElement | string) {
       'animate__backInUp',
       'animate__fadeInDownBig',
       'animate__fadeInRightBig',
-      'animate__zoomInLeft',
-      'animate__zoomInRight',
-      'animate__zoomInUp',
+      'animate__fadeInLeftBig',
     ]
     const card = $el.querySelector<HTMLElement>('.modal-card')!
     card.style.display = 'none'
-    anim.otherAnimationByName($el, 'animate__fadeIn', true, 200).addEventOnCompletion(() => {
+    anim.otherAnimationByName($el, 'animate__fadeIn', true, 100).addEventOnCompletion(() => {
       card.style.display = ''
       anim.otherAnimationByName(card, animations.pickRandom()!)
-      setTimeout(() => $el.classList.add('is-active'), 10)
+      setTimeout(() => $el.classList.add('is-active'), 5)
     })
   }
 }

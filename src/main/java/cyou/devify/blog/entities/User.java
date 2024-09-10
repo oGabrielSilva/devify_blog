@@ -178,6 +178,10 @@ public class User implements UserDetails {
     return allRoles().contains(Role.MODERATOR);
   }
 
+  public boolean isAdmin() {
+    return allRoles().contains(Role.ADMIN);
+  }
+
   public String getProcessedName() {
     return StringUtils.isNullOrBlank(pseudonym) ? name : pseudonym;
   }

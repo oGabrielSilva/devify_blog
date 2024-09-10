@@ -64,6 +64,11 @@ public class UserService implements UserDetailsService {
     return user != null && user.isMod();
   }
 
+  public boolean isAdmin() {
+    var user = getCurrentAuthenticatedUser();
+    return user != null && user.isAdmin();
+  }
+
   public List<User> getEditors() {
     return repository.findByAuthority(Role.EDITOR);
   }
