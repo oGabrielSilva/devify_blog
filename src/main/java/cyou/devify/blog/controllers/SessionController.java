@@ -61,6 +61,11 @@ public class SessionController {
       return mv;
     }
 
+    if (!userByEmail.isEnabled()) {
+      mv.addObject("error", "Usuário desativado. Contate um administrador");
+      return mv;
+    }
+
     if (!passwordEncoder.matches(payload.password(), userByEmail.getPassword())) {
       mv.addObject("error", "Credenciais inválidas");
       return mv;

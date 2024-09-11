@@ -40,8 +40,9 @@ public class SecurityFilter extends OncePerRequestFilter {
       return;
     }
     var user = userRepository.findByEmail(email);
-    if (user == null) {
+    if (user == null || !user.isEnabled()) {
       filterChain.doFilter(request, response);
+      response.addCookie(tokenService.createInvalidAuthorizationCookie());
       return;
     }
     var auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());

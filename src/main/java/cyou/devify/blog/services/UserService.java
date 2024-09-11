@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class UserService implements UserDetailsService {
   String ownerUsername;
 
   @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+  public User loadUserByUsername(String username) throws UsernameNotFoundException {
     return repository.findByEmail(username);
   }
 
@@ -74,7 +73,7 @@ public class UserService implements UserDetailsService {
   }
 
   public List<User> getStaff() {
-    return repository.findByAuthorityNot(Role.COMMON);
+    return repository.findByAuthorityNot(Role.COMMON).stream().filter(user -> user.isEnabled()).toList();
   }
 
   public UserRepository getRepository() {
