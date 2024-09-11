@@ -1,6 +1,7 @@
 package cyou.devify.blog.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -69,11 +70,17 @@ public class UserService implements UserDetailsService {
   }
 
   public List<User> getEditors() {
-    return repository.findByAuthority(Role.EDITOR);
+    return repository.findByAuthority(Role.EDITOR)
+        .stream()
+        .filter(user -> user.isEnabled())
+        .collect(Collectors.toList());
   }
 
   public List<User> getStaff() {
-    return repository.findByAuthorityNot(Role.COMMON).stream().filter(user -> user.isEnabled()).toList();
+    return repository
+        .findByAuthorityNot(Role.COMMON)
+        .stream().filter(user -> user.isEnabled())
+        .collect(Collectors.toList());
   }
 
   public UserRepository getRepository() {

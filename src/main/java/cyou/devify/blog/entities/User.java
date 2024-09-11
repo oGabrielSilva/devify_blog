@@ -46,7 +46,7 @@ public class User implements UserDetails {
   private String username;
 
   @Column(name = "avatarURL")
-  private String avatarURL;
+  private String avatarURL = "/images/avatar_placeholder.png";
   private String avatarFilePath;
 
   @Column(columnDefinition = "TEXT")
@@ -198,34 +198,4 @@ public class User implements UserDetails {
       return bio;
     return bio.substring(0, size).concat("...");
   }
-
-  // public List<Map<String, String>> listOfSocial() {
-  // var list = new ArrayList<Map<String, String>>();
-
-  // if (!email.equals(StartupSeedConfiguration.firstUserEmail)) {
-  // list.add(Map.of("link", String.format("mailto:%s", email)));
-  // }
-
-  // if (StringUtils.isNonNullOrBlank(social.getGithub())) {
-  // list.add(Map.of("link", social.getGithub()));
-  // }
-
-  // if (StringUtils.isNonNullOrBlank(social.getDiscord())) {
-  // list.add(Map.of("link", social.getDiscord()));
-  // }
-
-  // if (StringUtils.isNonNullOrBlank(social.getInstagram())) {
-  // list.add(Map.of("link", social.getInstagram()));
-  // }
-
-  // if (StringUtils.isNonNullOrBlank(social.getLinkedin())) {
-  // list.add(Map.of("link", social.getLinkedin()));
-  // }
-
-  // if (StringUtils.isNonNullOrBlank(social.getLinkedin())) {
-  // list.add(Map.of("link", social.getLinkedin()));
-  // }
-
-  // return list;
-  // }
 }

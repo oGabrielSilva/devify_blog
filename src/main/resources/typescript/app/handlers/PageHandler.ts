@@ -1,3 +1,4 @@
+import { AdminNewUserPageHandler } from './admin/AdminNewUserPageHandler'
 import { AdminUsersPageHandler } from './admin/AdminUsersPageHandler'
 import { EditArticleMetadataPageHandler } from './article/EditArticleMetadataPageHandler'
 import { EditArticlePageHandler } from './article/EditArticlePageHandler'
@@ -40,6 +41,9 @@ export class PageHandler {
         break
       case 'admin_users':
         AdminUsersPageHandler.fast.handle()
+        break
+      case 'admin_user':
+        AdminNewUserPageHandler.fast.handle()
         break
     }
   }

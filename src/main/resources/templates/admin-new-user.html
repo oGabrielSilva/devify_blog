@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <meta data-details="page" data-content="admin_user" />
+    <script src="/javascript/index.internal.js" defer></script>
+  </head>
+
+  <body>
+    <header id="header">
+      <th th:replace="~{partials/nav}"></th>
+    </header>
+
+    <div class="container" id="root">
+      <main class="pb-6 pt-5 px-3">
+        <h1 class="title">Cadastre novos usuários</h1>
+
+        <form
+          th:action="@{/internal/admin/user}"
+          method="post"
+          enctype="application/x-www-form-urlencoded"
+          id="new-user"
+          class="py-5"
+        >
+          <div class="field">
+            <div class="field-body">
+              <div class="field">
+                <label for="name" class="label">Nome</label>
+                <div class="control is-expanded has-icons-left">
+                  <input
+                    class="input"
+                    id="name"
+                    maxlength="50"
+                    name="name"
+                    type="text"
+                    placeholder="Belo Betty"
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="username" class="label">Nome de usuário (@)</label>
+                <div class="control is-expanded has-icons-left">
+                  <input
+                    maxlength="30"
+                    class="input"
+                    type="text"
+                    placeholder="belo_betty"
+                    name="username"
+                    id="username"
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-at"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email" class="label">Email</label>
+            <div class="control is-expanded has-icons-left">
+              <input
+                class="input"
+                type="email"
+                placeholder="belo_betty@devify.cyou"
+                name="email"
+                id="email"
+                maxlength="150"
+              />
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-body">
+              <div class="field">
+                <label for="password" class="label">Senha</label>
+                <div class="control is-expanded has-icons-left">
+                  <input class="input" id="password" name="password" type="password" />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="password-again" class="label">Repita a senha</label>
+                <div class="control is-expanded has-icons-left">
+                  <input class="input" type="password" id="password-again" />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="authority" class="label">Autoridade</label>
+            <div class="control is-expanded has-icons-left">
+              <div class="select" style="width: 100%">
+                <select style="width: 100%" name="authority" id="authority">
+                  <option
+                    th:each="authority : ${authorities}"
+                    th:value="${authority}"
+                    th:text="${authority.capitalize}"
+                  ></option>
+                </select>
+              </div>
+              <div class="icon is-small is-left">
+                <i class="fa-solid fa-id-badge"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="buttons py-5">
+            <button type="submit" class="button is-primary">Cadastrar</button>
+            <button type="reset" class="button">Limpar campos</button>
+          </div>
+        </form>
+      </main>
+    </div>
+
+    <th th:replace="~{partials/footer}"></th>
+  </body>
+</html>
