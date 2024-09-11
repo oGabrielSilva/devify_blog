@@ -3,6 +3,10 @@
   background: var(--bulma-navbar-dropdown-border-color);
 }
 
+.modal-card-title {
+  width: calc(100% - 2rem);
+}
+
 /* Avatar Styles */
 .avatar {
   width: 64px;

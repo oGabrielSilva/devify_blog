@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <meta data-details="page" data-content="admin_users" />
+    <script src="/javascript/index.internal.js" defer></script>
+  </head>
+
+  <body>
+    <header id="header">
+      <th th:replace="~{partials/nav}"></th>
+    </header>
+
+    <div class="container" id="root">
+      <main class="pb-6 pt-5 px-3">
+        <h1 class="title">Usuários</h1>
+
+        <div class="is-flex is-justify-content-flex-end pb-3">
+          <a
+            href="/internal/admin/user"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="button is-link is-small"
+          >
+            <span class="icon is-small">
+              <i class="fa-solid fa-user-plus"></i>
+            </span>
+            <span>Cadastrar</span>
+          </a>
+        </div>
+
+        <div class="py-3">
+          <th:block th:if="${#lists.isEmpty(users)}">
+            <div>
+              <p>Não há outros usuários cadastrados</p>
+            </div>
+          </th:block>
+
+          <th:block th:unless="${#lists.isEmpty(users)}">
+            <div th:each="user : ${users}">
+              <div class="is-flex is-align-items-center gap-3 is-justify-content-flex-start pb-3">
+                <span
+                  th:title="${user.isEnabled() ? 'Usuário ativo' : 'Usuário desativado'}"
+                  th:class="|icon is-small ${user.isEnabled() ? 'has-text-success' : 'has-text-danger'}|"
+                >
+                  <i class="fa-regular fa-circle-dot"></i>
+                </span>
+                <a th:href="@{/profile/{username}(username=${user.username})}" class="is-flex">
+                  <img
+                    th:src="${user.avatarURL}"
+                    th:alt="|Avatar - ${user.name}|"
+                    th:title="|Avatar - ${user.name}|"
+                    width="32"
+                    height="32"
+                    style="width: 32px; height: 32px"
+                    class="avatar"
+                    loading="lazy"
+                  />
+                </a>
+              </div>
+              <div>
+                <div>
+                  <span>
+                    <small th:text="${user.name}"></small>
+                  </span>
+                  |
+                  <span>
+                    <small th:text="${'@' + user.username}"></small>
+                  </span>
+                  |
+                  <span>
+                    <small>
+                      <a
+                        th:href="@{mailto:{email}(email=${user.email})}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="has-text-current"
+                        th:text="${user.email}"
+                      >
+                      </a>
+                    </small>
+                  </span>
+                </div>
+                <div>
+                  <span>
+                    Autoridade:
+                    <span style="text-transform: lowercase" th:text="${user.authority}"></span>
+                    |
+                    <button
+                      style="text-decoration: none"
+                      class="button is-ghost p-0 my-0 mr-0 ml-2"
+                      th:data-modal="${user.id}"
+                      type="button"
+                    >
+                      <span class="icon is-small">
+                        <i class="fa-solid fa-pen-ruler"></i>
+                      </span>
+                      <span>Atualizar</span>
+                    </button>
+
+                    <div th:data-modal-id="${user.id}" class="modal">
+                      <div class="modal-background"></div>
+                      <div class="modal-card">
+                        <header class="modal-card-head">
+                          <h1 class="modal-card-title" th:text="|Atualize o usuário [${user.email}]|"></h1>
+                          <button class="delete goBack" aria-label="Fechar"></button>
+                        </header>
+                        <section class="modal-card-body">
+                          <form
+                            th:action="@{/internal/admin/user/{userId}/authority(userId=${user.id})}"
+                            method="post"
+                            enctype="application/x-www-form-urlencoded"
+                            class="pb-3"
+                            th:data-authority="${user.id}"
+                          >
+                            <label class="label">Autoridade</label>
+                            <div class="field has-addons">
+                              <div class="control is-expanded has-icons-left">
+                                <span style="width: 100%" class="select">
+                                  <select
+                                    th:data-selected="${user.authority}"
+                                    style="width: 100%"
+                                    name="authority"
+                                  >
+                                    <option
+                                      th:each="authority : ${authorities}"
+                                      th:value="${authority}"
+                                      th:text="${authority.capitalize()}"
+                                      th:selected="${authority == user.authority}"
+                                    ></option>
+                                  </select>
+                                </span>
+                                <span class="icon is-small is-left">
+                                  <i class="fa-solid fa-id-badge"></i>
+                                </span>
+                              </div>
+                              <div class="control">
+                                <button type="submit" class="button is-primary">Salvar</button>
+                              </div>
+                            </div>
+                          </form>
+
+                          <form
+                            th:action="@{/internal/admin/user/{userId}/state(userId=${user.id})}"
+                            method="post"
+                            enctype="application/x-www-form-urlencoded"
+                            class="pt-3"
+                            th:data-state="${user.id}"
+                          >
+                            <div>
+                              <span>
+                                <strong class="label m-0">Estado de atividade do usuário:</strong>
+                              </span>
+                            </div>
+                            <p>
+                              Usuário está
+                              <span class="is-italic" th:if="${user.isEnabled()}">
+                                ativo e podendo operar a Devify
+                              </span>
+                              <span class="is-italic" th:unless="${user.isEnabled()}">
+                                desabilitado e não pode realizar operações na Devify
+                              </span>
+                            </p>
+                            <th:block th:if="${user.isEnabled()}">
+                              <div class="field is-horizontal pt-5">
+                                <div class="field-label is-normal">
+                                  <label th:for="'reason-' + ${user.id}" class="label">Motivo</label>
+                                </div>
+                                <div class="field-body">
+                                  <div class="field">
+                                    <p class="control is-expanded has-icons-left">
+                                      <input
+                                        class="input"
+                                        type="text"
+                                        placeholder="Comportamento antiético"
+                                        th:id="'reason-' + ${user.id}"
+                                        name="reason"
+                                      />
+                                      <span class="icon is-small is-left">
+                                        <i class="fa-solid fa-mug-saucer"></i>
+                                      </span>
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </th:block>
+
+                            <button
+                              type="submit"
+                              th:class="'button is-ghost p-0 ' + ${user.isEnabled() ? 'has-text-danger' : 'has-text-primary'}"
+                              th:text="${user.isEnabled() ? 'Desativar usuário' : 'Ativar usuário'}"
+                            ></button>
+                          </form>
+                        </section>
+                        <footer class="modal-card-foot">
+                          <div class="buttons">
+                            <button class="button goBack">Fechar</button>
+                          </div>
+                        </footer>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              </div>
+
+              <hr class="mx-0 mt-1" />
+            </div>
+          </th:block>
+        </div>
+      </main>
+    </div>
+
+    <th th:replace="~{partials/footer}"></th>
+  </body>
+</html>

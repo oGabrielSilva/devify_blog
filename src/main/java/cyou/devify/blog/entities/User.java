@@ -71,6 +71,9 @@ public class User implements UserDetails {
   private Instant updatedAt;
 
   private boolean enabled = true;
+  private String disabledForReason = null;
+  private UUID disabledBy = null;
+  private Instant disabledAt = null;
 
   public User(String name, String email, String avatarURL, String password) {
     this.name = name;
@@ -180,6 +183,10 @@ public class User implements UserDetails {
 
   public boolean isAdmin() {
     return allRoles().contains(Role.ADMIN);
+  }
+
+  public boolean isRoot() {
+    return authority.equals(Role.ROOT);
   }
 
   public String getProcessedName() {

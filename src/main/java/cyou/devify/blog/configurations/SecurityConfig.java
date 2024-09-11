@@ -44,6 +44,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .hasRole(Role.COMMON.asString())
                 .requestMatchers("/internal/mod", "/internal/mod/**").hasRole(Role.MODERATOR.asString())
                 .requestMatchers("/internal", "/internal/**").hasRole(Role.EDITOR.asString())
+                .requestMatchers("/internal/admin", "/internal/admin/**").hasRole(Role.ADMIN.asString())
                 .anyRequest().permitAll())
         .exceptionHandling(ex -> ex.accessDeniedPage("/403")
             .authenticationEntryPoint((req, res, exMet) -> res.sendRedirect("/session?next=" + req.getServletPath())))
