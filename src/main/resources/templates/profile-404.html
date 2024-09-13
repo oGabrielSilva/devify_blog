@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <meta data-details="page" data-content="profile_404" />
+  </head>
+
+  <body>
+    <header id="header">
+      <th th:replace="~{partials/nav}"></th>
+    </header>
+
+    <div class="container" id="root">
+      <main
+        class="py-6 px-3 is-flex is-justify-content-center is-align-items-center is-flex-direction-column has-text-centered"
+      >
+        <h2 class="subtitle">404</h2>
+        <h1 class="title icon-text is-align-items-center gap-3">
+          <span id="ic" class="icon has-text-danger" aria-hidden="true">
+            <i class="fa-solid fa-user-large-slash"></i>
+          </span>
+          <span>Perfil não encontrado</span>
+        </h1>
+        <p>
+          Oopss... infelizmente não foi possível encontrar o usuário do <i>@</i> informado. Pode ser que a
+          conta tenha sido desabilitada
+        </p>
+        <div class="buttons pt-5">
+          <a href="/" class="button">
+            <span class="icon is-small" aria-hidden="true">
+              <i class="fa-solid fa-house"></i>
+            </span>
+            <span>Início</span>
+          </a>
+        </div>
+      </main>
+    </div>
+
+    <th th:replace="~{partials/footer}"></th>
+    <script>
+      addEventListener('DOMContentLoaded', function () {
+        if (innerWidth <= 427) {
+          $('#ic').addClass('is-hidden')
+        }
+      })
+    </script>
+  </body>
+</html>

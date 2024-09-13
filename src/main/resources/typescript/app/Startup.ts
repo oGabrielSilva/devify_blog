@@ -57,14 +57,14 @@ export class Startup {
 
   private formatAllDate() {
     $<HTMLTimeElement>('time').each((_, element) => {
-      if (element.dateTime) {
+      if (element.dateTime && element.dataset.noFormatTime !== 'true') {
         const lang = supportedLangs.find((l) => l === element.dataset.timeLang)
         $(element).text(formatDate(new Date(element.dateTime), lang))
       }
     })
 
     $('[data-time-format]').each((_, element) => {
-      if (element.textContent) {
+      if (element.textContent && element.dataset.noFormatTime !== 'true') {
         const lang = supportedLangs.find((l) => l === element.dataset.timeLang)
         $(element).text(formatDate(new Date(element.textContent), lang))
       }

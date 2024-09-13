@@ -1,5 +1,6 @@
 package cyou.devify.blog.controllers;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +79,9 @@ public class InternalModController {
       article.setPublished(false);
       article.setUpdatedBy(user.getId());
       article.setUnpublishedBy(user.getId());
+      article.setUnpublishedAt(Instant.now());
     } else {
+      article.setPublishedAt(Instant.now());
       article.setPublished(true);
       article.setUpdatedBy(user.getId());
       article.setPublishedBy(user.getId());

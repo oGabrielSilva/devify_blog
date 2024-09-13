@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <meta data-details="page" data-content="profile_public" />
+  </head>
+
+  <body>
+    <header id="header">
+      <th th:replace="~{partials/nav}"></th>
+    </header>
+
+    <div class="container" id="root">
+      <main class="py-6 px-3">
+        <section
+          class="is-flex is-justify-content-center is-align-items-center is-flex-direction-column has-text-centered"
+        >
+          <div>
+            <img
+              th:src="${user.avatarURL}"
+              th:alt="|Avatar - ${user.processedName}|"
+              th:title="|Avatar - ${user.processedName}|"
+              width="98"
+              height="98"
+              style="width: 98px; height: 98px"
+              class="avatar"
+            />
+          </div>
+
+          <div class="py-3">
+            <h1 class="title is-5" th:text="${user.processedName}"></h1>
+            <div>
+              <div>
+                <div
+                  data-social
+                  th:with="social=${user.social}"
+                  class="buttons gap is-justify-content-center"
+                >
+                  <a
+                    th:href="@{mailto:{email}(email=${user.email})}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="button is-text"
+                    title="Envie-me um email"
+                  >
+                    <span class="icon is-small">
+                      <i class="fa-solid fa-envelope"></i>
+                    </span>
+                  </a>
+
+                  <a
+                    th:if="${!#strings.isEmpty(social.threads)}"
+                    th:href="${social.threads}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Link para meu Thread"
+                    class="button is-text"
+                  >
+                    <span class="icon is-small">
+                      <i class="fa-brands fa-threads"></i>
+                    </span>
+                  </a>
+
+                  <a
+                    th:if="${!#strings.isEmpty(social.instagram)}"
+                    th:href="${social.instagram}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Link para meu Instagram"
+                    class="button is-text"
+                  >
+                    <span class="icon is-small">
+                      <i class="fa-brands fa-instagram"></i>
+                    </span>
+                  </a>
+
+                  <a
+                    th:if="${!#strings.isEmpty(social.facebook)}"
+                    th:href="${social.facebook}"
+                    target="_blank"
+                    title="Link para meu Facebook"
+                    rel="noopener noreferrer"
+                    class="button is-text"
+                  >
+                    <span class="icon is-small">
+                      <i class="fa-brands fa-facebook"></i>
+                    </span>
+                  </a>
+
+                  <a
+                    th:if="${!#strings.isEmpty(social.youtube)}"
+                    th:href="${social.youtube}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Link para meu canal do YouTube"
+                    class="button is-text"
+                  >
+                    <span class="icon is-small">
+                      <i class="fa-brands fa-youtube"></i>
+                    </span>
+                  </a>
+
+                  <a
+                    th:if="${!#strings.isEmpty(social.bluesky)}"
+                    th:href="${social.bluesky}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Link para meu BlueSky"
+                    class="button is-text"
+                  >
+                    <span class="icon is-small">
+                      <i class="fa-brands fa-bluesky"></i>
+                    </span>
+                  </a>
+
+                  <a
+                    th:if="${!#strings.isEmpty(social.mastodon)}"
+                    th:href="${social.mastodon}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Link para meu Mastodon"
+                    class="button is-text"
+                  >
+                    <span class="icon is-small">
+                      <i class="fa-brands fa-mastodon"></i>
+                    </span>
+                  </a>
+
+                  <a
+                    th:if="${!#strings.isEmpty(social.reddit)}"
+                    th:href="${social.reddit}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Link para meu Reddit"
+                    class="button is-text"
+                  >
+                    <span class="icon is-small">
+                      <i class="fa-brands fa-reddit"></i>
+                    </span>
+                  </a>
+
+                  <a
+                    th:if="${!#strings.isEmpty(social.twitter)}"
+                    th:href="${social.twitter}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Link para meu X/Twitter"
+                    class="button is-text"
+                  >
+                    <span class="icon is-small">
+                      <i class="fa-brands fa-x-twitter"></i>
+                    </span>
+                  </a>
+
+                  <a
+                    th:if="${!#strings.isEmpty(social.github)}"
+                    th:href="${social.github}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Link para meu GitHub"
+                    class="button is-text"
+                  >
+                    <span class="icon is-small">
+                      <i class="fa-brands fa-github"></i>
+                    </span>
+                  </a>
+
+                  <a
+                    th:if="${!#strings.isEmpty(social.tiktok)}"
+                    th:href="${social.tiktok}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Link para meu TikTok"
+                    class="button is-text"
+                  >
+                    <span class="icon is-small">
+                      <i class="fa-brands fa-tiktok"></i>
+                    </span>
+                  </a>
+
+                  <a
+                    th:if="${!#strings.isEmpty(social.discord)}"
+                    th:href="${social.discord}"
+                    target="_blank"
+                    title="Link para meu Discord"
+                    rel="noopener noreferrer"
+                    class="button is-text"
+                  >
+                    <span class="icon is-small">
+                      <i class="fa-brands fa-discord"></i>
+                    </span>
+                  </a>
+
+                  <a
+                    th:if="${!#strings.isEmpty(social.linkedin)}"
+                    th:href="${social.linkedin}"
+                    target="_blank"
+                    title="Link para meu LinkedIn"
+                    rel="noopener noreferrer"
+                    class="button is-text"
+                  >
+                    <span class="icon is-small">
+                      <i class="fa-brands fa-linkedin-in"></i>
+                    </span>
+                  </a>
+
+                  <a
+                    th:if="${!#strings.isEmpty(social.site)}"
+                    th:href="${social.site}"
+                    title="Link para meu Site"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="button is-text"
+                  >
+                    <span class="icon is-small">
+                      <i class="fa-solid fa-globe"></i>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <p th:text="${user.bio}"></p>
+          </div>
+          <div class="py-3">
+            <div>
+              <span>Publicou <strong th:text="${articleCount}"></strong> artigo(s)</span>
+              <div>
+                <span class="help">
+                  Membro da Devify desde
+                  <b>
+                    <time
+                      data-no-format-time="true"
+                      th:datetime="${user.createdAt}"
+                      th:text="${user.createdAtToLocalDateTime.year}"
+                    ></time>
+                  </b>
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="py-5">
+          <h2 class="title is-5">Artigos publicados</h2>
+          <div th:if="${#lists.isEmpty(articles)}">
+            <span>Nenhum artigo publicado</span>
+          </div>
+
+          <div th:unless="${#lists.isEmpty(articles)}">
+            <div th:each="article : ${articles}">
+              <div>
+                <span>
+                  <small th:text="${article.stack.name}"></small> |
+                  <small>
+                    <time
+                      th:text="${article.formattedPublicationDate}"
+                      th:datetime="${article.publishedAt}"
+                      data-no-format-time="true"
+                    ></time>
+                  </small>
+                </span>
+              </div>
+              <a th:href="@{/item/{stack}/{slug}(stack=${article.stack.name}, slug=${article.slug})}">
+                <span class="link-title" th:text="${article.title}"></span>
+              </a>
+              <div>
+                <p>
+                  <small th:utext="${article.description}" class="help"></small>
+                </p>
+              </div>
+              <hr />
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <th th:replace="~{partials/footer}"></th>
+  </body>
+</html>

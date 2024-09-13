@@ -1,6 +1,8 @@
 package cyou.devify.blog.entities;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -197,5 +199,9 @@ public class User implements UserDetails {
     if (StringUtils.isNullOrBlank(bio) || bio.length() <= size)
       return bio;
     return bio.substring(0, size).concat("...");
+  }
+
+  public LocalDateTime getCreatedAtToLocalDateTime() {
+    return LocalDateTime.ofInstant(createdAt, ZoneOffset.UTC);
   }
 }
