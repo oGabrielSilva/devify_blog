@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <th th:replace="~{partials/head}"></th>
+    <th:block th:replace="~{partials/head}"></th:block>
     <meta data-details="page" data-content="mod_articles" />
     <script src="/javascript/index.internal.js" defer></script>
   </head>
 
   <body>
     <header id="header">
-      <th th:replace="~{partials/nav}"></th>
+      <th:block th:replace="~{partials/nav}"></th:block>
     </header>
 
     <div class="container" id="root">
@@ -116,6 +116,6 @@
       </main>
     </div>
 
-    <th th:replace="~{partials/footer}"></th>
+    <th:block th:replace="~{partials/footer}"></th:block>
   </body>
 </html>

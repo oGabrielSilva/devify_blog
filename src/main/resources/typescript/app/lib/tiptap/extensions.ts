@@ -36,7 +36,7 @@ export const requireTiptapBasicExtensions = () => [
     heading: {
       levels: [1, 2, 3],
       HTMLAttributes: {
-        class: 'title',
+        class: 'title tptp',
       },
     },
     listItem: false,

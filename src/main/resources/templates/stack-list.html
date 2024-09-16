@@ -3,6 +3,7 @@
   <head>
     <th th:replace="~{partials/head}"></th>
     <meta data-details="page" data-content="stack_list" />
+    <script src="/javascript/index.editor.js" defer></script>
     <script src="/javascript/index.internal.js" defer></script>
   </head>
 
@@ -135,15 +136,15 @@
                       >
                         <div th:data-edit="${stack.id}" class="modal">
                           <div class="modal-background"></div>
-                          <div class="modal-card">
+                          <div class="modal-card" style="width: 95vw; padding: 0">
                             <header class="modal-card-head">
                               <h1 class="modal-card-title">
                                 Editar Stack <strong th:text="|[${stack.name}]|"></strong>
                               </h1>
                               <button class="delete goBack" aria-label="Fechar" type="button"></button>
                             </header>
-                            <section class="modal-card-body">
-                              <div>
+                            <section style="padding-top: 0" class="modal-card-body">
+                              <div class="pt-5">
                                 <div class="field">
                                   <label for="stack-name" class="label">ID da Stack</label>
                                   <div class="control has-icons-left">
@@ -192,15 +193,20 @@
                                 </div>
 
                                 <div class="field">
-                                  <label for="description" class="label">Descrição</label>
+                                  <label class="label">Descrição</label>
                                   <div class="control">
-                                    <textarea
+                                    <div data-editor-id="edit-stack-description" class="editor-container">
+                                      <div class="topbar"></div>
+                                      <div data-text class="editor" th:utext="${stack.description}"></div>
+                                      <input type="hidden" name="description" />
+                                    </div>
+                                    <!-- <textarea
                                       id="description"
                                       rows="8"
                                       name="description"
                                       class="textarea"
                                       th:text="${stack.description}"
-                                    ></textarea>
+                                    ></textarea> -->
                                   </div>
                                   <p class="help">
                                     Descreva a Stack como um todo. O que esperar do conteúdo?
@@ -222,7 +228,7 @@
                         </div>
                       </form>
 
-                      <th:block th:if="${@userService.isMod}">
+                      <th th:if="${@userService.isMod}">
                         <button
                           th:data-disable="${stack.id}"
                           class="button is-small is-danger"
@@ -262,7 +268,7 @@
                             </div>
                           </div>
                         </form>
-                      </th:block>
+                      </th>
                     </div>
                   </td>
                 </tr>
@@ -273,6 +279,6 @@
       </main>
     </div>
 
-    <th th:replace="~{partials/footer}"></th>
+    <th:block th:replace="~{partials/footer}"></th:block>
   </body>
 </html>

@@ -6,24 +6,17 @@
 >
   <div class="modal" id="stack-modal">
     <div class="modal-background"></div>
-    <div class="modal-card">
+    <div style="width: 95vw; padding: 0" class="modal-card">
       <header class="modal-card-head">
         <h1 class="modal-card-title">Adicione uma nova Stack</h1>
         <button class="delete goBack" aria-label="Fechar" type="button"></button>
       </header>
-      <section class="modal-card-body">
-        <div>
+      <section style="padding-top: 0" class="modal-card-body">
+        <div class="pt-5">
           <div class="field">
-            <label for="stack-name" class="label">ID da Stack</label>
+            <label class="label">ID da Stack</label>
             <div class="control has-icons-left">
-              <input
-                id="stack-name"
-                name="name"
-                class="input"
-                type="text"
-                placeholder="Nome"
-                maxlength="25"
-              />
+              <input name="name" class="input" type="text" placeholder="Nome" maxlength="25" />
               <span class="icon is-small is-left">
                 <i class="fa-solid fa-layer-group"></i>
               </span>
@@ -32,17 +25,11 @@
           </div>
 
           <div class="field">
-            <label for="meta-description" class="label">Meta descrição</label>
+            <label class="label">Meta descrição</label>
             <div class="control" style="position: relative">
-              <textarea
-                rows="3"
-                id="meta-description"
-                name="metaDescription"
-                class="textarea"
-                maxlength="225"
-              ></textarea>
+              <textarea rows="3" name="metaDescription" class="textarea" maxlength="225"></textarea>
               <span style="position: absolute; bottom: 2%; right: 2%; font-size: 12px">
-                <small id="meta-size">0</small>
+                <small data-id="meta-size">0</small>
               </span>
             </div>
             <p class="help">
@@ -52,10 +39,18 @@
           </div>
 
           <div class="field">
-            <label for="description" class="label">Descrição</label>
+            <label class="label">Descrição</label>
+            <div class="control">
+              <div data-editor-id="new-stack-description" class="editor-container">
+                <div class="topbar"></div>
+                <div data-text class="editor"></div>
+                <input type="hidden" name="description" />
+              </div>
+            </div>
+            <!-- <label for="description" class="label">Descrição</label>
             <div class="control">
               <textarea id="description" rows="8" name="description" class="textarea"></textarea>
-            </div>
+            </div> -->
             <p class="help">Descreva a Stack como um todo. O que esperar do conteúdo?</p>
           </div>
         </div>
@@ -63,7 +58,7 @@
       <footer class="modal-card-foot">
         <div class="buttons">
           <button class="button is-success" type="submit">Salvar nova Stack</button>
-          <button aria-label="Cancelar" type="reset" id="close-modal" class="button goBack">Cancelar</button>
+          <button aria-label="Cancelar" type="button" id="close-modal" class="button goBack">Cancelar</button>
         </div>
       </footer>
     </div>

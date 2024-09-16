@@ -12,5 +12,5 @@ declare global {
 
   type AppScheme = 'dark' | 'light'
 
-  var editors: { id: string; editor: Editor }[] | undefined
+  var editors: { id: string; editor: Editor; element: HTMLElement }[] | undefined
 }

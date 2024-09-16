@@ -1,7 +1,6 @@
 :root {
   --bulma-body-family: 'JetBrains Mono', Inter, SF Pro, Segoe UI, Roboto, Oxygen, Ubuntu, Helvetica Neue,
     Helvetica, Arial, sans-serif, monospace;
-  font-size: 13px;
 }
 
 .navbar-dropdown hr {
@@ -11,6 +10,10 @@
 
 .modal-card-title {
   width: calc(100% - 2rem);
+}
+
+.table td {
+  color: var(--bulma-text);
 }
 
 /* Avatar Styles */
@@ -206,7 +209,8 @@ blockquote {
   font-weight: var(--bulma-title-weight);
   line-height: var(--bulma-title-line-height);
 }
-[data-text] h2 {
+[data-text] h2,
+h2.title.tptp {
   font-size: 1.5rem;
   color: var(--bulma-subtitle-color);
   font-weight: var(--bulma-subtitle-weight);

@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <th th:replace="~{partials/head}"></th>
+    <th:block th:replace="~{partials/head}"></th:block>
     <link rel="stylesheet" href="/css/github-dark.min.css" />
     <meta data-details="page" data-content="edit_article" />
+    <script defer src="/javascript/index.editor.js"></script>
     <script src="/javascript/index.internal.js" defer></script>
   </head>
 
   <body>
     <header id="header">
-      <th th:replace="~{partials/nav}"></th>
+      <th:block th:replace="~{partials/nav}"></th:block>
     </header>
 
     <div class="container" id="root">
@@ -20,7 +21,7 @@
           id="save"
           th:action="@{/internal/article/{articleId}/save(articleId=${article.id})}"
         >
-          <div id="article-content" class="editor-container">
+          <div data-editor-id="article-content" class="editor-container">
             <div class="topbar"></div>
             <div data-text class="editor" th:utext="${article.content}"></div>
           </div>
@@ -46,7 +47,6 @@
       </main>
     </div>
 
-    <th th:replace="~{partials/article-edit-footer}"></th>
-    <script defer src="/javascript/index.editor.js"></script>
+    <th:block th:replace="~{partials/article-edit-footer}"></th:block>
   </body>
 </html>

@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <th th:replace="~{partials/head}"></th>
+    <th:block th:replace="~{partials/head}"></th:block>
     <meta data-details="page" data-content="write_article" />
+    <script src="/javascript/index.editor.js" defer></script>
     <script src="/javascript/index.internal.js" defer></script>
   </head>
 
   <body>
     <header id="header">
-      <th th:replace="~{partials/nav}"></th>
+      <th:block th:replace="~{partials/nav}"></th:block>
     </header>
 
     <div class="container" id="root">
@@ -86,6 +87,6 @@
       <th:block th:replace="~{partials/stack-create}"></th:block>
     </div>
 
-    <th th:replace="~{partials/footer}"></th>
+    <th:block th:replace="~{partials/footer}"></th:block>
   </body>
 </html>

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <th th:replace="~{partials/head}"></th>
+    <th:block th:replace="~{partials/head}"></th:block>
     <meta data-details="page" data-content="mod_articles" />
     <script src="/javascript/index.internal.js" defer></script>
   </head>
 
   <body>
     <header id="header">
-      <th th:replace="~{partials/nav}"></th>
+      <th:block th:replace="~{partials/nav}"></th:block>
     </header>
 
     <div class="container" id="root">
@@ -74,7 +74,7 @@
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="button is-text m-0 is-small"
+                    class="button is-ghost px-0 has-text-current m-0 is-small"
                     th:href="@{/internal/article/{articleId}/edit/metadata(articleId=${article.id})}"
                   >
                     <span class="icon is-small">
@@ -86,7 +86,7 @@
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="button is-text m-0 is-small"
+                    class="button is-ghost px-0 has-text-current m-0 is-small"
                     th:href="@{/internal/mod/article/{articleId}/state(articleId=${article.id})}"
                   >
                     <span class="icon is-small">
@@ -178,6 +178,6 @@
       </main>
     </div>
 
-    <th th:replace="~{partials/footer}"></th>
+    <th:block th:replace="~{partials/footer}"></th:block>
   </body>
 </html>

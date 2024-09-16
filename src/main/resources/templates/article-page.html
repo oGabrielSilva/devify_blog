@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <th th:replace="~{partials/head}"></th>
+    <th:block th:replace="~{partials/head}"></th:block>
     <meta data-details="page" data-content="article_page" />
     <!-- <style>
       aside {
@@ -12,7 +12,7 @@
 
   <body>
     <header id="header">
-      <th th:replace="~{partials/nav}"></th>
+      <th:block th:replace="~{partials/nav}"></th:block>
     </header>
 
     <div id="root" class="container">
@@ -97,6 +97,6 @@
       </main>
     </div>
 
-    <th th:replace="~{partials/footer}"></th>
+    <th:block th:replace="~{partials/footer}"></th:block>
   </body>
 </html>

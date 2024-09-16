@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <th th:replace="~{partials/head}"></th>
+    <th:block th:replace="~{partials/head}"></th:block>
     <meta data-details="page" data-content="edit_article_metadata" />
     <script src="/javascript/index.editor.js" defer></script>
     <script src="/javascript/index.internal.js" defer></script>
@@ -9,7 +9,7 @@
 
   <body>
     <header id="header">
-      <th th:replace="~{partials/nav}"></th>
+      <th:block th:replace="~{partials/nav}"></th:block>
     </header>
 
     <div class="container" id="root">
@@ -98,7 +98,7 @@
 
           <div class="pb-3">
             <label class="label">Descrição</label>
-            <div id="article-description" class="editor-container">
+            <div data-editor-id="article-description" class="editor-container">
               <div class="topbar"></div>
               <div data-text class="editor" th:utext="${article.description}"></div>
             </div>
@@ -127,5 +127,7 @@
     <th:block th:replace="~{partials/stack-create}"></th:block>
 
     <th:block th:replace="~{partials/article-edit-footer}"></th:block>
+
+    <script src="/javascript/index.editor.js" defer></script>
   </body>
 </html>
