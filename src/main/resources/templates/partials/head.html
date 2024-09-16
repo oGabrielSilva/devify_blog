@@ -1,25 +1,32 @@
-<title th:text="${pageTitle != null ? pageTitle + ' - Devify' : '- Devify'}"></title>
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title th:text="${pageTitle != null ? pageTitle + ' - Devify' : 'Devify'}"></title>
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" th:content="${noIndexPage != null && noIndexPage ? 'noindex' : 'index, follow'}" />
 <meta name="author" content="Gabriel Henrique da Silva" />
-<meta name="copyright" content="Devify - Gabriel Henrique da Silva" />
+<meta name="copyright" content="© 2024 Devify - Gabriel Henrique da Silva" />
 <meta data-details="success" th:data-message="${success}" />
 <meta data-details="error" th:data-message="${error}" />
-<!-- META -->
-<meta property="og:url" content="https://devify.cyou" />
-<meta property="og:type" content="blog" />
-<meta property="og:title" content="Devify" />
-<meta property="og:description" content="Blank" />
-<meta property="og:image" content="blank" />
+<meta property="og:url" th:content="${pageURL}" />
+<meta property="og:type" content="article" />
+<meta property="og:title" th:content="${pageTitle != null ? pageTitle + ' - Devify' : 'Devify'}" />
 <meta property="og:locale" content="pt_BR" />
 <meta property="og:site_name" content="Devify" />
-<!-- GOOGLE -->
+<!-- <meta property="og:image" content="/devify.og.jpg" /> -->
+<meta
+  property="og:description"
+  th:content="${pageDescription != null ? pageDescription : 'Devify é um projeto focado em compartilhar conhecimentos e experiências sobre desenvolvimento web. Com foco primário em Node, React, Vue e Spring Boot'}"
+/>
+<meta
+  name="description"
+  th:content="${pageDescription != null ? pageDescription : 'Devify é um projeto focado em compartilhar conhecimentos e experiências sobre desenvolvimento web. Com foco primário em Node, React, Vue e Spring Boot'}"
+/>
 <meta itemprop="name" content="Devify" />
-<meta itemprop="description" content="Blank" />
-<meta itemprop="image" content="blank" />
+<meta
+  itemprop="description"
+  th:content="${pageDescription != null ? pageDescription : 'Devify é um projeto focado em compartilhar conhecimentos e experiências sobre desenvolvimento web. Com foco primário em Node, React, Vue e Spring Boot'}"
+/>
+<!-- <meta itemprop="image" content="/devify.og.jpg" /> -->
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -27,14 +34,12 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
 <link rel="stylesheet" href="/css/globals.css" />
 <link rel="stylesheet" href="/css/github-dark.min.css" />
-
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
   href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
   rel="stylesheet"
 />
-
 <script src="https://cdn.jsdelivr.net/npm/core-js-bundle@3.38.1/minified.min.js"></script>
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -49,7 +54,6 @@
     return item ? item : null
   }
 </script>
-
 <style>
   .navbar-dropdown {
     padding: 0.25rem;

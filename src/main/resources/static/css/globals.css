@@ -212,7 +212,6 @@ blockquote {
 [data-text] h2,
 h2.title.tptp {
   font-size: 1.5rem;
-  color: var(--bulma-subtitle-color);
   font-weight: var(--bulma-subtitle-weight);
   line-height: var(--bulma-subtitle-line-height);
 }
@@ -221,8 +220,8 @@ h2.title.tptp {
   padding-bottom: 0.5rem;
 }
 
-[data-text] ul,
-[data-text] ol {
+ul,
+ol {
   padding: 0.5rem 0 0.5rem 2rem;
 }
 
