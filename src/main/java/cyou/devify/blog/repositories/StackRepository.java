@@ -9,4 +9,6 @@ import cyou.devify.blog.entities.Stack;
 public interface StackRepository extends JpaRepository<Stack, UUID> {
 
   Stack findByName(String name);
+
+  Stack findBySlug(String slug);
 }

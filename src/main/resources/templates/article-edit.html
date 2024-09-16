@@ -29,6 +29,17 @@
             <button type="submit" class="button is-primary">
               <span>Salvar <span aria-hidden="true">[Ctrl + S]</span></span>
             </button>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              class="button"
+              th:href="@{/internal/article/{articleId}/edit/metadata(articleId=${article.id})}"
+            >
+              <span class="icon is-small">
+                <i class="fa-solid fa-database"></i>
+              </span>
+              <span>Metadados</span>
+            </a>
           </div>
           <input type="hidden" name="content" id="content" />
         </form>

@@ -53,7 +53,12 @@ public class InternalProfileController {
     }
 
     if (StringUtils.isNonNullOrBlank(payload.bio()) && !payload.bio().equals(user.getBio())) {
-      user.setBio(payload.bio());
+      String bio = payload.bio();
+
+      if (bio.length() > 500) {
+        bio = bio.substring(0, 500);
+      }
+      user.setBio(bio);
       hasChanges = true;
     }
 

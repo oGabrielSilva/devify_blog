@@ -29,6 +29,9 @@ public class Stack {
   @Column(unique = true, length = 25)
   private String name;
 
+  @Column(unique = true)
+  private String slug;
+
   @Column(columnDefinition = "TEXT")
   private String description;
 
@@ -47,8 +50,9 @@ public class Stack {
   @UpdateTimestamp
   private Instant updatedAt;
 
-  public Stack(String name, String description, String metaDescription, UUID createdBy, UUID updatedBy) {
+  public Stack(String name, String slug, String description, String metaDescription, UUID createdBy, UUID updatedBy) {
     this.name = name;
+    this.slug = slug;
     this.description = description;
     this.metaDescription = metaDescription;
     this.createdBy = createdBy;

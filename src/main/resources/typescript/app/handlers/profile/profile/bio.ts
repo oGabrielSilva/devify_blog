@@ -1,28 +1,13 @@
 import { type InternalProfilePageHandler } from '../InternalProfilePageHandler'
 
 export function configureBio(handler: InternalProfilePageHandler) {
-  if (handler.profile.bio) {
-    updateBioState(handler)
+  const bio = handler.profile.bio
 
-    handler.profile.bio.input.addEventListener('input', () => {
-      updateBioState(handler)
-    })
-  }
-}
+  bio.editor = editors!.find((props) => props.id === 'content')?.editor ?? null
 
-export function updateBioState(handler: InternalProfilePageHandler) {
-  const input = handler.profile.bio.input
-  const value = 500 - input.value.length
-  const helper = handler.profile.bio.len
-  helper.text(value)
+  bio.editor?.on('update', () => {
+    bio.input.val(bio.editor!.getHTML())
+  })
 
-  if (value < 0) {
-    $(input).addClass('is-danger')
-    $(helper).addClass('is-danger')
-    handler.profile.bio.isValid = false
-  } else {
-    $(input).removeClass('is-danger')
-    $(helper).removeClass('is-danger')
-    handler.profile.bio.isValid = true
-  }
+  if (bio.editor) bio.input.val(bio.editor.getHTML())
 }

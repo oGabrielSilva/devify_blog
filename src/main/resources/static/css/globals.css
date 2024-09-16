@@ -1,3 +1,9 @@
+:root {
+  --bulma-body-family: 'JetBrains Mono', Inter, SF Pro, Segoe UI, Roboto, Oxygen, Ubuntu, Helvetica Neue,
+    Helvetica, Arial, sans-serif, monospace;
+  font-size: 13px;
+}
+
 .navbar-dropdown hr {
   height: 1px;
   background: var(--bulma-navbar-dropdown-border-color);

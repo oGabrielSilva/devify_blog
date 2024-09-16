@@ -43,8 +43,17 @@ public class StackController {
       return mv;
     }
 
+    String stackSlug = StringUtils.slugify(name);
+
+    var stackBySlug = stackRepository.findBySlug(stackSlug);
+
+    if (stackBySlug != null) {
+      mv.addObject("error", String.format("Stack %s já está cadastrada", stackSlug));
+      return mv;
+    }
+
     var user = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
-    var stack = new Stack(name, payload.description(), payload.metaDescription(), user.getId(),
+    var stack = new Stack(name, stackSlug, payload.description(), payload.metaDescription(), user.getId(),
         user.getId());
 
     if (stack.getMetaDescription() != null) {
@@ -94,12 +103,21 @@ public class StackController {
         mv.addObject("error", String.format("Stack %s já está cadastrada. Escolha um nome diferente", payload.name()));
         return mv;
       }
+
+      String slug = StringUtils.slugify(payload.name());
+      var stackBySlug = stackRepository.findBySlug(slug);
+
+      if (stackBySlug != null) {
+        mv.addObject("error", String.format("Stack %s já está cadastrada. Escolha um nome diferente", slug));
+        return mv;
+      }
     }
 
     boolean hasChanges = false;
 
     if (!stack.getName().equals(payload.name())) {
       stack.setName(payload.name());
+      stack.setSlug(StringUtils.slugify(payload.name()));
       hasChanges = true;
     }
 

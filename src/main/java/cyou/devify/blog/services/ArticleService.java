@@ -19,6 +19,11 @@ public class ArticleService {
   UserRepository userRepository;
 
   @Transactional
+  public Article findBySlug(String slug) {
+    return articleRepository.findBySlug(slug);
+  }
+
+  @Transactional
   public List<Article> findAllByUser(User user) {
     return articleRepository.findAllByCreatedBy(user.getId());
   }

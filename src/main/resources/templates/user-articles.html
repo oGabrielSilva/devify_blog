@@ -54,11 +54,6 @@
                     th:href="@{/internal/article/{articleId}/edit(articleId=${article.id})}"
                     th:text="${article.slug}"
                   ></a>
-                  |
-                  <span
-                    th:text="${article.isPublished ? 'Publicado' : 'Não publicado'}"
-                    th:class="${article.isPublished ? 'has-text-primary' : 'has-text-danger'}"
-                  ></span>
                 </small>
               </div>
 
@@ -70,7 +65,27 @@
                   </em>
                 </small>
               </div>
+
               <div>
+                <span
+                  th:text="${article.isPublished ? 'Publicado' : 'Não publicado'}"
+                  th:class="${article.isPublished ? 'has-text-primary' : 'has-text-danger'}"
+                ></span>
+              </div>
+
+              <div>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="button is-text m-0 is-small"
+                  th:href="@{/internal/article/{articleId}/edit(articleId=${article.id})}"
+                >
+                  <span class="icon is-small">
+                    <i class="fa-regular fa-file-lines"></i>
+                  </span>
+                  <span>Editar artigo</span>
+                </a>
+
                 <a
                   target="_blank"
                   rel="noopener noreferrer"

@@ -1,4 +1,5 @@
 import KassiopeiaTools from 'kassiopeia-tools'
+import { ArticlePageHandler } from './handlers/public/ArticlePageHandler'
 import { BulmaCss } from './lib/BulmaCss'
 import { anim as animTool, locker as lockerTool, toaster } from './lib/kassiopeia-tools'
 import { configureDirectionButtons } from './utils/directionButtons'
@@ -9,6 +10,8 @@ export class Startup {
   private readonly root = document.querySelector<HTMLDivElement>('#root')
   private readonly success = document.head.querySelector<HTMLElement>('meta[data-details="success"]')
   private readonly error = document.head.querySelector<HTMLElement>('meta[data-details="error"]')
+
+  private readonly metaPage = document.head.querySelector<HTMLElement>('meta[data-details="page"]')!
 
   private configureBulmaCSS() {
     const bulma = new BulmaCss()
@@ -92,6 +95,10 @@ export class Startup {
         e.currentTarget.value = e.currentTarget.value.trim()
       }
     })
+
+    if (this.metaPage.dataset.content === 'article_page') {
+      ArticlePageHandler.fast.handle()
+    }
   }
 
   public static get fast() {

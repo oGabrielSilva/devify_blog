@@ -108,10 +108,17 @@
               id="article-description-input"
               th:value="${article.description}"
             />
+            <p class="help">Descrições mais curtas são melhores</p>
           </div>
 
           <div class="buttons py-3">
             <button class="button is-primary" type="submit">Salvar</button>
+            <a class="button" th:href="@{/internal/article/{articleId}/edit(articleId=${article.id})}">
+              <span class="icon is-small">
+                <i class="fa-regular fa-file-lines"></i>
+              </span>
+              <span>Editar artigo</span>
+            </a>
           </div>
         </form>
       </main>

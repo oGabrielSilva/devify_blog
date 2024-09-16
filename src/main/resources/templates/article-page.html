@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th th:replace="~{partials/head}"></th>
+    <meta data-details="page" data-content="article_page" />
+    <!-- <style>
+      aside {
+        background: var(--bulma-background);
+      }
+    </style> -->
+  </head>
+
+  <body>
+    <header id="header">
+      <th th:replace="~{partials/nav}"></th>
+    </header>
+
+    <div id="root" class="container">
+      <main class="py-6 px-4">
+        <article class="content">
+          <span>
+            <a
+              th:href="@{/item/{stack}(stack=${stack.slug})}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="has-text-current"
+            >
+              <span>&#8212;</span>
+              <span th:text="${stack.name}"></span> |
+            </a>
+            <span>
+              <em>
+                <time
+                  th:datetime="${article.updatedAt}"
+                  th:text="${dateFormatter.simple(article.updatedAt)}"
+                ></time>
+              </em>
+            </span>
+            | Escrito por
+            <a
+              th:href="@{/profile/{username}(username=${creator.username})}"
+              th:text="${creator.processedName}"
+            ></a>
+          </span>
+          <h1 class="title is-3 mt-3" th:text="${article.title}"></h1>
+          <hr />
+          <div th:utext="${article.content}"></div>
+          <hr />
+        </article>
+        <aside>
+          <div
+            class="is-flex is-justify-content-center is-align-items-center is-flex-direction-column has-text-centered"
+          >
+            <span class="subtitle mt-5">Escrito por</span>
+            <figure>
+              <a th:href="@{/profile/{username}(username=${creator.username})}">
+                <img
+                  th:src="${creator.avatarURL}"
+                  alt="Avatar do escritor do artigo"
+                  loading="lazy"
+                  class="avatar mb-3"
+                />
+              </a>
+            </figure>
+            <a class="has-text-current" th:href="@{/profile/{username}(username=${creator.username})}">
+              <h3 class="subtitle is-5" th:text="${creator.processedName}"></h3>
+            </a>
+            <div th:with="user=${creator}">
+              <th:block th:replace="~{partials/user-social-links}"></th:block>
+            </div>
+            <p class="pb-5" th:text="${creator.bio}"></p>
+          </div>
+          <div class="py-5" th:if="${!#lists.isEmpty(editorArticles)}">
+            <h3 class="title is-5 has-text-current has-text-weight-normal">Outros artigos do mesmo editor</h3>
+            <div>
+              <div th:each="art : ${editorArticles}">
+                <div>
+                  <span>
+                    <small th:text="${art.stack.name}"></small> |
+                    <small>
+                      <time
+                        th:text="${dateFormatter.simple(art.updatedAt)}"
+                        th:datetime="${art.updatedAt}"
+                        data-no-format-time="true"
+                      ></time>
+                    </small>
+                  </span>
+                </div>
+                <a th:href="@{/item/{stack}/{slug}(stack=${art.stack.slug}, slug=${art.slug})}">
+                  <span class="link-title" th:text="${art.title}"></span>
+                </a>
+                <hr />
+              </div>
+            </div>
+          </div>
+        </aside>
+      </main>
+    </div>
+
+    <th th:replace="~{partials/footer}"></th>
+  </body>
+</html>

@@ -105,7 +105,7 @@
                     rel="noopener noreferrer"
                     th:title="|Artigo criado por ${user.name} - ${user.email}|"
                     th:text="${article.title}"
-                    th:href="@{/{stackName}/{slug}(stackName=${article.stack.name}, slug=${article.slug})}"
+                    th:href="@{/{stack}/{slug}(stack=${article.stack.slug}, slug=${article.slug})}"
                   ></a>
                   <div>
                     <small>
@@ -148,7 +148,7 @@
                       target="_blank"
                       rel="noopener noreferrer"
                       class="button is-text m-0 is-small"
-                      th:href="@{/{stackName}/{slug}(stackName=${article.stack.name}, slug=${article.slug})}"
+                      th:href="@{/{stack}/{slug}(stack=${article.stack.slug}, slug=${article.slug})}"
                     >
                       <span class="icon is-small">
                         <i class="fa-regular fa-eye"></i>

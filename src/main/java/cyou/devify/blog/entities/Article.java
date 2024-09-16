@@ -1,9 +1,6 @@
 package cyou.devify.blog.entities;
 
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -80,17 +77,5 @@ public class Article {
     this.stack = stack;
     this.createdBy = createdBy;
     this.updatedBy = updatedBy;
-  }
-
-  public String formattedPublicationDate() {
-    if (publishedAt == null)
-      return "";
-
-    DateTimeFormatter formatter = DateTimeFormatter
-        .ofPattern("d MMM, yyyy", new Locale("pt", "BR"))
-        .withZone(ZoneId.of("America/Sao_Paulo"));
-
-    String formattedDate = formatter.format(publishedAt);
-    return formattedDate;
   }
 }
