@@ -44,7 +44,7 @@
               th:each="stack : ${stacks}"
               class="navbar-item"
               th:text="${stack.name}"
-              th:href="@{/stack/{stack}(stack=${stack.slug})}"
+              th:href="@{/item/{stack}(stack=${stack.slug})}"
             ></a>
           </div>
         </th:block>

@@ -155,6 +155,15 @@
   text-indent: 8rem;
 }
 
+pre {
+  margin: 0.75rem 0;
+  border-radius: 8px;
+}
+
+pre code {
+  padding: 0 !important;
+}
+
 /* Blockquote Styles */
 blockquote {
   border-left: 4px solid var(--bulma-border);

@@ -79,6 +79,9 @@ export const requireTiptapBasicExtensions = () => [
     defaultLanguage: 'typescript',
     exitOnArrowDown: true,
     exitOnTripleEnter: true,
+    HTMLAttributes: {
+      class: 'hljs',
+    },
   }),
   Placeholder.configure({
     placeholder: ({ node }) => {

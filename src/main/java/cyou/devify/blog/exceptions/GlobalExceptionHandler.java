@@ -188,6 +188,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(Forbidden.class)
   public Object forbidden(HttpServletRequest request, HttpServletResponse response,
       Forbidden ex) {
+    System.out.println(ex.getMessage());
     if (!request.getServletPath().contains("/api/")) {
       try {
         response.sendRedirect("/session?next=" + request.getServletPath());

@@ -86,8 +86,7 @@ public class InternalArticleController {
 
     var article = articleOpt.get();
 
-    System.out.println("Article id -> " + articleId);
-    var user = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
+    var user = userService.getCurrentAuthenticatedUser();
     if (!user.getId().equals(article.getCreatedBy())) {
       throw new Unauthorized("Usuário não tem permissão para alterar o artigo designado");
     }

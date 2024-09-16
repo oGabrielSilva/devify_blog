@@ -1,6 +1,7 @@
-import KassiopeiaTools from 'kassiopeia-tools'
+import KassiopeiaTools, { generateHTML } from 'kassiopeia-tools'
 import { ArticlePageHandler } from './handlers/public/ArticlePageHandler'
 import { BulmaCss } from './lib/BulmaCss'
+import { requireHLJS } from './lib/highlight'
 import { anim as animTool, locker as lockerTool, toaster } from './lib/kassiopeia-tools'
 import { configureDirectionButtons } from './utils/directionButtons'
 import { formatDate, supportedLangs } from './utils/formatDate'
@@ -99,6 +100,34 @@ export class Startup {
     if (this.metaPage.dataset.content === 'article_page') {
       ArticlePageHandler.fast.handle()
     }
+
+    document.querySelectorAll<HTMLElement>('*[class^="language-"]').forEach((el) => {
+      if ($(el).closest('.editor-container').length == 0) {
+        requireHLJS().highlightElement(el)
+
+        const copyButton = generateHTML({
+          tag: 'button',
+          attributes: {
+            type: 'button',
+          },
+          css: {
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            fontSize: 'large',
+          },
+        })
+
+        copyButton.onclick = () => {
+          anim.otherAnimationByName(copyButton, 'animate__headShake')
+          navigator.clipboard.writeText(el.innerText)
+          toaster.info('Copiado!')
+        }
+        copyButton.innerHTML = '<span class="icon is-small"><i class="fa-solid fa-copy"></i></span>'
+        el.parentElement!.appendChild(copyButton)
+        el.parentElement!.style.position = 'relative'
+      }
+    })
   }
 
   public static get fast() {
