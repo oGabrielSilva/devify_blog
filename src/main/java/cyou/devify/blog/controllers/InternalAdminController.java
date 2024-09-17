@@ -156,6 +156,8 @@ public class InternalAdminController {
     if (!user.getAuthority().equals(payload.authority())) {
       user.setAuthority(payload.authority());
       userRepository.save(user);
+      mv.addObject("success",
+          String.format("Autoridade do usuário foi atualizada para %s", user.getAuthority().capitalize()));
     }
 
     return mv;
@@ -188,6 +190,9 @@ public class InternalAdminController {
 
     user.setEnabled(!user.isEnabled());
     userRepository.save(user);
+
+    mv.addObject("info",
+        String.format("Estado do usuário atualizado para: %s", user.isEnabled() ? "ativo" : "desativado"));
 
     return mv;
   }

@@ -119,6 +119,12 @@
                 </span>
                 <span>Todos os artigos</span>
               </a>
+              <a class="navbar-item" th:href="@{/internal/mod/stacks}">
+                <span class="icon is-small">
+                  <i class="fa-solid fa-eye-slash"></i>
+                </span>
+                <span>Stacks desativadas</span>
+              </a>
             </th:block>
 
             <th:block th:if="${@userService.isAdmin}">

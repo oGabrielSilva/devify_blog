@@ -1,4 +1,3 @@
-import { getCSRFToken } from '../../utils/csrf'
 import { generateWinw } from '../../utils/generateWinw'
 import { BaseHandler } from '../BaseHandler'
 
@@ -6,11 +5,7 @@ export class EditArticlePageHandler extends BaseHandler {
   private readonly saveForm = $<HTMLFormElement>('#save')
 
   private async trySave() {
-    const request = await fetch('/session/is-logged-in', {
-      headers: {
-        'X-XSRF-TOKEN': getCSRFToken(),
-      },
-    })
+    const request = await fetch('/session/is-logged-in')
 
     const { isLoggedIn } = await request.json()
 
@@ -29,6 +24,13 @@ export class EditArticlePageHandler extends BaseHandler {
   }
 
   public handle(): void {
+    addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === 's' && e.ctrlKey) {
+        e.preventDefault()
+        this.trySave()
+      }
+    })
+
     this.saveForm.on('submit', (e) => {
       e.preventDefault()
 

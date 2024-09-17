@@ -8,7 +8,11 @@ import { formatDate, supportedLangs } from './utils/formatDate'
 
 export class Startup {
   static #instance: Startup
+  private readonly params = new URLSearchParams(location.search)
+
   private readonly root = document.querySelector<HTMLDivElement>('#root')
+  private readonly info = document.head.querySelector<HTMLElement>('meta[data-details="info"]')
+  private readonly warning = document.head.querySelector<HTMLElement>('meta[data-details="warning"]')
   private readonly success = document.head.querySelector<HTMLElement>('meta[data-details="success"]')
   private readonly error = document.head.querySelector<HTMLElement>('meta[data-details="error"]')
 
@@ -31,14 +35,13 @@ export class Startup {
 
   private showError() {
     if (this.error && this.error.dataset && this.error.dataset.message) {
-      toaster.danger(this.error.dataset.message, 25000)
+      toaster.danger(this.error.dataset.message, 50000)
     }
 
-    const params = new URLSearchParams(location.search)
-    if (params.size > 0) {
-      params.forEach((val, key) => {
+    if (this.params.size > 0) {
+      this.params.forEach((val, key) => {
         if (key.toLocaleLowerCase() === 'error') {
-          toaster.danger(val, 25000)
+          toaster.danger(val, 50000)
         }
       })
     }
@@ -46,14 +49,41 @@ export class Startup {
 
   private showSuccess() {
     if (this.success && this.success.dataset && this.success.dataset.message) {
-      toaster.success(this.success.dataset.message, 25000)
+      toaster.success(this.success.dataset.message, 50000)
     }
 
-    const params = new URLSearchParams(location.search)
-    if (params.size > 0) {
-      params.forEach((val, key) => {
+    if (this.params.size > 0) {
+      this.params.forEach((val, key) => {
         if (key.toLocaleLowerCase() === 'success') {
-          toaster.success(val, 25000)
+          toaster.success(val, 50000)
+        }
+      })
+    }
+  }
+
+  private showWarning() {
+    if (this.warning && this.warning.dataset && this.warning.dataset.message) {
+      toaster.warn(this.warning.dataset.message, 50000)
+    }
+
+    if (this.params.size > 0) {
+      this.params.forEach((val, key) => {
+        if (key.toLocaleLowerCase() === 'warning') {
+          toaster.warn(val, 50000)
+        }
+      })
+    }
+  }
+
+  private showInfo() {
+    if (this.info && this.info.dataset && this.info.dataset.message) {
+      toaster.info(this.info.dataset.message, 50000)
+    }
+
+    if (this.params.size > 0) {
+      this.params.forEach((val, key) => {
+        if (key.toLocaleLowerCase() === 'info') {
+          toaster.info(val, 50000)
         }
       })
     }
@@ -89,6 +119,8 @@ export class Startup {
 
     this.showSuccess()
     this.showError()
+    this.showWarning()
+    this.showInfo()
     this.formatAllDate()
 
     $<HTMLInputElement>('input').on('blur', (e) => {

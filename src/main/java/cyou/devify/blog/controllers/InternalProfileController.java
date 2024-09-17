@@ -77,6 +77,7 @@ public class InternalProfileController {
 
     if (hasChanges) {
       userRepository.save(user);
+      return "redirect:/internal/profile?success=Perfil+atualizado";
     }
     return "redirect:/internal/profile";
   }
@@ -102,7 +103,7 @@ public class InternalProfileController {
 
     userRepository.save(user);
 
-    return "redirect:/internal/profile?tab=social";
+    return "redirect:/internal/profile?tab=social&info=Social+atualizado";
   }
 
   @PostMapping("/email")
@@ -136,6 +137,8 @@ public class InternalProfileController {
       user.setEmail(payload.email());
       user = userRepository.save(user);
 
+      mv.addObject("success", String.format("Email atualizado para %s", user.getEmail()));
+
       response.addCookie(tokenService.createCookie(tokenService.create(user)));
     }
 
@@ -165,6 +168,8 @@ public class InternalProfileController {
 
       user.setUsername(username);
       userRepository.save(user);
+
+      mv.addObject("success", String.format("Nome de usuário atualizado para @%s", user.getUsername()));
     }
 
     return mv;
@@ -195,6 +200,7 @@ public class InternalProfileController {
     user.setPassword(passwordEncoder.encode(payload.newPassword()));
     user = userRepository.save(user);
 
+    mv.addObject("success", "Senha atualizada");
     return mv;
   }
 }

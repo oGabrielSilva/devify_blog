@@ -5,7 +5,9 @@
 <meta name="robots" th:content="${noIndexPage != null && noIndexPage ? 'noindex' : 'index, follow'}" />
 <meta name="author" content="Gabriel Henrique da Silva" />
 <meta name="copyright" content="© 2024 Devify - Gabriel Henrique da Silva" />
+<meta data-details="info" th:data-message="${info}" />
 <meta data-details="success" th:data-message="${success}" />
+<meta data-details="warning" th:data-message="${warning}" />
 <meta data-details="error" th:data-message="${error}" />
 <meta property="og:url" th:content="${pageURL}" />
 <meta property="og:type" content="article" />

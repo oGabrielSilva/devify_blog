@@ -28,7 +28,7 @@ public class StackController {
   public ModelAndView publicView(ModelAndView mv, @PathVariable String stackSlug) {
     var stack = stackRepository.findBySlug(stackSlug);
 
-    if (stack == null) {
+    if (stack == null || stack.isLocked()) {
       mv.setViewName("404");
       mv.setStatus(HttpStatus.NOT_FOUND);
       mv.addObject("pageTitle", "Stack não encontrada");

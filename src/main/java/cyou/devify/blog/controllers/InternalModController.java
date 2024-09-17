@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import cyou.devify.blog.repositories.ArticleRepository;
+import cyou.devify.blog.repositories.StackRepository;
 import cyou.devify.blog.services.ArticleService;
 import cyou.devify.blog.services.UserService;
 
@@ -23,9 +24,21 @@ public class InternalModController {
   ArticleRepository articleRepository;
   @Autowired
   ArticleService articleService;
-
   @Autowired
   UserService userService;
+  @Autowired
+  StackRepository stackRepository;
+
+  @GetMapping("/stacks")
+  public ModelAndView allDisabledStacks(ModelAndView mv) {
+    var stacks = stackRepository.findByIsLockedTrue();
+
+    mv.addObject("pageTitle", "Moderação - Stacks desativadas");
+    mv.addObject("stacks", stacks);
+
+    mv.setViewName("mod-stacks-locked");
+    return mv;
+  }
 
   @GetMapping("/articles")
   public ModelAndView allArticles(ModelAndView mv) {
@@ -90,6 +103,12 @@ public class InternalModController {
     articleRepository.save(article);
 
     mv.setViewName(String.format("redirect:/internal/mod/article/%s/state", article.getId()));
+
+    if (article.isPublished()) {
+      mv.addObject("success", "Artigo publicado");
+    } else {
+      mv.addObject("info", "Artigo removido do público");
+    }
 
     return mv;
   }

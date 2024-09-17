@@ -95,6 +95,7 @@ public class InternalArticleController {
     article = articleRepository.save(article);
 
     mv.setViewName(String.format("redirect:/internal/article/%s/edit", article.getId()));
+    // mv.addObject("success", "Artigo salvo");
 
     return mv;
   }
@@ -152,6 +153,7 @@ public class InternalArticleController {
     articleRepository.save(article);
 
     mv.setViewName(String.format("redirect:/internal/article/%s/edit/metadata", article.getId()));
+    mv.addObject("success", "Metadados atualizados");
 
     return mv;
   }

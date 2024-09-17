@@ -57,21 +57,27 @@ public class HomeController {
   }
 
   @GetMapping("/error")
-  public String handleError(HttpServletRequest request) {
+  public ModelAndView handleError(HttpServletRequest request) {
+    var mv = new ModelAndView();
+    mv.setViewName("error");
+    mv.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+
     Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
     if (status != null) {
       Integer statusCode = Integer.valueOf(status.toString());
 
       if (statusCode == HttpStatus.FORBIDDEN.value()) {
-        return "403";
+        mv.setStatus(HttpStatus.FORBIDDEN);
+        mv.setViewName("403");
+        return mv;
       } else if (statusCode == HttpStatus.NOT_FOUND.value()) {
-        return "404";
-      } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-        return "500";
+        mv.setStatus(HttpStatus.NOT_FOUND);
+        mv.setViewName("404");
+        return mv;
       }
     }
-    return "error";
+    return mv;
   }
 
   @GetMapping("/403")

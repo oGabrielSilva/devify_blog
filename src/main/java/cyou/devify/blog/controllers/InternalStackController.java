@@ -73,6 +73,8 @@ public class InternalStackController {
     }
 
     stackRepository.save(stack);
+
+    mv.addObject("success", String.format("Stack %s salva", stack.getSlug()));
     return mv;
   }
 
@@ -138,6 +140,9 @@ public class InternalStackController {
       stack.setUpdatedBy(user.getId());
 
       stackRepository.save(stack);
+
+      mv.addObject("success", String.format("Stack %s salva", stack.getSlug()));
+
     }
 
     return mv;
@@ -171,6 +176,7 @@ public class InternalStackController {
 
     stackRepository.save(stack);
 
+    mv.addObject("warning", String.format("Stack %s foi desabilitada", stack.getSlug()));
     return mv;
   }
 }

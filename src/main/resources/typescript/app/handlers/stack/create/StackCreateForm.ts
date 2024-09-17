@@ -69,6 +69,8 @@ export class StackCreateForm {
         dangerElement(idInput[0].parentElement!, 'Máximo de 25 caracteres')
         return
       }
+
+      locker.lock()
       this.form[0].submit()
     })
   }
