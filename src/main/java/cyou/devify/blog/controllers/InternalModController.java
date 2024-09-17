@@ -1,12 +1,15 @@
 package cyou.devify.blog.controllers;
 
 import java.time.Instant;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,7 @@ import cyou.devify.blog.repositories.ArticleRepository;
 import cyou.devify.blog.repositories.StackRepository;
 import cyou.devify.blog.services.ArticleService;
 import cyou.devify.blog.services.UserService;
+import cyou.devify.blog.utils.DateFormatter;
 
 @Controller
 @RequestMapping("/internal/mod")
@@ -29,12 +33,34 @@ public class InternalModController {
   @Autowired
   StackRepository stackRepository;
 
+  @ModelAttribute
+  public DateFormatter dateFormatter() {
+    return new DateFormatter();
+  }
+
   @GetMapping("/stacks")
   public ModelAndView allDisabledStacks(ModelAndView mv) {
     var stacks = stackRepository.findByIsLockedTrue();
 
     mv.addObject("pageTitle", "Moderação - Stacks desativadas");
-    mv.addObject("stacks", stacks);
+    // mv.addObject("stacks", stacks);
+
+    if (stacks.size() > 0) {
+      var userIds = stacks.stream()
+          .map(stack -> stack.getLockedBy())
+          .collect(Collectors.toList());
+
+      var users = userService.getRepository()
+          .findAllMinimalUserByIdIn(userIds);
+
+      var stackUserMap = stacks.stream()
+          .map(stack -> Map.of(
+              "stack", stack,
+              "locker", users.stream().filter(user -> user.id().equals(stack.getLockedBy())).findFirst().get()))
+          .collect(Collectors.toList());
+
+      mv.addObject("stacks", stackUserMap);
+    }
 
     mv.setViewName("mod-stacks-locked");
     return mv;

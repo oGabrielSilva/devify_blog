@@ -17,16 +17,16 @@
 <!-- <meta property="og:image" content="/devify.og.jpg" /> -->
 <meta
   property="og:description"
-  th:content="${pageDescription != null ? pageDescription : 'Devify é um projeto focado em compartilhar conhecimentos e experiências sobre desenvolvimento web. Com foco primário em Node, React, Vue e Spring Boot'}"
+  th:content="${not #strings.isEmpty(pageDescription) ? pageDescription : 'Devify é um projeto focado em compartilhar conhecimentos e experiências sobre desenvolvimento web. Com foco primário em Node, React, Vue e Spring Boot'}"
 />
 <meta
   name="description"
-  th:content="${pageDescription != null ? pageDescription : 'Devify é um projeto focado em compartilhar conhecimentos e experiências sobre desenvolvimento web. Com foco primário em Node, React, Vue e Spring Boot'}"
+  th:content="${not #strings.isEmpty(pageDescription) ? pageDescription : 'Devify é um projeto focado em compartilhar conhecimentos e experiências sobre desenvolvimento web. Com foco primário em Node, React, Vue e Spring Boot'}"
 />
 <meta itemprop="name" content="Devify" />
 <meta
   itemprop="description"
-  th:content="${pageDescription != null ? pageDescription : 'Devify é um projeto focado em compartilhar conhecimentos e experiências sobre desenvolvimento web. Com foco primário em Node, React, Vue e Spring Boot'}"
+  th:content="${not #strings.isEmpty(pageDescription) ? pageDescription : 'Devify é um projeto focado em compartilhar conhecimentos e experiências sobre desenvolvimento web. Com foco primário em Node, React, Vue e Spring Boot'}"
 />
 <!-- <meta itemprop="image" content="/devify.og.jpg" /> -->
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

@@ -1,5 +1,6 @@
 package cyou.devify.blog.controllers;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -173,6 +174,8 @@ public class InternalStackController {
     var stack = stackOpt.get();
     stack.setLocked(true);
     stack.setUpdatedBy(user.getId());
+    stack.setLockedBy(user.getId());
+    stack.setLockedAt(Instant.now());
 
     stackRepository.save(stack);
 

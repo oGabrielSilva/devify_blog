@@ -50,10 +50,10 @@ public class StartupSeedConfiguration implements ApplicationRunner {
     }
 
     if (seedJavaStack && stackRepository.findByName("Java") == null) {
-      var java = new Stack(null, "Java", "java",
-          "<div><h3><b>What is Java technology and why do I need it?</b></h3><p>Java is a programming language and computing platform first released by Sun Microsystems in 1995. It has evolved from humble beginnings to power a large share of today\'s digital world, by providing the reliable platform upon which many services and applications are built. New, innovative products and digital services designed for the future continue to rely on Java, as well.</p></div>",
-          "Java is a programming language and computing platform first released by Sun Microsystems in 1995", false,
-          rootUser.getId(), rootUser.getId(), null, null);
+      Stack java = new Stack("Java", "java",
+          "<h3 class=\"title tptp\">What is Java technology and why do I need it?</h3><p class=\"pb-2\">Java is a programming language and computing platform first released by Sun Microsystems in 1995. It has evolved from humble beginnings to power a large share of today’s digital world, by providing the reliable platform upon which many services and applications are built. New, innovative products and digital services designed for the future continue to rely on Java, as well.</p>",
+          "Java is a programming language and computing platform first released by Sun Microsystems in 1995",
+          rootUser.getId(), rootUser.getId());
       System.out.println("Java stack added");
       stackRepository.save(java);
     }

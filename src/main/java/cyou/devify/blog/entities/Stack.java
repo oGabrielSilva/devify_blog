@@ -39,6 +39,8 @@ public class Stack {
   private String metaDescription;
 
   private boolean isLocked = false;
+  private Instant lockedAt = null;
+  private UUID lockedBy = null;
 
   private UUID createdBy;
   private UUID updatedBy;

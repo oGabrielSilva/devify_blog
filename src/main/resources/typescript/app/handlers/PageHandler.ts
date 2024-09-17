@@ -7,6 +7,7 @@ import { NewArticlePageHandler } from './article/NewArticlePageHandler'
 import { InternalProfilePageHandler } from './profile/InternalProfilePageHandler'
 import { SessionPageHandler } from './session/SessionPageHandler'
 import { StackListPageHandler } from './stack/StackListPageHandler'
+import { StackLockedPageHandler } from './stack/StackLockedPageHandler'
 
 export class PageHandler {
   private readonly meta = document.head.querySelector<HTMLMetaElement>('meta[data-details="page"]')
@@ -26,6 +27,9 @@ export class PageHandler {
         break
       case 'stack_list':
         StackListPageHandler.fast.handle()
+        break
+      case 'mod_stacks_locked':
+        StackLockedPageHandler.fast.handle()
         break
       case 'write_article':
         NewArticlePageHandler.fast.handle()

@@ -11,10 +11,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import cyou.devify.blog.entities.MinimalUser;
 import cyou.devify.blog.entities.User;
 import cyou.devify.blog.enums.Role;
 import cyou.devify.blog.exceptions.Forbidden;
 import cyou.devify.blog.repositories.UserRepository;
+import cyou.devify.blog.utils.StringUtils;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -89,6 +91,14 @@ public class UserService implements UserDetailsService {
 
   public User getOwner() {
     return repository.findByUsername(ownerUsername);
+  }
+
+  public String getProcessedName(User user) {
+    return StringUtils.isNullOrBlank(user.getPseudonym()) ? user.getName() : user.getPseudonym();
+  }
+
+  public String getProcessedName(MinimalUser user) {
+    return StringUtils.isNullOrBlank(user.pseudonym()) ? user.name() : user.pseudonym();
   }
 
 }
