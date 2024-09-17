@@ -17,7 +17,7 @@ import cyou.devify.blog.repositories.UserRepository;
 import cyou.devify.blog.utils.StringUtils;
 
 @Controller
-public class UploadsController {
+public class StaticFilesController {
   @Autowired
   UserRepository userRepository;
 

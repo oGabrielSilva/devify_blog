@@ -70,6 +70,7 @@ public class ArticleController {
 
     mv.addObject("editorArticles", editorArticles);
     mv.addObject("creator", creator);
+    mv.addObject("pageDescription", article.getMetaDescription());
     return mv;
   }
 

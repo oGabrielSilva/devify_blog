@@ -32,6 +32,8 @@ public class HomeController {
     var owner = userService.getOwner();
 
     mv.addObject("owner", owner);
+    mv.addObject("pageDescription",
+        "Devify, o que é? Quem criou e por quê? Entenda um pouco da nossa história e da nossa motivação");
     return mv;
   }
 
@@ -41,7 +43,8 @@ public class HomeController {
     mv.addObject("pageTitle", "Entrar em contato");
 
     mv.addObject("staff", userService.getStaff());
-
+    mv.addObject("pageDescription",
+        "Conheça a equipe por trás da Devify e entre em contato para trocar ideias ou discutir oportunidades");
     return mv;
   }
 

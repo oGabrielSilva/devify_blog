@@ -38,6 +38,7 @@ public class StackController {
     mv.setViewName("stack-page");
     mv.addObject("pageTitle", stack.getName());
     mv.addObject("stack", stack);
+    mv.addObject("pageDescription", stack.getMetaDescription());
 
     var articles = articleRepository.findAllByStackAndIsPublishedTrueAndEnabledTrue(stack);
     mv.addObject("articles", articles);
