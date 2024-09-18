@@ -42,6 +42,9 @@ public class Stack {
   private Instant lockedAt = null;
   private UUID lockedBy = null;
 
+  private Instant unlockedAt = null;
+  private UUID unlockedBy = null;
+
   private UUID createdBy;
   private UUID updatedBy;
 

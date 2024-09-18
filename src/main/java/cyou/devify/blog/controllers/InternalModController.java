@@ -38,8 +38,8 @@ public class InternalModController {
     return new DateFormatter();
   }
 
-  @GetMapping("/stacks")
-  public ModelAndView allDisabledStacks(ModelAndView mv) {
+  @GetMapping("/stacks/locked")
+  public ModelAndView allLockedStacks(ModelAndView mv) {
     var stacks = stackRepository.findByIsLockedTrue();
 
     mv.addObject("pageTitle", "Moderação - Stacks desativadas");
@@ -63,6 +63,35 @@ public class InternalModController {
     }
 
     mv.setViewName("mod-stacks-locked");
+    return mv;
+  }
+
+  @PostMapping("/stack/{stackId}/unlock")
+  public ModelAndView unlockStack(ModelAndView mv, @PathVariable String stackId) {
+    mv.setViewName("redirect:/internal/mod/stacks/locked");
+
+    var stackOpt = stackRepository.findById(UUID.fromString(stackId));
+
+    if (stackOpt.isEmpty()) {
+      mv.addObject("error", "Stack não encontrada");
+      mv.setStatus(HttpStatus.NOT_FOUND);
+      return mv;
+    }
+
+    var stack = stackOpt.get();
+    if (!stack.isLocked()) {
+      return mv;
+    }
+
+    var user = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
+
+    stack.setLocked(false);
+    stack.setUnlockedAt(Instant.now());
+    stack.setUnlockedBy(user.getId());
+
+    stackRepository.save(stack);
+
+    mv.addObject("success", "Stack desbloqueada");
     return mv;
   }
 

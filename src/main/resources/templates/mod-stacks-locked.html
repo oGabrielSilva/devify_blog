@@ -82,6 +82,35 @@
                 </button>
               </div>
 
+              <form
+                th:action="@{/internal/mod/stack/{stackId}/unlock(stackId=${stack.id})}"
+                class="modal"
+                th:data-unlock-id="${stack.id}"
+                method="POST"
+                enctype="application/x-www-form-urlencoded"
+              >
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                  <header class="modal-card-head">
+                    <h1 class="modal-card-title">
+                      Desbloquear Stack [<strong th:text="${stack.name}"></strong>]?
+                    </h1>
+                    <button class="delete goBack" aria-label="Fechar" type="button"></button>
+                  </header>
+                  <section class="modal-card-body">
+                    <div>
+                      <p>Ao desbloquear, esta Stack poderá ser utilizada novamente na criação de artigos</p>
+                    </div>
+                  </section>
+                  <footer class="modal-card-foot">
+                    <div class="buttons">
+                      <button type="submit" class="button is-warning">Desbloquear</button>
+                      <button aria-label="Cancelar" type="button" class="button goBack">Cancelar</button>
+                    </div>
+                  </footer>
+                </div>
+              </form>
+
               <div class="modal" th:data-description-id="${stack.id}">
                 <div class="modal-background"></div>
                 <div style="width: 95vw; padding: 0" class="modal-card">
@@ -98,9 +127,7 @@
                   </section>
                   <footer class="modal-card-foot">
                     <div class="buttons">
-                      <button aria-label="Cancelar" type="button" id="close-modal" class="button goBack">
-                        Cancelar
-                      </button>
+                      <button aria-label="Cancelar" type="button" class="button goBack">Cancelar</button>
                     </div>
                   </footer>
                 </div>
