@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import cyou.devify.blog.entities.MinimalUser;
+import cyou.devify.blog.entities.MinimizedUser;
 import cyou.devify.blog.entities.User;
 import cyou.devify.blog.enums.Role;
 import cyou.devify.blog.exceptions.Forbidden;
@@ -97,7 +97,7 @@ public class UserService implements UserDetailsService {
     return StringUtils.isNullOrBlank(user.getPseudonym()) ? user.getName() : user.getPseudonym();
   }
 
-  public String getProcessedName(MinimalUser user) {
+  public String getProcessedName(MinimizedUser user) {
     return StringUtils.isNullOrBlank(user.pseudonym()) ? user.name() : user.pseudonym();
   }
 

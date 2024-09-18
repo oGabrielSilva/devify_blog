@@ -5,22 +5,52 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import cyou.devify.blog.repositories.ArticleRepository;
 import cyou.devify.blog.services.UserService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 
 @Controller
 public class HomeController {
 
   @Autowired
   UserService userService;
+  @Autowired
+  ArticleRepository articleRepository;
 
   @GetMapping("/")
   public ModelAndView ping(ModelAndView mv) {
     mv.setViewName("index");
     mv.addObject("pageTitle", "Início");
+
+    return mv;
+  }
+
+  @Transactional
+  @GetMapping("/search")
+  public ModelAndView search(ModelAndView mv, @RequestParam(required = false) String query) {
+    if (query == null) {
+      mv.setViewName("redirect:/");
+      return mv;
+    }
+
+    mv.setViewName("search");
+
+    var articlesByQuery = articleRepository.searchByKeyword(query);
+    var resultCount = articlesByQuery.size();
+
+    if (resultCount < 1) {
+      mv.addObject("pageTitle", "Nenhum resultado encontrado para a sua pesquisa");
+    } else {
+      mv.addObject("pageTitle", String.format("%s %s para a sua pesquisa", String.valueOf(resultCount),
+          resultCount > 1 ? "resultados encontrados" : "resultado encontrado"));
+    }
+
+    mv.addObject("articles", articlesByQuery);
 
     return mv;
   }

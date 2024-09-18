@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import cyou.devify.blog.entities.MinimalUser;
+import cyou.devify.blog.entities.MinimizedUser;
 import cyou.devify.blog.entities.User;
 import cyou.devify.blog.enums.Role;
 
@@ -20,5 +20,5 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
   List<User> findByAuthorityNot(Role authority);
 
-  List<MinimalUser> findAllMinimalUserByIdIn(List<UUID> ids);
+  List<MinimizedUser> findAllMinimizedUserByIdIn(List<UUID> ids);
 }

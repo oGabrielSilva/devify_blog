@@ -41,7 +41,6 @@ public class Article {
   @Basic(fetch = FetchType.LAZY)
   private String content = "<p>Hello world</p>";
 
-  @Lob
   @Column(columnDefinition = "TEXT")
   @Basic(fetch = FetchType.LAZY)
   private String description = "";

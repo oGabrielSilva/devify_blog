@@ -51,7 +51,7 @@ public class InternalModController {
           .collect(Collectors.toList());
 
       var users = userService.getRepository()
-          .findAllMinimalUserByIdIn(userIds);
+          .findAllMinimizedUserByIdIn(userIds);
 
       var stackUserMap = stacks.stream()
           .map(stack -> Map.of(

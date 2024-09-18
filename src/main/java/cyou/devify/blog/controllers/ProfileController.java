@@ -13,6 +13,7 @@ import cyou.devify.blog.repositories.ArticleRepository;
 import cyou.devify.blog.repositories.UserRepository;
 import cyou.devify.blog.services.UserService;
 import cyou.devify.blog.utils.DateFormatter;
+import jakarta.transaction.Transactional;
 
 @Controller
 @RequestMapping("/profile")
@@ -30,6 +31,7 @@ public class ProfileController {
     return new DateFormatter();
   }
 
+  @Transactional
   @GetMapping("/{username}")
   public ModelAndView publicProfile(ModelAndView mv, @PathVariable String username) {
     var currentUser = userService.getCurrentAuthenticatedUserOrThrowsForbidden();

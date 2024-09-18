@@ -65,7 +65,7 @@ public class ArticleController {
       return mv;
     }
 
-    var editorArticles = articleRepository.findAllMinimalByCreatedByAndIsPublishedTrueAndEnabledTrue(creator.getId());
+    var editorArticles = articleRepository.findAllMinimizedByCreatedByAndIsPublishedTrueAndEnabledTrue(creator.getId());
     editorArticles.removeIf(art -> art.slug().equals(article.getSlug()));
 
     mv.addObject("editorArticles", editorArticles);
