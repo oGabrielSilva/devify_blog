@@ -3,6 +3,30 @@
     Helvetica, Arial, sans-serif, monospace;
 }
 
+form.search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bulma-body-background-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+form.search-modal .search-body {
+  width: 90vw;
+  min-height: 45%;
+}
+
+#hide-search-modal {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+}
+
 .navbar-dropdown hr {
   height: 1px;
   background: var(--bulma-navbar-dropdown-border-color);

@@ -1,7 +1,8 @@
-import KassiopeiaTools, { generateHTML } from 'kassiopeia-tools'
+import KassiopeiaTools from 'kassiopeia-tools'
 import { ArticlePageHandler } from './handlers/public/ArticlePageHandler'
+import { CodeBlockHandler } from './handlers/public/CodeBlockHandler'
+import { PrimarySearchFormHandler } from './handlers/public/SearchFormHandler'
 import { BulmaCss } from './lib/BulmaCss'
-import { requireHLJS } from './lib/highlight'
 import { anim as animTool, locker as lockerTool, toaster } from './lib/kassiopeia-tools'
 import { configureDirectionButtons } from './utils/directionButtons'
 import { formatDate, supportedLangs } from './utils/formatDate'
@@ -106,7 +107,10 @@ export class Startup {
   }
 
   public run() {
-    ;(globalThis as any).tools = KassiopeiaTools
+    PrimarySearchFormHandler.fast.handle()
+
+    //@ts-ignore
+    globalThis.tools = KassiopeiaTools
     globalThis.locker = lockerTool
     globalThis.anim = animTool
 
@@ -133,33 +137,7 @@ export class Startup {
       ArticlePageHandler.fast.handle()
     }
 
-    document.querySelectorAll<HTMLElement>('*[class^="language-"]').forEach((el) => {
-      if ($(el).closest('.editor-container').length == 0) {
-        requireHLJS().highlightElement(el)
-
-        const copyButton = generateHTML({
-          tag: 'button',
-          attributes: {
-            type: 'button',
-          },
-          css: {
-            position: 'absolute',
-            top: '10px',
-            right: '10px',
-            fontSize: 'large',
-          },
-        })
-
-        copyButton.onclick = () => {
-          anim.otherAnimationByName(copyButton, 'animate__headShake')
-          navigator.clipboard.writeText(el.innerText)
-          toaster.info('Copiado!')
-        }
-        copyButton.innerHTML = '<span class="icon is-small"><i class="fa-solid fa-copy"></i></span>'
-        el.parentElement!.appendChild(copyButton)
-        el.parentElement!.style.position = 'relative'
-      }
-    })
+    CodeBlockHandler.fast.handle()
   }
 
   public static get fast() {

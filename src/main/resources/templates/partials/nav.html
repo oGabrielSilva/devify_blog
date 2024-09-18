@@ -189,4 +189,36 @@
       </div>
     </div>
   </div>
+
+  <form action="/search" role="search" method="GET" class="search-modal is-hidden" data-id="search">
+    <div class="search-body">
+      <h1 class="title">Devify</h1>
+      <label for="search-query" class="help label">Procure por artigos ou pessoas</label>
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <input
+            id="search-query"
+            name="query"
+            class="input"
+            type="search"
+            placeholder="Digite palavras-chave..."
+            aria-label="Pesquisar"
+            title="Pesquisar"
+            autocapitalize="off"
+            autocomplete="off"
+            maxlength="150"
+          />
+        </div>
+        <div class="control">
+          <button class="button">
+            <span class="icon is-small">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <button type="button" class="delete is-large" id="hide-search-modal"></button>
+    </div>
+  </form>
 </nav>
