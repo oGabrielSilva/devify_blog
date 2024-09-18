@@ -25,16 +25,14 @@ public interface ArticleRepository extends JpaRepository<Article, UUID> {
 
   List<Article> findByCreatedByAndEnabledTrueAndIsPublishedTrueOrderByCreatedAtDesc(UUID createdBy);
 
-  @Query("SELECT new cyou.devify.blog.entities.MinimizedArticleForResearch(a.title, a.slug, a.enabled, a.isPublished, a.publishedBy, a.publishedAt, a.updatedAt) "
+  @Query("SELECT new cyou.devify.blog.entities.MinimizedArticleForResearch(a.title, a.slug, a.description, a.enabled, a.isPublished, a.createdBy, a.publishedBy, a.publishedAt, a.updatedAt, a.stack) "
       +
       "FROM Article a " +
       "WHERE (LOWER(a.title) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
       "OR LOWER(CAST(a.content AS string)) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
       "OR LOWER(a.description) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
       "OR LOWER(a.metaDescription) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-      "OR LOWER(a.stack.name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-      "OR LOWER(a.stack.description) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-      "OR LOWER(a.stack.metaDescription) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
+      "OR LOWER(a.stack.name) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
       "AND a.enabled = true " +
       "AND a.isPublished = true")
   List<MinimizedArticleForResearch> searchByKeyword(@Param("keyword") String keyword);

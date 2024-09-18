@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th:block th:replace="~{partials/head}"></th:block>
+    <meta data-details="page" data-content="search_page" />
+  </head>
+
+  <body>
+    <header id="header">
+      <th:block th:replace="~{partials/nav}"></th:block>
+    </header>
+
+    <div class="container" id="root">
+      <main class="py-6 px-3">
+        <p class="help pb-6">Sua query: <span th:text="${query}"></span></p>
+
+        <th:block th:if="${#lists.isEmpty(result)}">
+          <div
+            class="is-flex is-justify-content-center is-align-items-center is-flex-direction-column has-text-centered"
+          >
+            <h1 class="title">Oopss...</h1>
+            <div>
+              <p><span>Nenhum resultado para a sua pesquisa</span></p>
+            </div>
+          </div>
+        </th:block>
+
+        <th:block th:unless="${#lists.isEmpty(result)}">
+          <div>
+            <h1 class="title">Resultado da sua pesquisa</h1>
+            <div th:each="item : ${result}">
+              <div th:with="article=${item.get('article')}, editor=${item.get('editor')}">
+                <div>
+                  <span>
+                    <small th:text="${article.stack.name}"></small> |
+                    <small>
+                      Última atualização em
+                      <time
+                        th:text="${dateFormatter.simple(article.updatedAt)}"
+                        th:datetime="${article.updatedAt}"
+                        data-no-format-time="true"
+                      ></time>
+                    </small>
+                  </span>
+                </div>
+                <a th:href="@{/item/{stack}/{slug}(stack=${article.stack.slug}, slug=${article.slug})}">
+                  <span class="link-title" th:text="${article.title}"></span>
+                </a>
+                <span
+                  class="help"
+                  th:with="user=${@userService.repository.findByUsername(article.createdBy)}"
+                >
+                  Publicado por
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    th:href="@{/profile/{username}(username=${editor.username})}"
+                    th:text="${@userService.getProcessedName(editor)}"
+                  ></a>
+                </span>
+              </div>
+              <hr />
+            </div>
+          </div>
+        </th:block>
+      </main>
+    </div>
+
+    <th:block th:replace="~{partials/footer}"></th:block>
+  </body>
+</html>

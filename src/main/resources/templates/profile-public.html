@@ -78,11 +78,7 @@
               <a th:href="@{/item/{stack}/{slug}(stack=${article.stack.slug}, slug=${article.slug})}">
                 <span class="link-title" th:text="${article.title}"></span>
               </a>
-              <div>
-                <p>
-                  <small th:utext="${article.description}" class="help"></small>
-                </p>
-              </div>
+              <div th:utext="${article.description}" class="help"></div>
               <hr />
             </div>
           </div>

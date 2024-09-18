@@ -13,8 +13,7 @@ export class EditArticleMetadataPageHandler extends BaseHandler {
   private readonly metaDescriptionInput = this.form.find<HTMLTextAreaElement>('#article-meta-description')
   private readonly metaDescriptionSizeHelper = this.form.find<HTMLElement>('#article-meta-size')
   private readonly descriptionInput = this.form.find<HTMLInputElement>('#article-description-input')
-
-  private readonly editor = editors!.find((payload) => payload.id === 'article-description')!
+  private readonly descriptionEditor = editors!.find((payload) => payload.id === 'article-description')!
 
   private isTitleValid = false
   private isMetaDescriptionValid = false
@@ -53,7 +52,7 @@ export class EditArticleMetadataPageHandler extends BaseHandler {
     if (!this.isMetaDescriptionValid)
       return dangerElement(this.metaDescriptionInput[0], 'Meta descrição precisa ser válida')
 
-    this.descriptionInput.val(this.editor.editor.getHTML())
+    this.descriptionInput.val(this.descriptionEditor.editor.getHTML())
     this.save()
   }
 

@@ -7,6 +7,7 @@ export class TiptapEditor {
   private readonly elements = document.querySelectorAll<HTMLElement>('.editor-container')
 
   private toGlobals(id: string, element: HTMLElement, editor: Editor) {
+    console.log(id, element, editor)
     if (!globalThis.editors) globalThis.editors = []
     globalThis.editors.push({
       id,

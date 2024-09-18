@@ -25,8 +25,6 @@ export class StackCreateForm {
         ed.id === this.descriptionEditorContainer.attr('data-editor-id') &&
         ed.element === this.descriptionEditorContainer[0]
     )!.editor
-
-    console.log(this)
   }
 
   private updateMetaDescriptionHelper() {

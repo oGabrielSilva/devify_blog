@@ -6,10 +6,13 @@ import java.util.UUID;
 public record MinimizedArticleForResearch(
     String title,
     String slug,
+    String description,
     boolean enabled,
     boolean isPublished,
+    UUID createdBy,
     UUID publishedBy,
     Instant publishedAt,
-    Instant updatedAt) {
+    Instant updatedAt,
+    Stack stack) {
 
 }

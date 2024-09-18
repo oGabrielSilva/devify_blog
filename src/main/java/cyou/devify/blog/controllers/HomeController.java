@@ -1,15 +1,20 @@
 package cyou.devify.blog.controllers;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import cyou.devify.blog.repositories.ArticleRepository;
 import cyou.devify.blog.services.UserService;
+import cyou.devify.blog.utils.DateFormatter;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -21,6 +26,11 @@ public class HomeController {
   UserService userService;
   @Autowired
   ArticleRepository articleRepository;
+
+  @ModelAttribute
+  public DateFormatter dateFormatter() {
+    return new DateFormatter();
+  }
 
   @GetMapping("/")
   public ModelAndView ping(ModelAndView mv) {
@@ -38,10 +48,12 @@ public class HomeController {
       return mv;
     }
 
+    mv.addObject("query", query);
     mv.setViewName("search");
 
-    var articlesByQuery = articleRepository.searchByKeyword(query);
-    var resultCount = articlesByQuery.size();
+    var articles = articleRepository.searchByKeyword(query);
+
+    var resultCount = articles.size();
 
     if (resultCount < 1) {
       mv.addObject("pageTitle", "Nenhum resultado encontrado para a sua pesquisa");
@@ -50,8 +62,15 @@ public class HomeController {
           resultCount > 1 ? "resultados encontrados" : "resultado encontrado"));
     }
 
-    mv.addObject("articles", articlesByQuery);
+    var editorsId = articles.stream().map(a -> a.createdBy()).collect(Collectors.toList());
+    var editors = userService.getRepository().findAllMinimizedUserByIdIn(editorsId);
 
+    var result = articles.stream()
+        .map(a -> Map.of("article", a, "editor",
+            editors.stream().filter(e -> e.id().equals(a.createdBy())).findFirst().get()))
+        .collect(Collectors.toList());
+
+    mv.addObject("result", result);
     return mv;
   }
 
