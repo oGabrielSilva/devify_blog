@@ -22,7 +22,7 @@ import cyou.devify.blog.utils.StringUtils;
 public class UserService implements UserDetailsService {
   @Autowired
   UserRepository repository;
-  @Value("${devify.owner.username}")
+  @Value("${props.owner.username}")
   String ownerUsername;
 
   @Override
@@ -78,11 +78,17 @@ public class UserService implements UserDetailsService {
         .collect(Collectors.toList());
   }
 
-  public List<User> getStaff() {
+  public List<User> getStaffIfEnabled() {
     return repository
         .findByAuthorityNot(Role.COMMON)
-        .stream().filter(user -> user.isEnabled())
+        .stream()
+        .filter(user -> user.isEnabled())
         .collect(Collectors.toList());
+  }
+
+  public List<User> getStaff() {
+    return repository
+        .findByAuthorityNot(Role.COMMON);
   }
 
   public UserRepository getRepository() {

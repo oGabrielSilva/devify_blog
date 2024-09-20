@@ -23,9 +23,9 @@ public class TokenService {
   private final String audience;
   private Algorithm algorithm;
 
-  public TokenService(@Value("${devify.jwt.secret}") String tokenSecret,
-      @Value("${devify.jwt.issuer}") String issuer,
-      @Value("${devify.jwt.audience}") String audience) {
+  public TokenService(@Value("${props.jwt.secret}") String tokenSecret,
+      @Value("${props.jwt.issuer}") String issuer,
+      @Value("${props.jwt.audience}") String audience) {
     this.algorithm = Algorithm.HMAC256(tokenSecret);
     this.issuer = issuer;
     this.audience = audience;

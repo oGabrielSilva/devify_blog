@@ -32,7 +32,13 @@
               <div th:with="article=${item.get('article')}, editor=${item.get('editor')}">
                 <div>
                   <span>
-                    <small th:text="${article.stack.name}"></small> |
+                    <a
+                      th:href="@{/item/{stackName}(stackName=${article.stack.slug})}"
+                      th:text="${article.stack.name}"
+                      class="button is-ghost has-text-current p-0 m-0"
+                      style="font-size: small"
+                    ></a>
+                    |
                     <small>
                       Última atualização em
                       <time
@@ -50,7 +56,7 @@
                   class="help"
                   th:with="user=${@userService.repository.findByUsername(article.createdBy)}"
                 >
-                  Publicado por
+                  Editado por
                   <a
                     target="_blank"
                     rel="noopener noreferrer"

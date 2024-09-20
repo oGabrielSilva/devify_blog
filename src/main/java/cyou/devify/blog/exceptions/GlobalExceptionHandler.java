@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
   public Object generic(HttpServletRequest request, HttpServletResponse response, Exception ex) {
     System.out.println(Instant.now());
     System.err.println("* Default exception handler: " + ex.getMessage() + "\n");
-    // ex.printStackTrace();
+    ex.printStackTrace();
     // if (!request.getServletPath().contains("/api/")) {
     // try {
     // response.sendRedirect("/session?next=" + request.getServletPath());

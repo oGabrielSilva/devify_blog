@@ -35,7 +35,7 @@
           </span>
           <span>Stacks</span>
         </a>
-        <th:block th:with="stacks=${@stackService.getUnlocked()}">
+        <th:block th:with="stacks=${#lists.isEmpty(stacks) ? @stackService.getUnlocked() : stacks}">
           <div th:if="${#lists.isEmpty(stacks)}" class="navbar-dropdown">
             <a class="navbar-item" role="none">Nenhuma Stack cadastrada</a>
           </div>

@@ -50,7 +50,7 @@ public class ArticleController {
     mv.addObject("pageTitle", article.getTitle());
 
     User creator;
-    User currentUser = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
+    User currentUser = userService.getCurrentAuthenticatedUser();
 
     if (currentUser != null && article.getCreatedBy().equals(currentUser.getId())) {
       creator = currentUser;

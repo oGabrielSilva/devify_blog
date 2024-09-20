@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import cyou.devify.blog.repositories.ArticleRepository;
+import cyou.devify.blog.services.StackService;
 import cyou.devify.blog.services.UserService;
 import cyou.devify.blog.utils.DateFormatter;
 import jakarta.servlet.RequestDispatcher;
@@ -26,6 +27,8 @@ public class HomeController {
   UserService userService;
   @Autowired
   ArticleRepository articleRepository;
+  @Autowired
+  StackService stackService;
 
   @ModelAttribute
   public DateFormatter dateFormatter() {
@@ -36,6 +39,19 @@ public class HomeController {
   public ModelAndView ping(ModelAndView mv) {
     mv.setViewName("index");
     mv.addObject("pageTitle", "Início");
+
+    var staff = userService.getStaff();
+    var stacks = stackService.getUnlocked();
+    var articles = articleRepository.findAllMinimizedByIsPublishedTrueAndEnabledTrue();
+
+    var articlesResult = articles.stream()
+        .map(a -> Map.of("article", a, "editor",
+            staff.stream().filter(user -> user.getId().equals(a.createdBy())).findFirst().get()))
+        .collect(Collectors.toList());
+
+    mv.addObject("articles", articlesResult);
+    mv.addObject("staff", staff);
+    mv.addObject("stacks", stacks);
 
     return mv;
   }
@@ -91,7 +107,7 @@ public class HomeController {
     mv.setViewName("contact");
     mv.addObject("pageTitle", "Entrar em contato");
 
-    mv.addObject("staff", userService.getStaff());
+    mv.addObject("staff", userService.getStaffIfEnabled());
     mv.addObject("pageDescription",
         "Conheça a equipe por trás da Devify e entre em contato para trocar ideias ou discutir oportunidades");
     return mv;

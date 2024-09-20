@@ -8,7 +8,7 @@ import java.util.Locale;
 public class DateFormatter {
   public String simple(Instant date) {
     DateTimeFormatter formatter = DateTimeFormatter
-        .ofPattern("d MMM, yyyy", new Locale("pt", "BR"))
+        .ofPattern("d MMM, yyyy", Locale.of("pt", "BR"))
         .withZone(ZoneId.of("America/Sao_Paulo"));
 
     String formattedDate = formatter.format(date);

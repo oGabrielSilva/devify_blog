@@ -1,6 +1,10 @@
 package cyou.devify.blog.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import cyou.devify.blog.repositories.UserRepository;
+import cyou.devify.blog.services.AmazonS3Service;
 import cyou.devify.blog.services.TokenService;
-import cyou.devify.blog.services.UploadImageService;
 import cyou.devify.blog.services.UserService;
 import cyou.devify.blog.utils.AuthValidation;
 import cyou.devify.blog.utils.StringUtils;
@@ -28,11 +32,15 @@ public class InternalProfileController {
   @Autowired
   UserRepository userRepository;
   @Autowired
-  UploadImageService imageService;
+  // UploadImageService imageService;
+  AmazonS3Service blobService;
   @Autowired
   PasswordEncoder passwordEncoder;
   @Autowired
   TokenService tokenService;
+
+  @Value("${props.app.domain}")
+  String appDomain;
 
   @PostMapping
   public String updateProfile(ProfileFormViewModel payload) {
@@ -64,10 +72,20 @@ public class InternalProfileController {
 
     if (payload.avatar() != null && !payload.avatar().isEmpty()) {
       try {
-        var result = imageService.saveAvatar(payload.avatar(), user);
+        // var result = imageService.saveAvatar(payload.avatar(), user);
+        // if (result != null) {
+        // user.setAvatarURL(result.URI());
+        // user.setAvatarFilePath(result.filePath());
+        // hasChanges = true;
+        // }
+        Map<String, String> metadata = new HashMap<>();
+        metadata.put("timestamp", String.valueOf(System.currentTimeMillis()));
+        metadata.put("generated-by", appDomain);
+
+        var result = blobService.uploadMultipart(payload.avatar(), user.getId() + ".webp", "avatar", metadata);
         if (result != null) {
-          user.setAvatarURL(result.URI());
-          user.setAvatarFilePath(result.filePath());
+          user.setAvatarURL(result.getUri());
+          user.setAvatarFilePath(result.getOrigin());
           hasChanges = true;
         }
       } catch (Exception e) {

@@ -16,16 +16,16 @@ import cyou.devify.blog.repositories.UserRepository;
 @Component
 public class StartupSeedConfiguration implements ApplicationRunner {
 
-  @Value("${devify.owner.name}")
+  @Value("${props.owner.name}")
   String rootName;
-  @Value("${devify.owner.username}")
+  @Value("${props.owner.username}")
   String rootUsername;
-  @Value("${devify.owner.email}")
+  @Value("${props.owner.email}")
   String rootEmail;
-  @Value("${devify.owner.password}")
+  @Value("${props.owner.password}")
   String rootPassword;
 
-  @Value("${devify.seed-java-stack}")
+  @Value("${props.seed-java-stack}")
   boolean seedJavaStack;
 
   @Autowired

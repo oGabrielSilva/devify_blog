@@ -19,7 +19,7 @@ public class UploadImageService {
   // private Path uploadPath;
   private Path uploadAvatarPath;
 
-  public UploadImageService(@Value("${devify.upload.path}") String uploadDir) {
+  public UploadImageService(@Value("${props.upload.path}") String uploadDir) {
     // uploadPath = Paths.get(System.getProperty("user.home"), uploadDir, "images");
     uploadAvatarPath = Paths.get(System.getProperty("user.home"), uploadDir, "images", "avatar");
   }

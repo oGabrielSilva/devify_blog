@@ -10,7 +10,110 @@
       <th:block th:replace="~{partials/nav}"></th:block>
     </header>
 
-    <div class="container" id="root"></div>
+    <div class="container" id="root">
+      <main class="pb-6 pt-4 px-3">
+        <header>
+          <nav th:if="${!#lists.isEmpty(stacks)}">
+            <ul class="buttons p-0 m-0 are-small">
+              <li th:each="stack : ${stacks}">
+                <a th:href="@{/item/{stackSlug}(stackSlug=${stack.slug})}" class="button is-text">
+                  <span class="icon is-small">
+                    <i class="fa-solid fa-layer-group"></i>
+                  </span>
+                  <span th:text="${stack.name}"></span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <h1 class="title mt-3">Devify</h1>
+          <p>
+            Nossa missão na Devify é promover o conhecimento e experiências em programação em diversas áreas.
+            Explore diferentes Stacks e mergulhe em conteúdos variados escritos com carinho
+          </p>
+        </header>
+        <hr />
+
+        <section>
+          <h3 class="subtitle">Artigos</h3>
+          <div>
+            <div th:each="item : ${articles}">
+              <div th:with="article=${item.get('article')}, editor=${item.get('editor')}">
+                <div>
+                  <span>
+                    <a
+                      th:href="@{/item/{stackName}(stackName=${article.stack.slug})}"
+                      th:text="${article.stack.name}"
+                      class="button is-ghost has-text-current p-0 m-0"
+                      style="font-size: small"
+                    ></a>
+                    |
+                    <small>
+                      Última atualização em
+                      <time
+                        th:text="${dateFormatter.simple(article.updatedAt)}"
+                        th:datetime="${article.updatedAt}"
+                        data-no-format-time="true"
+                      ></time>
+                    </small>
+                  </span>
+                </div>
+                <a th:href="@{/item/{stack}/{slug}(stack=${article.stack.slug}, slug=${article.slug})}">
+                  <span class="link-title" th:text="${article.title}"></span>
+                </a>
+                <span class="help">
+                  Editado por
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    th:href="@{/profile/{username}(username=${editor.username})}"
+                    th:text="${@userService.getProcessedName(editor)}"
+                  ></a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr />
+        <section>
+          <h3 class="subtitle">Nossa equipe:</h3>
+          <p th:if="${#lists.isEmpty(staff)}"><em>Nenhuma staff cadastrada</em></p>
+
+          <div th:unless="${#lists.isEmpty(staff)}">
+            <div th:each="user : ${staff}">
+              <div
+                th:with="name=${user.processedName}"
+                class="has-text-centered is-flex is-flex-direction-column gap-2 is-justify-content-flex-start is-align-items-center"
+              >
+                <a th:href="@{/profile/{username}(username=${user.username})}">
+                  <img
+                    th:src="${user.avatarURL}"
+                    th:alt="|Avatar - ${name}|"
+                    th:title="|Avatar - ${name}|"
+                    width="64"
+                    height="64"
+                    style="width: 64px; height: 64px"
+                    class="avatar"
+                    loading="lazy"
+                  />
+                </a>
+                <div>
+                  <a
+                    th:href="@{/profile/{username}(username=${user.username})}"
+                    class="subtitle is-5 m-0"
+                    th:text="${name}"
+                    th:title="|Visite o perfil de ${name}|"
+                  ></a>
+                  <p th:text="${user.bio}" style="font-size: small"></p>
+
+                  <th:block th:replace="~{partials/user-social-links}"></th:block>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
 
     <th:block th:replace="~{partials/footer}"></th:block>
   </body>

@@ -34,11 +34,11 @@ public class ProfileController {
   @Transactional
   @GetMapping("/{username}")
   public ModelAndView publicProfile(ModelAndView mv, @PathVariable String username) {
-    var currentUser = userService.getCurrentAuthenticatedUserOrThrowsForbidden();
+    var currentUser = userService.getCurrentAuthenticatedUser();
 
     mv.setViewName("profile-public");
 
-    if (currentUser.getUsername().equals(username)) {
+    if (currentUser != null && currentUser.getUsername().equals(username)) {
       mv.addObject("user", currentUser);
       mv.addObject("pageTitle", String.format("%s - Perfil", currentUser.getProcessedName()));
 
@@ -54,7 +54,7 @@ public class ProfileController {
 
     var user = userRepository.findByUsername(username);
 
-    if (user == null || !user.isEnabled()) {
+    if (user == null) {
       mv.setViewName("profile-404");
       mv.addObject("pageTitle", "Perfil não encontrado");
       mv.setStatus(HttpStatus.NOT_FOUND);

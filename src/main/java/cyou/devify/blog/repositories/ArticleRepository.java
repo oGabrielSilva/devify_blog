@@ -21,6 +21,8 @@ public interface ArticleRepository extends JpaRepository<Article, UUID> {
 
   List<MinimizedArticle> findAllMinimizedByCreatedByAndIsPublishedTrueAndEnabledTrue(UUID createdBy);
 
+  List<MinimizedArticle> findAllMinimizedByIsPublishedTrueAndEnabledTrue();
+
   Integer countByCreatedByAndEnabledTrueAndIsPublishedTrue(UUID createdBy);
 
   List<Article> findByCreatedByAndEnabledTrueAndIsPublishedTrueOrderByCreatedAtDesc(UUID createdBy);
