@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import cyou.devify.blog.entities.User;
 
 @Service
+@Deprecated
 public class UploadImageService {
 
   // private Path uploadPath;

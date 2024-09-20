@@ -31,8 +31,9 @@ public class InternalProfileController {
   UserService userService;
   @Autowired
   UserRepository userRepository;
-  @Autowired
+  // @Autowired
   // UploadImageService imageService;
+  @Autowired
   AmazonS3Service blobService;
   @Autowired
   PasswordEncoder passwordEncoder;

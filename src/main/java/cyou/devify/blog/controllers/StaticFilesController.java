@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import cyou.devify.blog.repositories.UserRepository;
 import cyou.devify.blog.utils.StringUtils;
 
+@Deprecated
 @Controller
 public class StaticFilesController {
   @Autowired
