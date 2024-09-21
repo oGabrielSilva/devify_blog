@@ -152,9 +152,37 @@ public class HomeController {
     return mv;
   }
 
+  @GetMapping("/subscription/notification/cancel")
+  public ModelAndView removeArticleSubscription(ModelAndView mv) {
+    mv.setViewName("remove-article-subscription");
+    mv.addObject("pageTitle", "Cancelar inscrição");
+
+    return mv;
+  }
+
+  @PostMapping("/subscription/notification/cancel")
+  public ModelAndView removeArticleSubscriptionPost(ModelAndView mv, NewArticleSubscriptionVO payload) {
+    mv.setViewName("redirect:/");
+
+    if (StringUtils.isNonNullOrBlank(payload.email())) {
+      AuthValidation validation = new AuthValidation();
+      String email = payload.email();
+
+      if (validation.isEmailValid(email)) {
+        var subscriptionByEmail = subscriptionRepository.findByEmail(email);
+
+        if (subscriptionByEmail != null) {
+          subscriptionRepository.delete(subscriptionByEmail);
+        }
+      }
+    }
+
+    mv.addObject("warning", "Seu email foi removido da nossa lista!");
+    return mv;
+  }
+
   @PostMapping("/subscription/notification")
-  public ModelAndView newArticleSubscription(ModelAndView mv, NewArticleSubscriptionVO payload,
-      HttpServletRequest req) {
+  public ModelAndView newArticleSubscription(ModelAndView mv, NewArticleSubscriptionVO payload) {
     mv.setViewName(String.format("redirect:%s", StringUtils.isNonNullOrBlank(payload.url()) ? payload.url() : "/"));
 
     if (StringUtils.isNonNullOrBlank(payload.email())) {

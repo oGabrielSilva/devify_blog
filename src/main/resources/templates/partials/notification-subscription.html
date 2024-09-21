@@ -1,12 +1,13 @@
 <section class="py-5 px-3">
   <form
-    th:action="@{/subscription/notification}"
+    action="/subscription/notification"
     method="post"
     enctype="application/x-www-form-urlencoded"
     class="is-flex is-justify-content-center is-align-items-center is-flex-direction-column py-6 px-4"
     style="background: var(--bulma-background); border-radius: 8px"
     id="email-subscription-form"
   >
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <input type="hidden" name="url" th:value="${basePageURL}" />
     <div style="width: 100%; max-width: 480px">
       <div class="field">

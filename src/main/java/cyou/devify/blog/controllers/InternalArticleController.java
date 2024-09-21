@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,7 +20,6 @@ import cyou.devify.blog.utils.StringUtils;
 import cyou.devify.blog.vm.ArticleViewModel;
 import cyou.devify.blog.vm.EditArticleMetadataViewModel;
 import cyou.devify.blog.vm.EditArticleViewModel;
-import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/internal/article")
@@ -34,8 +32,7 @@ public class InternalArticleController {
   ArticleRepository articleRepository;
 
   @PostMapping
-  public ModelAndView create(ModelAndView mv, ArticleViewModel payload, HttpServletRequest request,
-      @RequestHeader(value = "User-Agent") String userAgent) {
+  public ModelAndView create(ModelAndView mv, ArticleViewModel payload) {
     mv.setViewName("redirect:/internal/article");
 
     if (payload == null) {
@@ -66,6 +63,13 @@ public class InternalArticleController {
     }
 
     var slug = StringUtils.slugify(payload.title());
+
+    var slugAlreadyExists = articleRepository.existsBySlug(slug);
+
+    if (slugAlreadyExists) {
+      slug = slug.concat("-" + String.valueOf(System.currentTimeMillis()));
+    }
+
     var article = new Article(payload.title(), slug, stack.get(), user.getId(), user.getId());
     article = articleRepository.save(article);
 
@@ -128,7 +132,7 @@ public class InternalArticleController {
 
     var articleBySlug = articleRepository.findBySlug(article.getSlug());
 
-    if (articleBySlug != null) {
+    if (articleBySlug != null && !articleBySlug.getId().equals(articleId)) {
       article.setSlug(article.getSlug() + System.currentTimeMillis());
     }
 

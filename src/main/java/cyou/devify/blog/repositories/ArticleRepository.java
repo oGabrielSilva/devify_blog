@@ -15,6 +15,8 @@ import cyou.devify.blog.entities.Stack;
 public interface ArticleRepository extends JpaRepository<Article, UUID> {
   Article findBySlug(String slug);
 
+  boolean existsBySlug(String slug);
+
   List<Article> findAllByCreatedBy(UUID createdBy);
 
   List<MinimizedArticle> findAllByStackAndIsPublishedTrueAndEnabledTrue(Stack stack);

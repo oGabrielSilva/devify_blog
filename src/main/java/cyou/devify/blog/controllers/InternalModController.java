@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import cyou.devify.blog.repositories.ArticleRepository;
 import cyou.devify.blog.repositories.StackRepository;
 import cyou.devify.blog.services.ArticleService;
+import cyou.devify.blog.services.EmailService;
 import cyou.devify.blog.services.UserService;
 import cyou.devify.blog.utils.DateFormatter;
 
@@ -32,6 +33,9 @@ public class InternalModController {
   UserService userService;
   @Autowired
   StackRepository stackRepository;
+
+  @Autowired
+  EmailService emailService;
 
   @ModelAttribute
   public DateFormatter dateFormatter() {
@@ -160,6 +164,11 @@ public class InternalModController {
     mv.setViewName(String.format("redirect:/internal/mod/article/%s/state", article.getId()));
 
     if (article.isPublished()) {
+      var editor = user.getId().equals(article.getCreatedBy()) ? user
+          : userService.getRepository().findById(article.getCreatedBy()).get();
+
+      emailService.sendMessageToAllSubscriptionNewArticle(article, editor != null ? editor : user);
+
       mv.addObject("success", "Artigo publicado");
     } else {
       mv.addObject("info", "Artigo removido do público");
