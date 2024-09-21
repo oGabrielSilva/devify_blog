@@ -1,0 +1,49 @@
+<section class="py-5 px-3">
+  <form
+    th:action="@{/subscription/notification}"
+    method="post"
+    enctype="application/x-www-form-urlencoded"
+    class="is-flex is-justify-content-center is-align-items-center is-flex-direction-column py-6 px-4"
+    style="background: var(--bulma-background); border-radius: 8px"
+    id="email-subscription-form"
+  >
+    <input type="hidden" name="url" th:value="${basePageURL}" />
+    <div style="width: 100%; max-width: 480px">
+      <div class="field">
+        <div class="columns">
+          <div class="column py-0">
+            <label class="label" for="email-notify">Atualizações de graça</label>
+          </div>
+          <div class="column py-0 is-two-thirds">
+            <span class="help">
+              Fique por dentro! Receba uma notificação sempre que publicarmos um novo artigo
+            </span>
+          </div>
+        </div>
+        <div class="field has-addons pt-3">
+          <div class="control has-icons-left is-expanded">
+            <input
+              title="Digite seu email"
+              id="email-notify"
+              type="email"
+              required
+              placeholder="Qual seu email?"
+              name="email"
+              class="input"
+              maxlength="150"
+            />
+            <span class="icon is-small is-left">
+              <i class="fa-solid fa-envelope"></i>
+            </span>
+          </div>
+          <div class="control">
+            <button type="submit" class="button is-link">Enviar</button>
+          </div>
+        </div>
+        <p style="font-size: x-small" class="help">
+          Seu email será usado apenas para notificá-lo sobre publicações de artigos na Devify
+        </p>
+      </div>
+    </div>
+  </form>
+</section>

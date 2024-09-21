@@ -14,6 +14,7 @@ public class MetadataInterceptor implements HandlerInterceptor {
   public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
       ModelAndView mv) throws Exception {
     if (mv != null) {
+      mv.addObject("basePageURL", request.getRequestURI());
       mv.addObject("pageURL", "https://devify.cyou" + request.getRequestURI());
     }
   }

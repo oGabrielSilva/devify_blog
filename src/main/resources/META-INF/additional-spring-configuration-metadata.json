@@ -54,6 +54,41 @@
       "name": "props.app.domain",
       "type": "java.lang.String",
       "description": "Domínio da aplicação"
+    },
+    {
+      "name": "props.mail.host",
+      "type": "java.lang.String",
+      "description": "Host do email utilizado (Google por exemplo)"
+    },
+    {
+      "name": "props.mail.port",
+      "type": "java.lang.String",
+      "description": "Porta do serviço de email"
+    },
+    {
+      "name": "props.mail.user",
+      "type": "java.lang.String",
+      "description": "Endereço de email"
+    },
+    {
+      "name": "props.mail.password",
+      "type": "java.lang.String",
+      "description": "Senha do email"
+    },
+    {
+      "name": "props.mail.debug",
+      "type": "java.lang.String",
+      "description": "Habilitar o debug do email"
+    },
+    {
+      "name": "props.mail.smtp.auth",
+      "type": "java.lang.String",
+      "description": "A description for 'props.mail.smtp.auth'"
+    },
+    {
+      "name": "props.mail.smtp.starttls-enable",
+      "type": "java.lang.String",
+      "description": "A description for 'props.mail.smtp.starttls-enable'"
     }
   ]
 }

@@ -12,10 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import cyou.devify.blog.entities.NewArticleNotificationSubscription;
 import cyou.devify.blog.repositories.ArticleRepository;
+import cyou.devify.blog.repositories.NewArticleNotificationSubscriptionRepository;
 import cyou.devify.blog.services.StackService;
 import cyou.devify.blog.services.UserService;
+import cyou.devify.blog.utils.AuthValidation;
 import cyou.devify.blog.utils.DateFormatter;
+import cyou.devify.blog.utils.StringUtils;
+import cyou.devify.blog.vo.NewArticleSubscriptionVO;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -29,6 +34,8 @@ public class HomeController {
   ArticleRepository articleRepository;
   @Autowired
   StackService stackService;
+  @Autowired
+  NewArticleNotificationSubscriptionRepository subscriptionRepository;
 
   @ModelAttribute
   public DateFormatter dateFormatter() {
@@ -142,6 +149,28 @@ public class HomeController {
         return mv;
       }
     }
+    return mv;
+  }
+
+  @PostMapping("/subscription/notification")
+  public ModelAndView newArticleSubscription(ModelAndView mv, NewArticleSubscriptionVO payload,
+      HttpServletRequest req) {
+    mv.setViewName(String.format("redirect:%s", StringUtils.isNonNullOrBlank(payload.url()) ? payload.url() : "/"));
+
+    if (StringUtils.isNonNullOrBlank(payload.email())) {
+      AuthValidation validation = new AuthValidation();
+      String email = payload.email();
+
+      if (validation.isEmailValid(email)) {
+        var subscriptionByEmail = subscriptionRepository.findByEmail(email);
+
+        if (subscriptionByEmail == null) {
+          subscriptionRepository.save(new NewArticleNotificationSubscription(email));
+        }
+      }
+    }
+
+    mv.addObject("success", "Seu email foi adicionado a nossa lista!");
     return mv;
   }
 

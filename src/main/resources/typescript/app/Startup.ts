@@ -4,6 +4,7 @@ import { CodeBlockHandler } from './handlers/public/CodeBlockHandler'
 import { PrimarySearchFormHandler } from './handlers/public/SearchFormHandler'
 import { BulmaCss } from './lib/BulmaCss'
 import { anim as animTool, locker as lockerTool, toaster } from './lib/kassiopeia-tools'
+import { dangerElement } from './utils/dangerElement'
 import { configureDirectionButtons } from './utils/directionButtons'
 import { formatDate, supportedLangs } from './utils/formatDate'
 
@@ -18,6 +19,8 @@ export class Startup {
   private readonly error = document.head.querySelector<HTMLElement>('meta[data-details="error"]')
 
   private readonly metaPage = document.head.querySelector<HTMLElement>('meta[data-details="page"]')!
+
+  private readonly notificationSubscriptionForm = $<HTMLFormElement>('#email-subscription-form')
 
   private configureBulmaCSS() {
     const bulma = new BulmaCss()
@@ -106,6 +109,22 @@ export class Startup {
     })
   }
 
+  private configureNewArticleNotificationSubscriptionForm() {
+    if (this.notificationSubscriptionForm.length < 1) return
+
+    this.notificationSubscriptionForm.on('submit', (e) => {
+      globalThis.locker.lock()
+
+      const email = this.notificationSubscriptionForm.find<HTMLInputElement>('input[type="email"]')
+      if (email.val()!.length > 150) {
+        e.preventDefault()
+        dangerElement(email[0].parentElement!, 'Endereço de email muito grande')
+        globalThis.locker.unlock()
+        return
+      }
+    })
+  }
+
   public run() {
     PrimarySearchFormHandler.fast.handle()
 
@@ -138,6 +157,7 @@ export class Startup {
     }
 
     CodeBlockHandler.fast.handle()
+    this.configureNewArticleNotificationSubscriptionForm()
   }
 
   public static get fast() {
