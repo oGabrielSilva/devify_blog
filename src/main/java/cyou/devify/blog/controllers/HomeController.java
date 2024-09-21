@@ -163,7 +163,6 @@ public class HomeController {
   @PostMapping("/subscription/notification/cancel")
   public ModelAndView removeArticleSubscriptionPost(ModelAndView mv, NewArticleSubscriptionVO payload) {
     mv.setViewName("redirect:/");
-
     if (StringUtils.isNonNullOrBlank(payload.email())) {
       AuthValidation validation = new AuthValidation();
       String email = payload.email();

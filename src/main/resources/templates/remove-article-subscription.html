@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <th:block th:replace="~{partials/head}"></th:block>
+    <meta data-details="page" data-content="remove_article_subscription" />
+  </head>
+
+  <body>
+    <header id="header">
+      <th:block th:replace="~{partials/nav}"></th:block>
+    </header>
+
+    <div class="container is-flex" id="root">
+      <main
+        style="flex: 1"
+        class="py-5 px-3 is-flex is-justify-content-center is-align-items-center is-flex-direction-column has-text-centered"
+      >
+        <h1 class="title">Deseja cancelar sua inscrição?</h1>
+        <p>Ao cancelar, você deixará de receber emails sobre novos artigos publicados na Devify</p>
+        <p class="help">
+          Se concordar, insira seu endereço de email abaixo para removê-lo de nossa lista de envios
+        </p>
+
+        <form
+          action="/subscription/notification/cancel"
+          enctype="application/x-www-form-urlencoded"
+          method="post"
+          id="subscription-notification-cancel"
+          class="pb-5 py-6"
+          style="width: 100%; max-width: 540px"
+        >
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          <div>
+            <div class="field">
+              <label class="label">Email</label>
+              <p class="help pb-3">Digite o endereço de email cadastrado</p>
+
+              <div class="field">
+                <div class="control is-expanded has-icons-left">
+                  <input
+                    autofocus
+                    maxlength="150"
+                    class="input"
+                    type="email"
+                    name="email"
+                    placeholder="Digite o endereço de email cadastrado"
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="fa-solid fa-envelope"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="buttons is-justify-content-center">
+                  <a href="/" class="button">
+                    <span class="icon is-small">
+                      <i class="fa-solid fa-house"></i>
+                    </span>
+                  </a>
+
+                  <button type="submit" class="button is-warning">
+                    <span class="icon is-small">
+                      <i class="fa-solid fa-ban"></i>
+                    </span>
+                    <span>Cancelar inscrição</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </main>
+    </div>
+
+    <th:block th:replace="~{partials/footer}"></th:block>
+  </body>
+</html>

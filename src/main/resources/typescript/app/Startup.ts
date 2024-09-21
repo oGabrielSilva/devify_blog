@@ -1,6 +1,7 @@
 import KassiopeiaTools from 'kassiopeia-tools'
 import { ArticlePageHandler } from './handlers/public/ArticlePageHandler'
 import { CodeBlockHandler } from './handlers/public/CodeBlockHandler'
+import { RemoveArticleSubscriptionPageHandler } from './handlers/public/RemoveArticleSubscriptionPageHandler'
 import { PrimarySearchFormHandler } from './handlers/public/SearchFormHandler'
 import { BulmaCss } from './lib/BulmaCss'
 import { anim as animTool, locker as lockerTool, toaster } from './lib/kassiopeia-tools'
@@ -154,6 +155,10 @@ export class Startup {
 
     if (this.metaPage.dataset.content === 'article_page') {
       ArticlePageHandler.fast.handle()
+    }
+
+    if (this.metaPage.dataset.content === 'remove_article_subscription') {
+      RemoveArticleSubscriptionPageHandler.fast.handle()
     }
 
     CodeBlockHandler.fast.handle()

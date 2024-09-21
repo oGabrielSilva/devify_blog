@@ -132,7 +132,7 @@ public class InternalArticleController {
 
     var articleBySlug = articleRepository.findBySlug(article.getSlug());
 
-    if (articleBySlug != null && !articleBySlug.getId().equals(articleId)) {
+    if (articleBySlug != null && !articleBySlug.getId().equals(article.getId())) {
       article.setSlug(article.getSlug() + System.currentTimeMillis());
     }
 
