@@ -77,4 +77,8 @@ public class Article {
     this.createdBy = createdBy;
     this.updatedBy = updatedBy;
   }
+
+  public void plusAccessCount() {
+    accessCounter += 1;
+  }
 }

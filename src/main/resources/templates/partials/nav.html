@@ -156,6 +156,7 @@
         <div class="is-hidden">
           <form th:action="@{/session/out}" method="post" class="is-hidden">
             <button type="submit" id="sign-out-btn">Sair</button>
+            <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
           </form>
         </div>
       </th:block>

@@ -1,17 +1,15 @@
 package cyou.devify.blog.entities;
 
 import java.time.Instant;
+import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,20 +25,13 @@ public class ArticleAccess {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
-  private String userAgent;
-  private String ipAddress;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(nullable = false)
-  private Article article;
+  private UUID articleId;
 
   @CreationTimestamp
   @Column(updatable = false)
-  private Instant createdAt;
+  private Instant accessedAt;
 
-  public ArticleAccess(String userAgent, String ipAddress, Article article) {
-    this.userAgent = userAgent;
-    this.ipAddress = ipAddress;
-    this.article = article;
+  public ArticleAccess(Article article) {
+    this.articleId = article.getId();
   }
 }

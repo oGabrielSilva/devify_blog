@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
+import cyou.devify.blog.entities.ArticleAccess;
 import cyou.devify.blog.entities.User;
+import cyou.devify.blog.repositories.ArticleAccessRepository;
 import cyou.devify.blog.repositories.ArticleRepository;
 import cyou.devify.blog.repositories.StackRepository;
 import cyou.devify.blog.services.ArticleService;
@@ -25,6 +27,8 @@ public class ArticleController {
   ArticleRepository articleRepository;
   @Autowired
   UserService userService;
+  @Autowired
+  ArticleAccessRepository articleAccessRepository;
 
   @ModelAttribute
   public DateFormatter dateFormatter() {
@@ -71,6 +75,13 @@ public class ArticleController {
     mv.addObject("editorArticles", editorArticles);
     mv.addObject("creator", creator);
     mv.addObject("pageDescription", article.getMetaDescription());
+
+    ArticleAccess access = new ArticleAccess(article);
+    articleAccessRepository.save(access);
+
+    article.plusAccessCount();
+    articleRepository.save(article);
+
     return mv;
   }
 

@@ -72,7 +72,5 @@ export class PrimarySearchFormHandler extends BaseHandler {
         this.hideSearchModal()
       }
     })
-
-    console.log(this)
   }
 }

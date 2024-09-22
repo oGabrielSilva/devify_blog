@@ -1,34 +1,46 @@
 <title th:text="${pageTitle != null ? pageTitle + ' - Devify' : 'Devify'}"></title>
+
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" th:content="${noIndexPage != null && noIndexPage ? 'noindex' : 'index, follow'}" />
 <meta name="author" content="Gabriel Henrique da Silva" />
 <meta name="copyright" content="© 2024 Devify - Gabriel Henrique da Silva" />
+
 <meta data-details="info" th:data-message="${info}" />
 <meta data-details="success" th:data-message="${success}" />
 <meta data-details="warning" th:data-message="${warning}" />
 <meta data-details="error" th:data-message="${error}" />
+
+<meta name="application-name" content="Devify" />
+
 <meta property="og:url" th:content="${pageURL}" />
 <meta property="og:type" content="article" />
 <meta property="og:title" th:content="${pageTitle != null ? pageTitle + ' - Devify' : 'Devify'}" />
 <meta property="og:locale" content="pt_BR" />
 <meta property="og:site_name" content="Devify" />
-<!-- <meta property="og:image" content="/devify.og.jpg" /> -->
+<meta property="og:image" th:content="${domain + '/images/devify.og.jpg'}" />
 <meta
   property="og:description"
   th:content="${not #strings.isEmpty(pageDescription) ? pageDescription : 'Devify é um projeto focado em compartilhar conhecimentos e experiências sobre desenvolvimento web. Com foco primário em Node, React, Vue e Spring Boot'}"
 />
+
 <meta
   name="description"
   th:content="${not #strings.isEmpty(pageDescription) ? pageDescription : 'Devify é um projeto focado em compartilhar conhecimentos e experiências sobre desenvolvimento web. Com foco primário em Node, React, Vue e Spring Boot'}"
 />
+
 <meta itemprop="name" content="Devify" />
 <meta
   itemprop="description"
   th:content="${not #strings.isEmpty(pageDescription) ? pageDescription : 'Devify é um projeto focado em compartilhar conhecimentos e experiências sobre desenvolvimento web. Com foco primário em Node, React, Vue e Spring Boot'}"
 />
-<!-- <meta itemprop="image" content="/devify.og.jpg" /> -->
+<meta itemprop="image" th:content="${domain + '/images/devify.og.jpg'}" />
+
+<meta name="theme-color" content="#14161a" />
+
+<link rel="canonical" href="https://devify.cyou" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />

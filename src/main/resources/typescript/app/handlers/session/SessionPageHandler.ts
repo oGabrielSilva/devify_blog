@@ -3,7 +3,7 @@ import { toaster } from '../../lib/kassiopeia-tools'
 import { BaseHandler } from '../BaseHandler'
 
 export class SessionPageHandler extends BaseHandler {
-  private readonly form = document.querySelector('form') as HTMLFormElement
+  private readonly form = document.querySelector('form#session-form') as HTMLFormElement
   private readonly email = this.form.querySelector('#email') as HTMLElement
   private isEmailValid = false
   private readonly password = this.form.querySelector('#password') as HTMLElement
@@ -48,6 +48,7 @@ export class SessionPageHandler extends BaseHandler {
   }
 
   private configureSignUp() {
+    console.log(this.signUpButton)
     $(this.signUpButton).on('click', () => {
       if (this.isFormValid()) {
         this.form.action = this.signUpButton.dataset.action as string
@@ -61,6 +62,8 @@ export class SessionPageHandler extends BaseHandler {
     this.isPasswordValid = ValidationKassiopeiaTool.fast.isPasswordValid(
       $(this.password).find('input').get(0)!.value
     )
+
+    console.log(this.isEmailValid)
 
     if (!this.isEmailValid) {
       toaster.danger('Email não é válido')
