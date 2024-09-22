@@ -1,35 +1,38 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>3.3.4</version>
-    <relativePath/>
+    <relativePath /> <!-- lookup parent from repository -->
   </parent>
   <groupId>cyou.devify</groupId>
   <artifactId>blog</artifactId>
-  <version>0.1.1-ALPHA</version>
+  <version>0.1.0-ALPHA</version>
   <name>Devify</name>
   <description>Devify Blog</description>
-  <url/>
+  <url />
   <licenses>
-    <license/>
+    <license />
   </licenses>
   <developers>
-    <developer/>
+    <developer />
   </developers>
   <scm>
-    <connection/>
-    <developerConnection/>
-    <tag/>
-    <url/>
+    <connection />
+    <developerConnection />
+    <tag />
+    <url />
   </scm>
   <properties>
     <java.version>22</java.version>
     <maven.compiler.target>22</maven.compiler.target>
     <maven.compiler.source>22</maven.compiler.source>
   </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -42,10 +45,12 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -66,6 +71,7 @@
       <groupId>org.thymeleaf.extras</groupId>
       <artifactId>thymeleaf-extras-springsecurity6</artifactId>
     </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
@@ -97,15 +103,20 @@
       <artifactId>java-jwt</artifactId>
       <version>4.4.0</version>
     </dependency>
+
     <dependency>
       <groupId>com.github.slugify</groupId>
       <artifactId>slugify</artifactId>
       <version>3.0.7</version>
     </dependency>
+
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-mail</artifactId>
     </dependency>
+
+    <!-- aws -->
     <dependency>
       <groupId>software.amazon.awssdk</groupId>
       <artifactId>s3</artifactId>
@@ -120,16 +131,20 @@
         </exclusion>
       </exclusions>
     </dependency>
+
     <dependency>
       <groupId>software.amazon.awssdk</groupId>
       <artifactId>url-connection-client</artifactId>
     </dependency>
+
     <dependency>
       <groupId>software.amazon.awssdk</groupId>
       <artifactId>aws-sdk-java</artifactId>
       <version>2.28.4</version>
     </dependency>
+
   </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -144,6 +159,7 @@
           </excludes>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -154,6 +170,7 @@
         </configuration>
       </plugin>
     </plugins>
+
     <resources>
       <resource>
         <directory>src/main/resources</directory>
@@ -163,4 +180,5 @@
       </resource>
     </resources>
   </build>
+
 </project>
