@@ -52,8 +52,17 @@ public class HomeController {
     var articles = articleRepository.findAllMinimizedByIsPublishedTrueAndEnabledTrue();
 
     var articlesResult = articles.stream()
-        .map(a -> Map.of("article", a, "editor",
-            staff.stream().filter(user -> user.getId().equals(a.createdBy())).findFirst().get()))
+        .map(a -> {
+          var editorFromStaff = staff.stream().filter(user -> user.getId().equals(a.createdBy())).findFirst();
+          var editor = editorFromStaff.isPresent() ? editorFromStaff.get() : null;
+
+          if (editor == null) {
+            editor = userService.getRepository().findById(a.createdBy()).get();
+          }
+
+          var map = Map.of("article", a, "editor", editor);
+          return map;
+        })
         .collect(Collectors.toList());
 
     mv.addObject("articles", articlesResult);

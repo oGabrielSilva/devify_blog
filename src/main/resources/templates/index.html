@@ -63,8 +63,7 @@
                 <span class="help">
                   Editado por
                   <a
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    th:title="|Clique para acessar o perfil de @userService.getProcessedName(editor)|"
                     th:href="@{/profile/{username}(username=${editor.username})}"
                     th:text="${@userService.getProcessedName(editor)}"
                   ></a>

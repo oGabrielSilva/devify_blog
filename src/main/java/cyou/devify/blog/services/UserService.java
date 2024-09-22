@@ -100,10 +100,18 @@ public class UserService implements UserDetailsService {
   }
 
   public String getProcessedName(User user) {
+    if (user == null) {
+      return "";
+    }
+
     return StringUtils.isNullOrBlank(user.getPseudonym()) ? user.getName() : user.getPseudonym();
   }
 
   public String getProcessedName(MinimizedUser user) {
+    if (user == null) {
+      return "";
+    }
+
     return StringUtils.isNullOrBlank(user.pseudonym()) ? user.name() : user.pseudonym();
   }
 
