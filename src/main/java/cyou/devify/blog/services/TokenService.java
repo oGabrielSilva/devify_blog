@@ -35,7 +35,7 @@ public class TokenService {
     try {
       return JWT.create().withIssuer(issuer).withAudience(audience).withSubject(user.getEmail())
           .withClaim("authorities", user.allRolesAsStrings())
-          .withExpiresAt(LocalDateTime.now().plusHours(16).toInstant(ZoneOffset.UTC)).sign(algorithm);
+          .withExpiresAt(LocalDateTime.now().plusHours(60).toInstant(ZoneOffset.UTC)).sign(algorithm);
     } catch (JWTCreationException ex) {
       return "";
     }
