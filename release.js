@@ -3,6 +3,13 @@ const xml2js = require('xml2js')
 const { exec } = require('child_process')
 const readline = require('readline')
 
+function normalizeLineEndings(filePath) {
+  const data = fs.readFileSync(filePath, 'utf-8')
+  const normalizedData = data.replace(/\r\n/g, '\n') // Substitui CRLF por LF
+  fs.writeFileSync(filePath, normalizedData, 'utf-8')
+  console.log(`Finais de linha normalizados para LF em: ${filePath}`)
+}
+
 // Função para ler a versão atual do pom.xml
 async function readPomVersion(pomPath) {
   const xml = fs.readFileSync(pomPath, 'utf-8')
@@ -12,13 +19,17 @@ async function readPomVersion(pomPath) {
 }
 
 // Função para atualizar a versão no pom.xml
+/**
+ *
+ * @param {string} newVersion
+ */
 async function updatePomVersion(pomPath, newVersion) {
   const xml = fs.readFileSync(pomPath, 'utf-8')
   const parser = new xml2js.Parser()
   const result = await parser.parseStringPromise(xml)
 
   // Atualiza a versão
-  result.project.version[0] = newVersion
+  result.project.version[0] = newVersion.toUpperCase()
 
   // Converte o objeto de volta para XML
   const builder = new xml2js.Builder()
@@ -27,6 +38,8 @@ async function updatePomVersion(pomPath, newVersion) {
   // Grava o novo XML no arquivo pom.xml
   fs.writeFileSync(pomPath, updatedXml)
   console.log(`Versão atualizada para ${newVersion} no arquivo pom.xml.`)
+
+  normalizeLineEndings(pomPath)
 }
 
 // Função para fazer commit no GitHub
