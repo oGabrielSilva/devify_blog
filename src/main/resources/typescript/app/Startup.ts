@@ -1,4 +1,3 @@
-import KassiopeiaTools from 'kassiopeia-tools'
 import { ArticlePageHandler } from './handlers/public/ArticlePageHandler'
 import { CodeBlockHandler } from './handlers/public/CodeBlockHandler'
 import { RemoveArticleSubscriptionPageHandler } from './handlers/public/RemoveArticleSubscriptionPageHandler'
@@ -129,8 +128,6 @@ export class Startup {
   public run() {
     PrimarySearchFormHandler.fast.handle()
 
-    //@ts-ignore
-    globalThis.tools = KassiopeiaTools
     globalThis.locker = lockerTool
     globalThis.anim = animTool
 
