@@ -96,7 +96,7 @@ public class UserService implements UserDetailsService {
   }
 
   public User getOwner() {
-    return repository.findByUsername(ownerUsername);
+    return repository.findFirstByOrderByCreatedAtAsc();
   }
 
   public String getProcessedName(User user) {

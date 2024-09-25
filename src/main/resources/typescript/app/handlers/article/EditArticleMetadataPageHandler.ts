@@ -38,6 +38,8 @@ export class EditArticleMetadataPageHandler extends BaseHandler {
 
     if (input.value.length > 160) {
       this.metaDescriptionInput.addClass('is-warning')
+    } else {
+      this.metaDescriptionInput.removeClass('is-warning')
     }
 
     if (this.isMetaDescriptionValid) input.classList.remove('is-danger')

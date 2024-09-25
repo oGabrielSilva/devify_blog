@@ -37,7 +37,7 @@
           <h3 class="subtitle">Artigos</h3>
           <div>
             <div th:each="item : ${articles}">
-              <div th:with="article=${item.get('article')}, editor=${item.get('editor')}">
+              <div class="mb-5" th:with="article=${item.get('article')}, editor=${item.get('editor')}">
                 <div>
                   <span>
                     <a
