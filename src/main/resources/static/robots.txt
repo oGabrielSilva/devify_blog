@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://devify.cyou/sitemap.xml

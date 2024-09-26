@@ -209,3 +209,4 @@ target/
 **/src/**/static/javascript/**
 
 application-*.properties
+*sitemap.*
