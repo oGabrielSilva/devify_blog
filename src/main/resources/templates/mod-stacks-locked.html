@@ -31,11 +31,11 @@
           </a>
         </div>
 
-        <div th:if="${#lists.isEmpty(stacks-locked)}">
+        <div th:if="${#lists.isEmpty(stacksLocked)}">
           <span>Não há Stacks bloqueadas</span>
         </div>
 
-        <div th:unless="${#lists.isEmpty(stacks-locked)}">
+        <div th:unless="${#lists.isEmpty(stacksLocked)}">
           <h3 class="title is-5">Stacks</h3>
           <div th:each="stackAndUserMap : ${stacks}">
             <div th:with="stack=${stackAndUserMap.get('stack')}, locker=${stackAndUserMap.get('locker')}">

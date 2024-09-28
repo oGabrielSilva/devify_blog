@@ -63,7 +63,7 @@ public class InternalModController {
               "locker", users.stream().filter(user -> user.id().equals(stack.getLockedBy())).findFirst().get()))
           .collect(Collectors.toList());
 
-      mv.addObject("stacks-locked", stackUserMap);
+      mv.addObject("stacksLocked", stackUserMap);
     }
 
     mv.setViewName("mod-stacks-locked");
