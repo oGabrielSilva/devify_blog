@@ -37,7 +37,7 @@
 
         <div th:unless="${#lists.isEmpty(stacksLocked)}">
           <h3 class="title is-5">Stacks</h3>
-          <div th:each="stackAndUserMap : ${stacks}">
+          <div th:each="stackAndUserMap : ${stacksLocked}">
             <div th:with="stack=${stackAndUserMap.get('stack')}, locker=${stackAndUserMap.get('locker')}">
               <div>
                 <div>
