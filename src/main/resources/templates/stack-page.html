@@ -32,13 +32,12 @@
           </div>
 
           <th:block th:unless="${#lists.isEmpty(articles)}">
-            <div th:each="article : ${articles}">
+            <div th:each="article : ${articles}" class="pb-3">
               <div>
                 <span>
-                  <small th:text="${stack.name}"></small> |
                   <small>
                     <time
-                      th:text="${dateFormatter.simple(article.updatedAt)}"
+                      th:text="|Atualizado em ${dateFormatter.simple(article.updatedAt)}|"
                       th:datetime="${article.updatedAt}"
                       data-no-format-time="true"
                     ></time>
